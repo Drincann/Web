@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>CSS（一）</title>
+
+    <h1 id="backtotop">List</h1>
+    <ol>
+        <li><a href="#1">CSS样式表</a></li>
+        <li><a href="#2">选择器</a></li>
+        <li><a href="#3">字体</a></li>
+        <li><a href="#4">文本</a></li>
+        <li><a href="#5">CSS复合选择器</a></li>
+        <li><a href="#6">标签显示模式</a></li>
+        <li><a href="#7">CSS特性</a></li>
+        <li><a href="#8">盒子模型-普通流（标准流）</a></li>
+        <li><a href="css2.html">盒子模型-浮动</a></li>
+    </ol>
+    <hr />
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css" />
+    <script src="js/statistics_baidu.js"></script>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+<body>
+    <style>
+        ol a {
+            text-decoration: none;
+        }
+
+        ol a:hover {
+            color: #00aaaa;
+        }
+
+        .backtotop {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            right: 100px;
+            bottom: 50px;
+            border-radius: 50px;
+            border: 3px solid black;
+            background: #ccc url(img/arr.png) no-repeat center top;
+            background-size: 90%;
+            box-shadow: 0 15px 30px 0 rgba(0, 121, 121, 0.2);
+            transition: all 0.15s;
+        }
+
+        .backtotop:hover {
+            background-color: #fff;
+            transform: translateY(-5px);
+        }
+
+        .backtotop:active {
+            background-color: #0aa;
+        }
+    </style>
+
+    <a href="#backtotop" class="backtotop"></a>
+    <h1 id="1">一、CSS样式表</h1>
+
+    <h2>1.行内式（内联样式）</h2>
+
+    <div style="font-size: 20px;">可作为特殊设定</div>
+    <div style="color: orange; font-size: 60px;">
+        style="color: blue; font-size: 60px;"
+    </div>
+    <br />
+
+    <h2>2.内部样式表（内嵌样式表）</h2>
+
+    <style type="text/css">
+        h2 {
+            color: gray;
+        }
+
+        a {
+            color: orange;
+        }
+    </style><br />
+
+    <h2>3.外部样式表（外链式）</h2>
+
+    <span style="color: green; font-size: 20px;">将所有样式放在一个或多个以.css为扩展名的外部样式表文件中</span><br /><br />
+
+    <span style="font-size: 20px;">通过link标签将外部样式表文件链接到html文档中</span><br /><br />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <hr />
+    <br />
+
+    <h1 id="2">二、选择器</h1>
+
+    <h2>1.基础选择器</h2>
+
+    <h3>1.1 标签选择器</h3>
+
+    <style type="text/css">
+        h4 {
+            color: red;
+        }
+    </style>
+    <h4 style="font-size: 20px;">全部选择</h4>
+    <h4 style="font-size: 20px;">全部选择</h4>
+    <h4 style="font-size: 20px;">全部选择</h4>
+    <h4 style="font-size: 20px;">全部选择</h4>
+    <br />
+
+    <h3>1.2 类选择器</h3>
+
+    <style type="text/css">
+        .class_name {
+            color: deeppink;
+            font-size: 20px;
+        }
+    </style>
+    <div class="class_name">1.指定标签类名</div>
+    <div class="class_name red">2.多类名 (相同属性以第一个类名为准)</div>
+    <style type="text/css">
+        .blue {
+            color: #4285f4;
+        }
+
+        .red {
+            color: #ea4335;
+        }
+
+        .orange {
+            color: #fbbc05;
+        }
+
+        .green {
+            color: #34a853;
+        }
+
+        .size100 {
+            font-size: 100px;
+        }
+    </style>
+
+    <span class="blue size100">G</span><span class="red size100">o</span><span class="orange size100">o</span><span
+        class="blue size100">g</span><span class="green size100">l</span><span class="red size100">e</span>
+    <br />
+
+    <h3>1.3 id选择器</h3>
+
+    <style type="text/css">
+        #Label_1 {
+            font-size: 20px;
+            color: gray;
+        }
+    </style>
+    <div id="Label_1">
+        id仅针对于唯一标签，在js中应用较多，css写样式应该较少
+    </div>
+    <br />
+
+    <h3>1.4 通配符选择器</h3>
+    <style>
+        * {
+            color: #00aaaa;
+        }
+    </style>
+
+    <hr />
+    <br />
+
+    <h1 id="3">三、字体</h1>
+
+    <h2>1.font-size</h2>
+
+    <div class="orange">
+        不同浏览器的默认字号不同，故应给body标签指定一个文字大小
+    </div>
+
+    <style type="text/css">
+        body {
+            font-size: 20px;
+            font-family: 'Product Sans', 'Microsoft YaHei', '微软雅黑';
+        }
+    </style><br />
+
+    <h2>2.font-family</h2>
+
+    <style type="text/css">
+        @font-face {
+            font-family: 'Product Sans';
+            src: url('../ttf/Product Sans.ttf');
+        }
+    </style><br />
+
+    <h2>3.font-weight</h2>
+
+    <style type="text/css">
+        .weight_nor {
+            font-weight: normal;
+        }
+
+        /*400 == normal*/
+
+        .weight_bol {
+            font-weight: bold;
+        }
+
+        /*700 == bold*/
+    </style>
+    <div class="weight_bol">weight = 700</div>
+    <div class="weight_nor">weight = 400</div>
+    <br />
+
+    <h2>4.font-style</h2>
+
+    <style type="text/css">
+        .style_nor {
+            font-style: normal;
+        }
+
+        .style_italic {
+            font-style: italic;
+        }
+    </style>
+    <div class="style_nor">style: normal;</div>
+    <div class="style_italic">style: italic;</div>
+    <br />
+
+    <h2>5.font:综合设置字体样式</h2>
+    <!-- font: font-style font-weight font-size/line-height font-famil -->
+    <style type="text/css">
+        .Simplify {
+            font: italic 700 20px/2 '黑体';
+        }
+    </style>
+    <div class="Simplify">
+        顺序：font: font-style font-weight (font-size/line-height
+        font-family)
+    </div>
+    <div class="Simplify">括号内不可省略，感觉不是很好用</div>
+
+    <hr />
+    <br />
+
+    <h1 id="4">四、文本</h1>
+
+    <h2>1.文本颜色（color）</h2>
+    <br />
+
+    <h2>2.文本对齐（text-align）</h2>
+
+    <style type="text/css">
+        .align_center {
+            text-align: center;
+            /*right left*/
+        }
+    </style>
+    <div class="align_center">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id omnis
+        temporibus reiciendis corporis, iusto culpa suscipit voluptate in
+        aliquid sequi ratione, hic placeat cum minus nobis at ea qui vero.
+    </div>
+    <br />
+
+    <h2>3.文本行距（line-height）</h2>
+
+    <style type="text/css">
+        .line_height {
+            line-height: 30px;
+            /*行高一般比字号大7-8像素*/
+        }
+    </style>
+    <p class="line_height">
+        Quas numquam ab itaque! Sint, quam fugit voluptatibus dignissimos
+        fuga dolorem dicta odio iure, vel, adipisci asperiores corporis
+        maxime error doloremque repellat.
+    </p>
+
+    <p>
+        Autem veritatis ex quisquam impedit, blanditiis delectus earum.
+        Laboriosam tempore, laudantium, facilis a rerum quis optio officiis
+        sunt harum maxime porro illo.
+    </p>
+    <br />
+
+    <h2>4.文本首行缩进（text-indent）</h2>
+
+    <style type="text/css">
+        .text_indent {
+            text-indent: 2em;
+        }
+    </style>
+    <p class="text_indent">
+        Ut provident sit saepe blanditiis nostrum dignissimos id laudantium
+        neque. Dolores distinctio dolore tempora, nulla porro deleniti
+        voluptas consequatur vel magnam cupiditate!
+    </p>
+
+    <p class="text_indent">
+        Laudantium, optio similique omnis earum doloremque qui nulla, magnam
+        quibusdam officiis saepe ut eius sed nesciunt dignissimos dolor
+        explicabo numquam, pariatur repellendus!
+    </p>
+    <br />
+
+    <h2>5.文本的装饰（text-decoration）</h2>
+    <style type="text/css">
+        .under_line_none {
+            text-decoration: none;
+        }
+    </style>
+    <a href="#4" class="under_line_none">不加下划线的链接</a><br />
+
+    <h2>6.Emmet 快捷操作语法</h2>
+    <img src="img/simple.png" />
+
+    <hr />
+    <br />
+
+    <h1 id="5">五、CSS复合选择器</h1>
+
+    <h2>1.后代选择器</h2>
+    <style type="text/css">
+        .father1 span {
+            font-size: 20px;
+            font-weight: 1000;
+        }
+
+        .father2 dt {
+            /*或者 .mother dl dt*/
+            font-size: 20px;
+            font-weight: 1000;
+        }
+    </style>
+    <div class="father1 father2">
+        <span>child1</span>
+        <span>child2</span>
+        <span>child3</span>
+        <span>child4</span>
+
+        <dl>
+            <dt>dt</dt>
+            <dd>dd</dd>
+            <dd>dd</dd>
+            <dd>dd</dd>
+        </dl>
+        <p>无限向上继承</p>
+    </div>
+    <br />
+
+    <h2>2.子元素选择器</h2>
+    <style type="text/css">
+        .father3>dl>dd {
+            font-size: 20px;
+            font-weight: 1000;
+        }
+    </style>
+    <div class="father3">
+        <dl>
+            <dt>dt</dt>
+            <dd>dd</dd>
+            <dd>dd</dd>
+            <dd>dd</dd>
+        </dl>
+        <p>必须指明继承关系</p>
+    </div>
+    <br />
+
+    <h2>3.交集选择器</h2>
+    <style type="text/css">
+        div.green {
+            color: green;
+        }
+    </style>
+    <div class="green">div.green</div>
+    <br />
+
+    <h2>4.并集选择器</h2>
+    <style type="text/css">
+        .father4 span,
+        .father4 div {
+            color: blue;
+        }
+    </style>
+
+    <div class="father4">
+        <span>span</span>
+        <div>div</div>
+    </div>
+
+    <h2>5.(链接)伪类选择器</h2>
+    <style>
+        .father5 a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /*		.father5 a:link{
+			color: #333;
+		}
+		.father5 a:visited{
+			color: #333;
+		}*/
+
+        .father5 a:hover {
+            color: orange;
+        }
+
+        /*		.father5 a:active{
+			color: red;
+		}*/
+    </style>
+    <div class="father5">
+        <a href="http://www.baidu.com/" target="_blank">百度链接</a>
+        <a href="http://www.baidu.com/" target="_blank">百度链接</a>
+        <a href="http://www.xiaomi.com/" target="_blank">小米链接</a>
+    </div>
+
+    <hr />
+    <br />
+
+    <h1 id="6">六、标签显示模式</h1>
+
+    <h2>1.块级元素（block-level）</h2>
+    <style>
+        div.example1 {
+            background-color: #abcdef;
+            height: 100px;
+            font-size: 40px;
+        }
+    </style>
+    <div class="example1">div</div>
+    <p>独占一行</p>
+    <p>宽高及外边距均可调</p>
+    <p>默认宽度是父级元素的100%</p>
+    <p>是一个容器及盒子，里面可以放行内或者块级元素</p>
+    <br />
+
+    <h2>2.行内元素（inline-level）</h2>
+
+    <style>
+        span.example2 {
+            width: 200px;
+            height: 200px;
+            background-color: #abcdef;
+        }
+    </style>
+    <span class="example2">span</span>
+    <p>一行多个</p>
+    <p>无法设置宽高,默认为内容的宽高</p>
+    <p>只能容纳文本或其他行内元素</p>
+    <br />
+
+    <h2>3.行内块元素（inline-block）</h2>
+
+    <style>
+        img.example3 {
+            width: 150px;
+            background-color: #abcdef;
+        }
+    </style>
+    <img src="img/buttonimg.png" alt="" class="example3" /><img src="img/buttonimg.png" alt="" class="example3" /><img
+        src="img/buttonimg.png" alt="" class="example3" />
+    <br />
+    <img src="img/buttonimg.png" alt="" class="example3" /><img src="img/buttonimg.png" alt="" class="example3" />
+    <p>一行多个</p>
+    <p>默认宽度是其内容宽度</p>
+    <p>可以控制宽高</p>
+    <br />
+
+    <h2>4.标签显示模式转换</h2>
+    <style>
+        span.example4 {
+            display: block;
+            height: 100px;
+            background-color: #abcdef;
+        }
+
+        a.example4 {
+            text-decoration: none;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: #abcdef;
+        }
+
+        a.example4:hover {
+            color: #0aa;
+        }
+    </style>
+
+    <span class="example4">span display block</span><br />
+    <a href="htttp://www.baidu.com" class="example4">百度链接</a>
+
+    <h3>简单导航栏：</h3>
+    <style>
+        div.menu a {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #67d8ef;
+            text-decoration: none;
+            color: white;
+        }
+
+        div.menu a:hover {
+            background-color: black;
+        }
+    </style>
+
+    <div class="menu">
+        <a href="#">菜单1</a>
+        <a href="#">菜单2</a>
+        <a href="#">菜单3</a>
+        <a href="#">菜单4</a>
+    </div>
+
+    <h3>图片背景（背景附着）</h3>
+    <style>
+        .imgms {
+            /*url repeat position*/
+            /*			background-image: url(img/sm.jpg);
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-position: center top;*/
+            /*bg样式没有顺序要求，习惯上是
+			color url repeat attachment position*/
+            background: url(img/sm.jpg) no-repeat fixed center top;
+            height: 1080px;
+        }
+    </style>
+    <div class="imgms"></div>
+
+    <h3></h3>
+    <style></style>
+
+    <h3>图片导航栏</h3>
+
+    <style type="text/css">
+        .nav {
+            text-align: center;
+            background-color: #ccc;
+        }
+
+        .nav a {
+            display: inline-block;
+            width: 100px;
+            height: 100%;
+            background: url(img/bg.png) no-repeat center;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+            line-height: 45px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+        }
+
+        .nav a:hover {
+            background: url(img/bgc.png) no-repeat center;
+            background-size: 100%;
+        }
+    </style>
+    <div class="nav">
+        <a href="">菜单1</a>
+        <a href="">菜单2</a>
+        <a href="">菜单3</a>
+        <a href="">菜单4</a>
+    </div>
+    <br />
+
+    <h3>背景半透明</h3>
+    <style>
+        a.imgsm {
+            display: inline-block;
+            background: url(img/sm.jpg) no-repeat center;
+            background-color: orange;
+            -webkit-background-size: 100%;
+            background-size: 100%;
+        }
+
+        div.transparent:hover {
+            animation: process 0.3s forwards;
+        }
+
+        div.transparent {
+            width: 400px;
+            height: 220px;
+            background: rgba(0, 0, 0, 00);
+        }
+
+        @keyframes process {
+            0% {
+                background: rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                background: rgba(0, 0, 0, 0.4);
+            }
+        }
+    </style>
+    <a class="imgsm" href="#">
+        <div class="transparent"></div>
+    </a>
+
+    <hr />
+    <br />
+
+    <h1 id="7">七、CSS特性</h1>
+
+    <h2>1.层叠性</h2>
+    <p>后来的样式会覆盖先前的样式</p>
+    <br />
+
+    <h2>2.继承性</h2>
+    <p>带“-”的属性（样式）均会继承父元素的属性（样式）</p>
+    <p>如 text-decoration text-align margin-top 等</p>
+    <br />
+
+    <h2>3.权重</h2>
+
+    <p>权重大的选择器样式会覆盖权重小的选择器样式</p>
+    <table border="10" cellspacing="0" cellpadding="10">
+        <td>!important > 行内样式 > id > 类/伪类 > 标签 > 通配符/继承</td>
+    </table>
+    <p>同等级比较出现个数多少</p>
+
+    <hr />
+    <br />
+
+    <h1 id="8">八、盒子模型-普通流（标准流</h1>
+
+    <h2>1.盒子边框（border）</h2>
+
+    <h3>1.1 边框</h3>
+
+    <style>
+        div.border {
+            width: 200px;
+            height: 200px;
+            background-color: white;
+            /*border-width: 1px;*/
+            /*border-style: solid;*/
+            /*dashed dotted*/
+            /*border-color: #0aa;*/
+            border: 1px solid #0aa;
+        }
+
+        div.border:hover {
+            animation: box_border 0.3s forwards;
+        }
+
+        @keyframes box_border {
+            0% {
+                background-color: rgba(0, 0, 0, 0);
+            }
+
+            100% {
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+        }
+    </style>
+    <div class="border"></div>
+    <br />
+
+    <h3>1.2 指定边框</h3>
+
+    <style>
+        div.border1 {
+            width: 100px;
+            height: 100px;
+            border-top: 2px solid red;
+        }
+
+        input.border2 {
+            border: none;
+            border-bottom: 1px solid red;
+        }
+    </style>
+    <div class="border1"></div>
+    ID: <input type="text" class="border2" /><br />
+
+    <h3>1.3 表格边框</h3>
+
+    <style>
+        table.border3,
+        table.border3 td {
+            border: 1px solid red;
+            border-collapse: collapse;
+            background-color: pink;
+        }
+    </style>
+
+    <table class="border3">
+        <tr>
+            <td>td</td>
+            <td>td</td>
+            <td>td</td>
+        </tr>
+        <tr>
+            <td>td</td>
+            <td>td</td>
+            <td>td</td>
+        </tr>
+    </table>
+
+    <h2>2.内边距（padding）</h2>
+
+    <h3>2.1 内边距</h3>
+    <style>
+        div.padding {
+            width: 100px;
+            height: 100px;
+            border: 10px solid white;
+            padding: 10px 20px;
+            /*四个参数顺势站*/
+            font-size: 10px;
+        }
+    </style>
+
+    <div class="padding">
+        consectetur dignissimos impedit nisi quas tempora modi architecto
+        quasi beatae eaque. Perferendis!
+    </div>
+    <br />
+
+    <h3>2.2 简约导航栏</h3>
+    <style>
+        div.nav1 {
+            height: 60px;
+            /*	padding-left: 5px;*/
+            border-bottom: 1px solid #ccc;
+            border-top: 3px solid #ff8500;
+            background-color: #fcfcfc;
+            /* 行内块元素缝隙解决方法 */
+            /* 1. display: table;
+            word-spacing: 0; */
+            /* 2.*/
+            font-size: 0px;
+            /* 3. 子元素加浮动 */
+            /* 行内元素缝隙解决方法 */
+            /* 1. display: table;
+            word-spacing: 0; 暂时只有一种*/
+            /* 设置字体大小之后元素内无内容，于是会失去宽度和高度 */
+            /* 加浮动会改变display */
+        }
+
+        .nav1 a {
+            display: inline-block;
+            color: #0aa;
+            padding: 10px 20px;
+            line-height: 41px;
+            text-align: center;
+            text-decoration: none;
+            transition: font-size 0.3s;
+            font-size: 20px;
+        }
+
+        .nav1 a:hover {
+            background-color: #edeef0;
+            color: orange;
+            font-size: 25px;
+        }
+    </style>
+
+    <div class="nav1">
+        <a href="#">选项</a>
+        <a href="#">选项</a>
+        <a href="#">选项</a>
+        <a href="#">选项</a>
+        <a href="#">选项</a>
+    </div>
+    <br />
+
+    <h3>2.3 内盒尺寸计算（元素实际大小）</h3>
+
+    <style>
+        div.box1 {
+            padding: 10px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid orange;
+        }
+
+        div.box2 {
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+        }
+
+        div.box2 p {
+            background-color: #a00;
+            padding-left: 30px;
+            transition: padding 1s;
+        }
+
+        div.box2 p:hover {
+            padding-left: 300px;
+        }
+    </style>
+    <div class="box1"></div>
+    <br />
+    <p>盒子边框以内的部分等于width + padding</p>
+    <p>所以想要200 * 200 的盒子，width + padding 就要等于200</p>
+    <br />
+
+    <h3>例外情况：</h3>
+
+    <p>如果盒子没有width属性，那么内边距不会使盒子变大</p>
+
+    <p>除非内边距过大，鼠标放在内部盒子上观查padding增大的效果</p>
+
+    <div class="box2">
+        <p>lorem</p>
+    </div>
+    <br />
+
+    <h2>3.外边距</h2>
+
+    <h3>3.1 外边距</h3>
+
+    <style>
+        div.box3 {
+            width: 100px;
+            height: 100px;
+            transition: margin 1s;
+            border: 1px solid orange;
+            background-color: #ccc;
+        }
+
+        div.box3:hover {
+            margin: 100px;
+        }
+    </style>
+
+    <div class="box3"></div>
+    <div class="box3"></div>
+    <br />
+
+    <h3>3.2 块级盒子水平居中对齐</h3>
+    <style>
+        div.box4 {
+            width: 300px;
+            height: 300px;
+            margin: auto;
+            border: 1px solid orange;
+            background-color: #ccc;
+        }
+    </style>
+
+    <div class="box4"></div>
+
+    <h3>3.2 清除盒子的默认外边距</h3>
+    <p>通过通配符选择器为所有标签设置样式</p>
+    <pre style="font-family: 'Product Sans';">
+		<strong>
+*{
+	margin: 0;
+	padding: 0;
+}
+		</strong>
+	</pre>
+    <br />
+
+    <h3>3.3 外边距垂直合并（塌陷）（仅垂直方向）</h3>
+    <style>
+        div.top,
+        div.bottom {
+            width: 200px;
+            height: 200px;
+            margin: 0 0 10px 0;
+            background-color: #ccc;
+        }
+
+        div.bottom {
+            margin: 20px 0 0 0;
+            background-color: #0aa;
+        }
+    </style>
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <br />
+
+    <p>父子边距塌陷：</p>
+
+    <style>
+        div.box5_father {
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+            /*1. 父元素指定 padding*/
+            /*2. 父元素指定 border*/
+            /*3. 父元素指定overflow: hidding;*/
+            /*overflow: hidden;*/
+            transition: all 0.3s;
+        }
+
+        div.box5_child {
+            width: 100px;
+            height: 100px;
+            background-color: #0aa;
+            margin-top: 100px;
+        }
+
+        div.box5_father:hover {
+            overflow: hidden;
+        }
+    </style>
+
+    <div class="box5_father">
+        <div class="box5_child"></div>
+    </div>
+
+    <h3>3.4 盒子模型布局稳定性</h3>
+    <p>优先使用width、然后是padding、最后考虑使用margin</p>
+    <br />
+
+    <h2>4.新闻列表</h2>
+
+    <style>
+        div.fa_box * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div.fa_box {
+            /*margin: 0;
+			padding: 0;*/
+            width: 298px;
+            height: 198px;
+            background-image: url(img/line.jpg);
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 15px;
+        }
+
+        div.top_box {
+            border-bottom: 1px solid #ccc;
+        }
+
+        div.top_box h2 {
+            font-size: 20px;
+            color: black;
+            padding: 5px 0;
+        }
+
+        ul.list_box {
+            margin-top: 9px;
+            list-style: none;
+        }
+
+        ul.list_box li {
+            height: 30px;
+            line-height: 30px;
+            border-bottom: 1px dashed #ccc;
+            padding-left: 20px;
+            background: url(img/arr.jpg) no-repeat 5px center;
+        }
+
+        ul.list_box a {
+            text-decoration: none;
+            color: black;
+        }
+
+        ul.list_box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="fa_box">
+        <div class="top_box">
+            <h2>最新文章/New Articles</h2>
+        </div>
+
+        <ul class="list_box">
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+            <li><a href="#">Lorem ipsum dolor sit</a></li>
+        </ul>
+    </div>
+    <br />
+
+    <h2>5.CSS3拓展：</h2>
+    <style>
+        div.cir {
+            width: 300px;
+            height: 100px;
+            background-color: #0aa;
+            border-radius: 50px;
+            color: black;
+            transition: all 0.2s;
+        }
+
+        div.cir:hover {
+            /*水平阴影 垂直阴影 模糊距离 影子大小 内外阴影（外阴影缺省即可）*/
+            box-shadow: 0px 0px 10px 0px #000;
+        }
+    </style>
+    <p>圆角盒子 + 阴影</p>
+    <div class="cir"></div>
+    <br />
+
+    <hr />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <hr />
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

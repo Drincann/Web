@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Memo</title>
+    <hr>
+    <h1 align="center">Memo</h1><br />
+    <hr /><br />
+    <link rel="stylesheet" href="font-awesome-4.7.0\css\font-awesome.min.css">
+    <script src="js\statistics_baidu.js"></script>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+</head>
+
+<body>
+    <script>NProgress.start();</script>
+    <p>
+        <ol>
+            <dt>
+                <h2>pip镜像</h2>
+            </dt>
+            <dd>pip install --index-url https://pypi.douban.com/simple {库name}</dd>
+        </ol>
+    </p>
+
+    <hr />
+
+    <p>
+        <ol>
+            <dt>
+                <h2>pyinstaller 语法</h2>
+            </dt>
+            <dd>
+                <p> <strong>pyinstaller [options] name.py</strong> </p>
+                常用的可选参数如下：<br /> --onefile 将结果打包成一个可执行文件<br /> --onedir
+                将所有结果打包到一个文件夹中，该文件夹包括一个可执行文件和可执行文件执行时需要的依赖文件（默认）<br /> --paths=DIR 设置导入路径<br /> --distpath=DIR
+                设置将打包的结果文件放置的路径<br /> --specpath=DIR 设置将spec文件放置的路径<br /> --windowed
+                使用windows子系统执行，不会打开命令行（只对windows有效）<br /> --nowindowed 使用控制台子系统执行（默认）（只对windows有效）<br /> --icon=
+                <FILE.ICO> 将file.ico添加为可执行文件的资源(只对windows有效）<br /><br /> 如pyinstaller --paths="D:\Queena"
+                    guess_exe.py<br /><br /> 示例: pyinstaller -F wxy_tool.py --distpath=wxy-mtt<br />
+            </dd>
+        </ol>
+    </p>
+
+    <hr />
+
+    <p>
+        <ol>
+            <dt>
+                <h2>自动跳转</h2>
+            </dt>
+            <dd>&lt;meta http-equiv="refresh" content="0;url=test.html"&gt;</dd>
+        </ol>
+    </p>
+
+    <hr>
+
+    <style>
+        .git li {
+            padding: 20px 0 20px 0;
+            border-bottom: 1px dashed black;
+        }
+
+        .git dt {
+            font-weight: 700;
+        }
+    </style>
+    <p>
+        <h2>Git</h2>
+        <ul class="git">
+            <li>
+                <ol>
+                    <dt>1. origin 克隆到本地</dt>
+                    <dd>git clone [https://github.com/xxx/xxx / git@github.com:xxx/xxx]</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>2. 创建分支</dt>
+                    <dd>git checkout [branch-name]</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>3. 修改代码</dt>
+                    <dd></dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>4. commit 到本地仓库</dt>
+                    <dd>git add [. / file_name]</dd>
+                    <dd>git commit -m "description"</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>5. 将 upstream 同步到本地</dt>
+                    <dd>git upstream [branch-name(master)]</dd>
+                    <dd>git rebase upstream/[branch-name(master)]</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>6. 本地 branch 推送到 origin</dt>
+                    <dd>git push -f origin [branch-name]</dd>
+                    <dd>这里的 -f 意为强覆盖，以强覆盖方式替代 origin 内容</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>7.1 pr 后删除远程分支</dt>
+                    <dd>git push origin --delete [branch-name]</dd>
+                    <dt>7.2 切换到主分支</dt>
+                    <dd>git checkout master -f</dd>
+                    <dt>7.3 删除本地分支</dt>
+                    <dd>git branch -D [branch-mame]</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>8. 用 upstream 版本来更新本地(主)分支</dt>
+                    <dd>git pull --ff upstream [branch-name(master)]</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>文件操作</dt>
+                    <dd>ls file_name 列出清单</dd>
+                    <dd>cat file_name 查看和修改文件内容</dd>
+                    <dd>(git) rm file_name 删除文件</dd>
+                    <dd>git checkout -- file_name 用版本库里的版本替换工作区版本(恢复文件</dd>
+                    <dd>cp old_file_name new_file_name 复制文件</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>查看分支情况</dt>
+                    <dd>git branch</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>开发环境信息</dt>
+                    <dd>git remote 检查远程仓库信息</dd>
+                    <dd>git remote add upstream/origin [url] 添加远程仓库信息</dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt></dt>
+                    <dd></dd>
+                </ol>
+            </li>
+        </ul>
+
+    </p>
+    <br />
+    <style>
+        .eslint li {
+            padding: 20px 0 20px 0;
+            border-bottom: 1px dashed black;
+        }
+
+        .eslint dt {
+            font-weight: 700;
+        }
+    </style>
+    <p>
+        <h2>配置 ESlint</h2>
+        <ul class="eslint">
+            <li>
+                <ol>
+                    <dt>vscode setting:(不写也没事)</dt>
+                    <dd>
+                        <pre>
+"eslint.enable": true,//启用eslint
+
+"eslint.autoFixOnSave": true,//保存时自动lint
+
+"files.eol": "\n",//如果你在linux/mac上开发，请添加这一项，windows请忽略
+
+"editor.insertSpaces": false,
+
+"editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+} 
+//禁止自动添加空格，因为我们前面定义使用tab缩进，如果你使用空格缩进请忽略
+                        </pre>
+                    </dd>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>安装 npm i -g eslint</dt>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>在项目目录下执行 eslint --init</dt>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>回答问题后生成 json, vscode会自动检测</dt>
+                </ol>
+            </li>
+            <li>
+                <ol>
+                    <dt>当前项目目录下须存在项目包信息 package.json</dt>
+                </ol>
+            </li>
+        </ul>
+
+    </p>
+    <hr>
+    <p>
+        <ol>
+            <dt>
+                <h2>.py 默认打开方式</h2>
+            </dt>
+            <dd>windows-build-tools 会自动将此项置 py 2.x 版本的解释器</dd>
+
+            <dd>注册表项: HKEY_CLASSES-ROOT->Python.file->shell->open->command</dd>
+        </ol>
+    </p>
+
+    <hr>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <script src="live2d\autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

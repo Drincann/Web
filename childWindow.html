@@ -1,0 +1,113 @@
+<!DOCTYPE val>
+<val lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./plug/bootstrap4/css/bootstrap.min.css">
+        <title>childWindow</title>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="alert">
+                <h1 class="display-3 border-bottom pb-3">修改信息</h1>
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" class="form-control" id="name" required placeholder="请输入姓名">
+                </div>
+                <div class="form-group">
+                    <label for="sex">性别</label>
+                    <input type="text" class="form-control" id="sex" required placeholder="请输入性别">
+                </div>
+                <div class="form-group">
+                    <label for="birthday">出生日期</label>
+                    <input type="text" class="form-control" id="birthday" required placeholder="请输入出生日期">
+                </div>
+                <div class="form-group">
+                    <label for="nation">民族</label>
+                    <input type="text" class="form-control" id="nation" required placeholder="请输入民族">
+                </div>
+                <div class="form-group">
+                    <label for="profile">照片</label>
+                    <input type="file" class="form-control-file" id="profile">
+                </div>
+                <div class="form-group">
+                    <label for="university">就读院校</label>
+                    <input type="text" class="form-control" id="university" required placeholder="请输入就读院校">
+                </div>
+                <div class="form-group">
+                    <label for="intention">求职意向</label>
+                    <textarea class="form-control" id="intention" cols="30" rows="10" placeholder="请输入求职意向"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="skills">专业技能</label>
+                    <textarea class="form-control" id="skills" cols="30" rows="10" placeholder="请输入专业技能"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" id="save">保存</button>
+            </div>
+            <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.js"></script>
+            <script>
+                $(function () {
+                    // init
+                    var name = $('#name');
+                    var sex = $('#sex');
+                    var birthday = $('#birthday');
+                    var nation = $('#nation');
+                    var university = $('#university');
+                    var intention = $('#intention');
+                    var skills = $('#skills');
+                    var profile = $('#profile');
+                    // 接收父窗口发来的消息
+                    window.addEventListener('message', function (e) {
+                        // 父窗口仅会发送一次消息，故不做
+                        // 判断初始化信息
+                        var defaultInfo = JSON.parse(e.data);
+                        var storageInfo = JSON.parse(localStorage.getItem('resume'));
+                        $('#name').val((storageInfo && storageInfo.name) || defaultInfo.name);
+                        sex.val((storageInfo && storageInfo.sex) || defaultInfo.sex);
+                        birthday.val((storageInfo && storageInfo.birthday) || defaultInfo.birthday);
+                        nation.val((storageInfo && storageInfo.nation) || defaultInfo.nation);
+                        university.val((storageInfo && storageInfo.university) || defaultInfo.university);
+                        intention.val((storageInfo && storageInfo.intention) || defaultInfo.intention);
+                        skills.val((storageInfo && storageInfo.skills) || defaultInfo.skills);
+                    }, false);
+                    // 发送获取 defaultInfo 的请求
+                    opener.window.postMessage(JSON.stringify({ message: 'getInfo' }), '*');
+
+                    // 保存信息并发送
+                    $('#save').on('click', async function (e) {
+                        var info = {
+                            name: name.val(),
+                            sex: sex.val(),
+                            birthday: birthday.val(),
+                            nation: nation.val(),
+                            university: university.val(),
+                            intention: intention.val(),
+                            skills: skills.val(),
+                            profile: await getURL(profile[0].files[0])
+                        }
+                        // 发送修改请求
+                        opener.window.postMessage(JSON.stringify({ message: 'setInfo', data: info }), '*');
+                        window.close();
+                    });
+                    /// 获取图片 url，不支持 ie
+                    function getURL(file) {
+                        if (!file) return;
+                        // 参数是 File 实例
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        // Promise 处理异步操作
+                        return new Promise(function (resolve, reject) {
+                            reader.onload = function () {
+                                resolve(reader.result);
+                            };
+                        });
+                    }
+                })
+
+            </script>
+        </div>
+    </body>
+
+</val>

@@ -1,0 +1,467 @@
+@font-face {
+    font-family: "Product Sans";
+    src: url("../ttf/Product Sans.ttf");
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('../ttf/fonts/icomoon.eot?cv013x');
+    src: url('../ttf/fonts/icomoon.eot?cv013x#iefix') format('embedded-opentype'), url('../ttf/fonts/icomoon.ttf?cv013x') format('truetype'), url('../ttf/fonts/icomoon.woff?cv013x') format('woff'), url('../ttf/fonts/icomoon.svg?cv013x#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Product Sans";
+    user-select: none;
+}
+
+a {
+    text-decoration: none;
+    transition: all .5s;
+}
+
+html {
+    height: 100%;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 11;
+}
+.audio-player{
+    position: absolute;
+    z-index: 1;
+    width: 200px;
+    height: 70px;
+    padding: 5px 20px;
+    background-color: #ccc;
+    border-radius: 0 0 35px 0;
+    transition: all .2s;
+    box-shadow: 0 0 10px 0 #000;
+}
+.audio-player:hover{
+    box-shadow: 0 0 10px 0 #0aa;
+}
+
+.zi{
+    display: inline-block;
+    cursor: pointer;
+}
+.zi:hover{
+    color: #fff;
+}
+
+#musicInfo{
+    height: 30px;
+    line-height:30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audio-btn{
+    position: relative;
+    height:40px;
+    color: #000;
+}
+#play{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+}
+#prev{
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+}
+#next{
+    position: absolute;
+    left: 70%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+}
+#loop{
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+}
+#loading{
+    display: none;
+    position: absolute;
+    left: 90%;
+    top: 50%;
+    font-size: 50px;
+    transform: translate(-50%,-50%);
+    font-size: 20px;
+    animation: zoomStatic 0.5s infinite alternate ease-in-out;
+}
+@keyframes zoomShaking{
+    0%{
+        opacity: .5;
+        /* transform: scale(.5); */
+        transform: translate(0,-50%);
+    }
+    50%{
+        opacity: 1;
+        transform: translate(-100%,-50%);
+    }
+    100%{
+        opacity: .5;
+        /* transform: scale(.5); */
+        transform: translate(-200%,-50%);
+    }
+}
+@keyframes zoomStatic{
+    0%{
+        opacity: .1;
+        transform: translate(-50%,-50%) scale(.6) ;
+    }
+    100%{
+        opacity: 1;
+        /* transform: scale(1); */
+        transform: translate(-50%,-50%) scale(1);
+    }
+}
+@media screen and (min-width:500px) {
+    body {
+        position: relative;
+        background-color: #f3f5f7;
+        height: 100%;
+    }
+    .w {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -80%);
+        width: 1000px;
+        height: 500px;
+    }
+    /*List-note*/
+    .list_container {
+        float: left;
+        margin: 0;
+    }
+    /* outside ul */
+    .list_container ul {
+        width: 270px;
+        list-style: none;
+        padding-left: 20px;
+    }
+    /* outside li */
+    .list_container>ul>li {
+        margin-top: 15px;
+    }
+    /* 第一个 li */
+    .list_container .mark a {
+        color: orangered;
+    }
+    /* 父标题 */
+    .list_container>ul>li div.title {
+        position: relative;
+        height: 60px;
+        padding-left: 10px;
+        border-bottom: 1px solid black;
+        font-size: 25px;
+        line-height: 65px;
+        color: #111;
+    }
+    /* 小图标 */
+    .list_container>ul>li div.title span {
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%) rotate(-45deg);
+        width: 10px;
+        height: 10px;
+        border: 3px solid black;
+        border-left: 0px solid;
+        border-top: 0px solid;
+        transition: .3s;
+    }
+    /* 首选子项 */
+    .list_container>ul>li.current_li div.content {
+        display: block;
+    }
+    /* 小图标 */
+    .current_icon {
+        transform: translateY(-25%) rotate(45deg) !important;
+    }
+    /* 子项内容 */
+    .list_container>ul>li div.content {
+        display: none;
+        font-size: 40px;
+        margin-right: -50px;
+    }
+    /* a style */
+    .list_container ul a {
+        display: inline-block;
+        width: 100%;
+        height: 55px;
+        line-height: 65px;
+        padding-left: 20px;
+        /* padding: 10px 0 0 20px; */
+        margin-top: 10px;
+        text-decoration: none;
+        font-size: 30px;
+        color: orange;
+        transition: all 0.2s;
+        border-radius: 10px;
+    }
+    .list_container ul a:hover {
+        font-weight: 1000;
+        color: #0AA !important;
+        font-size: 35px;
+        /* transform: scale(1.2); */
+        box-shadow: -15px 15px 30px 0px rgba(0, 0, 0, .1);
+        background-color: #fff;
+        /*transform: scale(1.03);*/
+        /*animation: List_font 0.2s forwards;*/
+    }
+    /*List-demo*/
+    .list-demo {
+        float: right;
+        width: 550px;
+    }
+    .list-demo ul li {
+        float: left;
+        list-style: none;
+    }
+    .list-demo ul li a {
+        position: relative;
+        display: inline-block;
+        width: 150px;
+        height: 200px;
+        margin: 15px;
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid orange;
+        overflow: hidden;
+        transition: all .3s;
+        font-size: 20px;
+        color: orange;
+        text-align: center;
+    }
+    .list-demo ul li a:hover {
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .2);
+        transform: scale(1.2);
+        color: #0aa;
+        font-weight: 700;
+    }
+    .list-demo ul li a div {
+        height: 150px;
+        overflow: hidden;
+        /* border-bottom: 1px solid orange; */
+    }
+    .list-demo ul li a img {
+        width: 100%;
+        transition: 1s;
+        vertical-align: middle;
+    }
+    .list-demo ul li a:hover img {
+        transform: scale(1.5);
+    }
+    .list-demo ul li a span {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        bottom: 10px;
+        transform: translateX(-50%);
+    }
+
+
+    /*Foot*/
+    footer{
+        position: absolute;
+        bottom:0;
+        width: 100%;
+        height: 50px;
+        text-align:center;
+    }
+
+    footer a{
+        text-decoration: none;
+        color: #B9B9B9;
+    }
+
+    footer a:hover {
+        color: #0AA;
+    }
+    
+}
+
+@media screen and (max-width:500px) {
+    body {
+        position: relative;
+        background-color: #f3f5f7;
+    }
+    .w {
+        margin: auto;
+    }
+    /*List-note*/
+    .list_container {
+        margin: 20px auto;
+        width: 260px;
+    }
+    /* outside ul */
+    .list_container ul {
+        width: 240px;
+        list-style: none;
+        padding-left: 20px;
+    }
+    /* outside li */
+    .list_container>ul>li {
+        margin-top: 15px;
+    }
+    /* 第一个 li */
+    .list_container .mark a {
+        color: orangered;
+    }
+    /* 父标题 */
+    .list_container>ul>li div.title {
+        position: relative;
+        height: 60px;
+        padding-left: 10px;
+        border-bottom: 1px solid black;
+        font-size: 25px;
+        line-height: 65px;
+        color: #111;
+    }
+    /* 小图标 */
+    .list_container>ul>li div.title span {
+        position: absolute;
+        display: inline-block;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%) rotate(45deg);
+        width: 10px;
+        height: 10px;
+        border: 3px solid black;
+        border-left: 0px solid;
+        border-top: 0px solid;
+        transition: .3s;
+    }
+    /* 首选子项 */
+    .list_container>ul>li.current_li div.content {
+        display: block;
+    }
+    /* 小图标 */
+    .current_icon {
+        transform: translateY(-25%) rotate(-135deg) !important;
+    }
+    /* 子项内容 */
+    .list_container>ul>li div.content {
+        display: none;
+        font-size: 40px;
+        margin-right: -50px;
+    }
+    /* a style */
+    .list_container ul a {
+        display: inline-block;
+        width: 100%;
+        height: 55px;
+        line-height: 65px;
+        padding-left: 20px;
+        /* padding: 10px 0 0 20px; */
+        margin-top: 10px;
+        text-decoration: none;
+        font-size: 30px;
+        color: orange;
+        transition: all 0.2s;
+        border-radius: 10px;
+    }
+    .list_container ul a:hover {
+        font-weight: 1000;
+        color: #0AA !important;
+        font-size: 35px;
+        /* transform: scale(1.2); */
+        box-shadow: -15px 15px 30px 0px rgba(0, 0, 0, .1);
+        background-color: #fff;
+        /*transform: scale(1.03);*/
+        /*animation: List_font 0.2s forwards;*/
+    }
+    /*List-demo*/
+    .list-demo {
+        margin: 50px auto;
+        width: 360px;
+    }
+    .list-demo ul li {
+        float: left;
+        list-style: none;
+    }
+    .list-demo ul li a {
+        display: inline-block;
+        width: 150px;
+        height: 200px;
+        margin: 15px;
+        background-color: #fff;
+        border-radius: 8px;
+        border: 1px solid orange;
+        overflow: hidden;
+        transition: all .3s;
+        font-size: 20px;
+        color: orange;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    .list-demo ul li a:hover {
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .2);
+        transform: scale(1.2);
+        color: #0aa;
+        font-weight: 700;
+    }
+    .list-demo ul li a div {
+        height: 150px;
+        overflow: hidden;
+        /* border-bottom: 1px solid orange; */
+    }
+    .list-demo ul li a img {
+        width: 100%;
+        transition: 2s;
+        vertical-align: middle;
+    }
+    .list-demo ul li a:hover img {
+        transform: scale(1.5);
+    }
+    .list-demo ul li a span {
+        display: block;
+        height: 50px;
+        line-height: 50px;
+    }
+    /*Foot*/
+    footer{
+        position: absolute;
+        bottom:0;
+        width: 100%;
+        height: 50px;
+        text-align:center;
+    }
+
+    footer a{
+        text-decoration: none;
+        color: #B9B9B9;
+    }
+
+    footer a:hover {
+        color: #0AA;
+    }
+}

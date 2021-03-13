@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/statistics_baidu.js"></script>
+    <link rel="stylesheet" href="./plug/code-prettify/prettify.css">
+    <link rel="stylesheet" href="./plug/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/FiraCode.css">
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+        pre {
+            font-family: 'Fira Code';
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        nav ul {
+            position: fixed;
+            z-index: 999;
+            padding: 0;
+            margin: 0;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            list-style: none;
+        }
+
+        nav ul li {
+            display: block;
+            padding: 7px 10px;
+            margin-top: 10px;
+            color: #444;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+            transition: .3s, color .1s;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        nav ul li:hover {
+            box-shadow: 0 0 30px rgba(0, 144, 144, .9);
+            background-color: #0aa;
+            color: #fff;
+        }
+
+        .jumbotron {
+            background: url('./demo/fullpage/images/landscape3.jpg') fixed;
+            color: #aaa;
+            background-size: cover;
+        }
+
+        .jumbotron .container :nth-child(n):not(:last-child) {
+            mix-blend-mode: color-dodge;
+        }
+    </style>
+    <script src="./js/scrollSmooth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var list = document.getElementsByTagName('nav')[0].children[0].children;
+            for (let i in list) {
+                if (i == 'length') {
+                    break;
+                }
+                list[i].addEventListener('click', function () {
+                    var top = document.querySelector('#' + list[i].getAttribute('data-index')).offsetTop;
+                    scrollSmooth(top, 15, 10, undefined, false)();
+                });
+            }
+        });
+    </script>
+    <title>jQuery Note</title>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+</head>
+
+<body>
+    <script>NProgress.start();</script>
+    <nav>
+        <ul>
+            <li data-index="h1">一、DOM 对象 和 jq 对象</li>
+            <li data-index="h2">二、jq 选择器</li>
+            <li data-index="h3">三、jq 样式操作</li>
+            <li data-index="h4">四、jq 动画</li>
+            <li data-index="h5">五、元素操作</li>
+            <li data-index="h6">六、jq 事件</li>
+            <li data-index="h7">七 ~ 九、拷贝、多库共存、插件</li>
+            <li data-index="h8">十、jq 尺寸和位置</li>
+        </ul>
+    </nav>
+
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <h2>这里是 <a href="./index.html" target="_blank">@高厉害</a> 的 jQuery 笔记</h2>
+            <h2> 一些例子见此 → </h2><a class="btn btn-primary btn-lg" href="./jq_demo.html" role="button" target="_blank">./
+                jq_demo.html</a>
+        </div>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;"></h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // DOM 加载完成后回调，两种写法
+    1. 
+        $(function() {
+
+        });
+    
+    2. 
+        $(document).ready(function() {
+
+        });
+        </pre>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">一、DOM 对象 和 jq 对象</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 一.DOM 和 jq 对象互转
+    
+    //  jq 对象的元素即为 DOM 对象
+    //  1.DOM 转 jq
+    $(DOM)
+
+
+    //  2.jq 转 DOM
+    $('div').get(0)
+
+    $('div')[0]
+        </pre>
+    </div>
+
+
+
+
+
+
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h2">二、jq 选择器</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 二.jq 选择器
+    $('selector')
+
+
+    //  1.jq 更改元素样式
+    $('selector').css('style', 'value')
+
+
+    //  2.jq 筛选选择器
+    $('div :first')   
+    // div 下的第一个元素
+
+    $('div :last')    
+    // div 下的最后一个元素
+
+    $('div :odd')     
+    // div 下的奇数的元素
+
+    $('div :even')    
+    // div 下的偶数的元素
+
+    $('div :eq(n)')   
+    // div 下的第 n 个元素，从 0 开始
+    //   遵循 css3 新增选择器的性质(冒号前空格)，详见 http://gaolihai.top/CSS3.html
+
+    $('checkbox:checked')被选中的复选框个数
+    //   允许链式表达式，如 $(".gf :first :first")
+
+
+    //  3.一些方法
+    $('selector').find('selector’)
+    // 所有子代元素
+
+    $('selector').children('selector')
+    // 子级元素
+
+    $('selector').parent('selector')
+    // 父级元素
+
+    $('selector').parents('selector')
+    // 祖先级元素
+
+    $('selector').sibling('selector')
+    // 兄弟元素
+
+    $('selector').prev()
+    // 前一个元素
+
+    $('selector').next()
+    // 其后一个元素
+
+    $('selector').nextAll('selector')
+    // 从次元素开始，其后所有元素
+
+    $('selector').prevAll('selector')
+    // 从次元素开始，其前所有元素
+
+    $('selector').eq(n) 与 $('selector :eq(n)') 相同
+    // 注意：此方法不能通过空格来全配子元素，但可以通过 * 全配子元素，* 也是一个基本操作，并不特殊
+
+    $('selector').hasClass('') 
+    // 是否具有某类名，返回布尔值
+        </pre>
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h3">三、jq 样式操作</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 三.jq 样式操作
+    //  1.
+    $('').css('style')
+    // 返回样式值
+
+    $('').css('style', 'value')
+    //   api 会迭代遍历内部的元素，这被称为’隐式迭代‘
+
+    //  多个样式
+    $('').css({// 属性可以不加引号
+        style:value,    
+        // value 是数字也可以不加引号
+
+        'style':'value',
+
+        backgroundColor:'red' 
+        // 带 - 的必须使用驼峰命名
+        })
+
+
+    //  2.修改类名
+    $('').addClass('className')
+    // 添加类名
+
+    $('').removeClass('className')
+    // 移除类名
+
+    $('').toggleClass('className')
+    // 切换类名，取反之意，存在则删去，不存在则添加
+
+
+    //  3.常用方法
+    $('').show()
+    // 显示 DOM，返回 jq 对象
+
+    $('').hide()
+    // 隐藏 DOM，返回 jq 对象
+        </pre>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h4">四、jq 动画</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 四、jq 动画
+    //  1.显示 / 隐藏
+    //   参数 speed, easing, callback
+    $('').show()
+
+    $('').hide()
+
+    $('').toggle()
+
+
+    //  2.滑动
+    //   参数 speed, easing, callback
+    $('').slideUp()
+
+    $('').slideDown()
+
+    $('').slideToggle()
+
+
+    //  3.淡入 淡出
+    //   参数 speed, easing, callback
+    $('').fadeIn()
+
+    $('').fadeOut()
+
+    $('').fadeToggle()
+
+    //   参数 speed, opacity, easing, callback
+    $('').fadeTo()
+
+    //  4.animate
+    //   参数 attr_end, [speed], [easing], [callback]
+    $('').animate()
+
+
+    //  另： hover 注册鼠标事件
+    $('').hover(mouseenter, mouseover) 传入一个函数，则两个事件均回调
+        </pre>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h5">五、元素操作</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 五、元素操作
+    //  1.获取 / 设置 自带属性值(property)
+    $('').prop(prop, value)
+    // 设置属性
+    
+    $('').prop(prop)
+    // 获取属性
+
+
+    //  2.获取 / 设置 自定义属性值(attribute)
+    $('').attr(attr, value)
+
+    $('').attr(attr)
+
+
+    //  3.数据缓存 获取 / 设置 绑定在元素的数据缓存 不显示在属性上
+    //   也可以直接获取 h5(data-attr) 属性值，对于数字，取到的是 Number，参数只填 attr 即可，填 data-attr 取不到
+    //   设置过相应缓存，则取不到 h5 属性
+    $('').data(key, value) 
+
+    $('').data(key)
+
+    //  4.获取 / 设置 元素内容
+    //   包含 html
+    $('').html(text)
+    // 设置
+
+    $('').html()
+    // 获取
+
+    //   不包含html
+    $('').text(text)
+    // 设置
+
+    $('').text()
+    // 获取
+
+    //   表单 value
+    $('').val(text)
+    // 设置
+
+    $('').val()
+    // 获取
+
+
+    //  5.遍历元素
+    //   遍历选择到的元素
+    $('').each(callback(index, DOM_obj){// do sth.})
+
+    //   遍历任何数据，包括数组等
+    $.each(target_obj, callback(index, data){// do sth.})
+
+
+    //  6.创建元素
+    //   创建
+    $('&lt;div&gt;new element&lt;/div&gt;')
+
+    $('&lt;div&gt;new element&lt;/div&gt;')
+
+    //   添加
+    $('').append(new_element)
+    // 添加到内部末尾
+
+    $('').prepend(new_element)
+    // 添加到内部开头
+
+    $('').before(new_element)
+    // 添加到前边
+
+    $('').after(new_element)
+    // 添加到后边
+
+
+    //   删除
+    $('').remove()
+    // 删除自己
+
+    $('').empty()
+    // 清空子元素
+
+    $('').html()
+    // 置内部 html 文本
+        </pre>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h6">六、jq 事件</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 六、jq 事件
+    //  1. on 方法 
+    //   直接绑定
+    $('').on({event : function () {} }) 
+
+    $('').on('event1 event2', function () {})
+
+    //   事件委派 优势：动态绑定事件，未来创建的 元素会自动绑定
+    $('fa').on('event', 'child', function () {})
+
+
+    //  2. off 方法解绑事件
+    $('').off()
+    // 解绑所有事件
+
+    $('').off('event')
+    // 解绑指定事件
+
+    $('fa').off('event' ,'child')
+
+
+    //  3. one 方法 触发一次自动解绑
+    //   直接绑定
+    $('').one({event : function () {} }) 
+
+    $('').one('event1 event2', function () {})
+
+    //   事件委派 优势：动态绑定事件，未来创建的元素会自动绑定
+    $('fa').one('event', 'child', function () {})
+
+
+    //  4. 自动触发事件
+    $('').trigger('event')
+
+    $('').triggerHandler('event')
+    // 不会触发默认行为
+
+
+    //  5. jq 事件对象
+
+
+    //  6. jq 实现单击双击事件
+    //  jq 的 dblclick 和 click 互相独立，在触发 dblclick 的基础上也会触发两次 click
+    //  这里演示一种使其互相耦合的 demo
+    var click = false;
+    $().on('click', function () {
+        if (click) {
+            // 双击
+            click = false;
+
+        } else {
+            click = true;
+            setTimeout(function () {
+                if (click) {
+                    // 单击
+                    click = false;
+                }
+            }.bind(this), 200)
+        }
+    });
+    // 封装
+    var dblclick = function (elementSelector, childSelector, dblCallback, clickCallback = undefined) {
+        var click = false;
+        $(elementSelector).on('click', childSelector && '', function () {
+            if (click) {
+                // 双击
+                click = false;
+                dblCallback();
+            } else {
+                click = true;
+                setTimeout(function () {
+                    if (click) {
+                        // 单击
+                        click = false;
+                        clickCallback && clickCallback();
+                    }
+                }.bind(this), 200)
+            }
+        });
+    }
+
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h7">七 ~ 九、拷贝、多库共存、插件</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // 七、jq 拷贝对象
+    // 参数 deep = bool 深拷贝 / 浅拷贝 , target = obj 目标 , source_obj = obj 源 obj
+    $.extend([deep,] target, source_obj)
+
+
+    // 八、多库共存
+    var customer = $.noConflict() 
+
+
+    // 九、jq 插件
+    http://www.jq22.com/
+    http://www.htmleaf.com/
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h8">十、jq 尺寸和位置</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // 十、jq 尺寸和位置
+    //  1. 宽高
+    $('').width([set]) 内容宽度
+    $('').innerWidth([set]) 内容 + padding 宽度 
+    $('').outerWidth([include margin ?], [set]) 内容 + padding + border 宽度，传一个 true 则额外包含 margin
+    //   改变时仅改变内容的宽高
+
+    //  2. 位置
+    //   以文档为参考对象
+    $('').offset() 返回一个对象 {top: value, left： value} 
+    $('').offset({top: value, left： value}) 更改其偏移
+
+    //   以带有定位的父亲为参考对象
+        $('').position() 只读
+
+    //  3. scroll
+    $(window).scroll(fun) 页面被滚动
+    $('').scrollTop([set]) 页面被卷曲高度，可写，会触发 scroll 事件
+
+
+    // 其他
+    $('').index() 返回在父元素中为索引 从 0 开始
+        </pre>
+    </div>
+
+    <script src="css/live2d/autoload.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./plug/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./plug/code-prettify/run_prettify.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

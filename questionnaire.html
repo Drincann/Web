@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>questionnaire</title>
+    <link rel="stylesheet" href="./plug/bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/questionnaire.css">
+</head>
+
+<body>
+
+    <div class="video-wrapper">
+        <video preload="auto" autoplay="autoplay" loop="loop" muted="muted" src="./media/xiaomi.mp4"
+            poster="./img/poster.jpg"></video>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid p-4">
+        <div class="container">
+            <h1 class="display-4">问卷调查</h1>
+            <p class="lead">您好！为了了解消费者对小米手机的看法，我们诚挚邀请您参加本次问卷调查。您的回答对我们的研究非常重要，所以希望你能认真的填完问卷，我们将对您的所有信息保密，谢谢！.</p>
+        </div>
+    </div>
+
+    <div id="infoBox" class="pb-5 fixed-bottom">
+        <!-- infoTpl -->
+    </div>
+    <div class="container">
+        <nav id="navbar-example2" class="navbar navbar-light bg-light fixed-bottom border-top">
+            <a class="navbar-brand" href="#">问卷调查</a>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="./index.html">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:;" id="backToTop">回到顶部</a>
+                </li>
+                <li class="nav-item">
+                    <button class="btn btn-primary" id="submit">提交</button>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="item pb-5">
+            <h2 class="border-bottom py-3">请选择您的所在地区</h2>
+            <div class="form-inline pt-3">
+                <div class="form-group">
+                    <select name="province" class="form-control" id="province">
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="city" class="form-control" id="city">
+                        <option>请选择城市</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <form class="pb-5 mb-5" id="questionBox">
+            <!-- question Tpl -->
+        </form>
+    </div>
+
+    <!-- 省份模板 -->
+    <script type="text/html" id="provinceTpl">
+		<option>请选择省份</option>
+		{{each }}
+			<option value="{{$value.id}}">{{$value.name}}</option>
+		{{/each}}
+	</script>
+    <!-- 城市模板 -->
+    <script type="text/html" id="cityTpl">
+		<option>请选择城市</option>
+		{{each }}
+			<option value="{{$value.id}}">{{$value.name}}</option>
+		{{/each}}
+	</script>
+
+    <!-- info 模板 -->
+    <script type="text/html" id="infoTpl">
+        <div class="alert {{@classText}} col text-center" role="alert" id="info" style="display: none;">
+            {{infoText}}
+        </div>
+    </script>
+
+    <!-- 问题模板 -->
+    <script type="text/html" id="questionTpl">
+        {{each list}}
+        {{set listIndex = $index}}
+        <div class="item pb-5">
+            <h4 class="border-bottom py-3">{{$value.question}}</h4>
+            <!-- 单选 -->
+            {{if $value.type == 'radio'}}
+                {{each $value.options}}
+                {{set id = $imports.Math.random()}}
+                <div class="form-check pt-3">
+                    <input class="form-check-input" type="radio" name="{{@listIndex}}" value="{{@$index}}" id="{{@id}}">
+                    <label class="form-check-label" for="{{@id}}">
+                        {{$value}}
+                    </label>
+                </div>
+                {{/each}}
+
+            <!-- 多选 -->
+            {{else if $value.type == 'checkbox'}}
+                {{each $value.options}}
+                {{set id = $imports.Math.random()}}
+                <div class="form-check pt-3">
+                    <input class="form-check-input" type="checkbox" name="{{@listIndex}}" value="{{@$index}}" id="{{@id}}">
+                    <label class="form-check-label" for="{{@id}}">
+                        {{$value}}
+                    </label>
+                </div>
+                {{/each}}
+            {{else}}
+                <div class="form-group pt-3">
+                    <textarea class="form-control" name="{{@listIndex}}" rows="3"></textarea>
+                </div>
+            {{/if}}
+        </div>
+        {{/each}}
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.js"></script>
+    <script src="./plug/template/template.js"></script>
+    <script src="./plug/bootstrap4/js/bootstrap.min.js"></script>
+    <script src="./js/scrollSmooth.js"></script>
+    <script src="./js/questionnaire.js"></script>
+</body>
+
+</html>

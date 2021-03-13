@@ -1,0 +1,95 @@
+/* outside ul */
+
+.list_container ul {
+    width: 240px;
+    list-style: none;
+    padding-left: 20px;
+}
+
+
+/* outside li */
+
+.list_container>ul>li {
+    margin-top: 15px;
+}
+
+
+/* 父标题 */
+
+.list_container>ul>li div.title {
+    position: relative;
+    height: 60px;
+    padding-left: 10px;
+    border-bottom: 1px solid black;
+    font-size: 25px;
+    line-height: 65px;
+    color: #111;
+}
+
+
+/* 小图标 */
+
+.list_container>ul>li div.title span {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%) rotate(45deg);
+    width: 10px;
+    height: 10px;
+    border: 3px solid black;
+    border-left: 0px solid;
+    border-top: 0px solid;
+    transition: .3s;
+}
+
+
+/* 首选子项 */
+
+.list_container>ul>li.current_li div.content {
+    display: block;
+}
+
+
+/* 小图标 */
+
+.current_icon {
+    transform: translateY(-25%) rotate(-135deg) !important;
+}
+
+
+/* 子项内容 */
+
+.list_container>ul>li div.content {
+    display: none;
+    font-size: 40px;
+}
+
+
+/* a style */
+
+.list_container ul a {
+    display: inline-block;
+    width: 100%;
+    height: 55px;
+    line-height: 65px;
+    padding-left: 20px;
+    /* padding: 10px 0 0 20px; */
+    margin-top: 10px;
+    text-decoration: none;
+    font-size: 30px;
+    color: orange;
+    transition: all 0.2s;
+    border-radius: 10px;
+}
+
+.list_container ul a:hover {
+    font-weight: 1000;
+    color: #0AA !important;
+    font-size: 35px;
+    /* transform: scale(1.2); */
+    box-shadow: -15px 15px 30px 0px rgba(0, 0, 0, .1);
+    background-color: #fff;
+    /*transform: scale(1.03);*/
+    /*animation: List_font 0.2s forwards;*/
+}

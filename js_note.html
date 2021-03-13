@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/statistics_baidu.js"></script>
+    <link rel="stylesheet" href="./plug/code-prettify/prettify.css" />
+    <link rel="stylesheet" href="./plug/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/FiraCode.css" />
+
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+        pre {
+            font-family: 'Fira Code';
+            font-weight: 400;
+            font-size: 14px;
+            padding: 15px !important;
+        }
+
+        nav ul {
+            position: fixed;
+            z-index: 999;
+            padding: 0;
+            margin: 0;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            list-style: none;
+        }
+
+        nav ul li {
+            display: block;
+            padding: 7px 10px;
+            margin-top: 10px;
+            color: #444;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: 0.3s, color 0.1s;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        nav ul li:hover {
+            box-shadow: 0 0 30px rgba(0, 144, 144, 0.9);
+            background-color: #0aa;
+            color: #ccc;
+        }
+
+        .jumbotron {
+            background: url('./demo/fullpage/images/landscape14.jpg') fixed;
+            color: #aaa;
+            background-size: cover;
+        }
+
+        .jumbotron .container :nth-child(n):not(:last-child) {
+            mix-blend-mode: color-dodge;
+        }
+    </style>
+    <script src="./js/scrollSmooth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var list = document.getElementsByTagName('nav')[0].children[0]
+                .children;
+            for (let i in list) {
+                if (i == 'length') {
+                    break;
+                }
+                list[i].addEventListener('click', function () {
+                    var top = document.querySelector(
+                        '#' + list[i].getAttribute('data-index')
+                    ).offsetTop;
+                    scrollSmooth(top, 15, 10, undefined, false)();
+                });
+            }
+        });
+    </script>
+    <title>JavaScript Note</title>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+
+</head>
+
+<body>
+    <script>NProgress.start();</script>
+    <nav>
+        <ul>
+            <li data-index="h1">╔══ 一、JavaScript 基础</li>
+            <li data-index="h2">╬═ 创建对象</li>
+            <li data-index="h3">╬═ 闭包</li>
+            <li data-index="h4">╚══ 常用对象</li>
+
+            <li data-index="h5">╔══ 二、Web api</li>
+            <li data-index="h6">╬═ DOM 获取元素</li>
+            <li data-index="h7">╬═ DOM 事件回调</li>
+            <li data-index="h8">╬═ DOM 元素属性</li>
+            <li data-index="h9">╬═ DOM 节点操作</li>
+            <li data-index="h10">╚══ DOM 事件回调高级</li>
+
+            <li data-index="h11">╔══ BOM 基础</li>
+            <li data-index="h12">╬═ BOM 常用对象</li>
+            <li data-index="h13">╚══ BOM js 网页特效</li>
+        </ul>
+    </nav>
+
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <h2>
+                这里是 <a href="./index.html" target="_blank">@高厉害</a> 的
+                JS 笔记
+            </h2>
+            <h2>
+                一些例子见此 →
+
+            </h2>
+            <a class="btn btn-primary btn-lg" href="./js_demo.html" role="button" target="_blank">./
+                js_demo.html</a>
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">
+            一、JavaScript 基础 <small>不包含ES6</small>
+        </h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 先写个冒泡
+    function sort(arr) {
+        for (let i = 0; i < arr.length - 1; i++) {
+            for (let j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        return arr
+    }
+
+    // arguments 参数
+    // 函数内部隐式存在一个 argument 参数, 其以为数组形式存有所有传入的参数。
+    // 示例代码:实现 python 里的 range() 函数, 用于方便 for(index in range(number)){}
+    function range() {
+        if (arguments.length == 2) {
+            var arr = [...new Array(arguments[1]).keys()];
+            for (i in arr) {
+                arr[i] += arguments[0];
+            }
+            return arr;
+        } else {
+            return [...new Array(arguments).keys()];
+        }
+    }
+
+
+
+
+
+    <div id="h2"></div>
+    // 一、创建对象
+    // 创建对象方法1:字面量创建对象
+    var counter = {
+        name: "counter",
+        count: 0,
+        add: function() {
+            return ++this.count;
+        }
+    }
+    console.log(counter.add());
+    console.log(counter.add());
+
+
+
+    // 创建对象方法2:创建空对象
+    var counter = new Object();
+    counter.name = "counter";
+    counter.count = 0;
+    counter.add = function() {
+        return ++this.count;
+    }
+    console.log(counter.add());
+    console.log(counter.add());
+
+
+
+
+    // 创建对象方法3:构造函数
+    function Counter(name, count) {
+        this.name = name;
+        this.count = 0;
+        this.add = function() {
+            return ++this.count;
+        }
+    }
+    var counter = new Counter('counter', 0);
+    console.log(counter['add']());
+    console.log(counter.add());
+
+
+
+
+
+    <div id="h3"></div>
+    // 二、闭包
+    //
+    // 简单闭包例子：
+    function fun_out(x) {
+        var x = 0;
+
+        function fun_in() {
+            x += 1;
+            return x;
+        }
+        return fun_in;
+    }
+    counter = fun_out();
+    console.log(counter());
+    console.log(counter());
+
+
+    // 通过闭包来解决 [(通过创建空对象来创建对象)时无法创建私有成员]的问题
+    var counter = new Object();
+    fun_list = (function() {
+        //两个私有成员
+        var count = 0;
+        var name = 'adder';
+
+        //四个闭包（方法）
+        function fun() {
+            count += (name == 'adder' ? 1 : -1);
+            return count;
+        }
+
+        function get_count() {
+            return count;
+        }
+
+        function ch_name(param) {
+            if (param == 'adder')
+                name = param;
+            else if (param == 'minus')
+                name = param;
+            return name;
+        }
+
+        function get_name(params) {
+            return name;
+        }
+        return [get_count, fun, ch_name, get_name];
+
+    })()
+
+    // 测试
+    counter.get_count = fun_list[0];
+    counter.fun = fun_list[1];
+    counter.ch_fun = fun_list[2];
+    counter.get_fun = fun_list[3];
+    console.log(counter.get_count(), counter.fun(), counter.get_count());
+    console.log(counter.get_fun(), counter.ch_fun('minus'), counter.get_fun());
+    console.log(counter.get_count(), counter.fun(), counter.get_count());
+    
+    // 闭包实现对象
+    function Person(name, weight, height, age) {
+        var instance = {
+            name: name,
+            weight: weight,
+            height: height,
+            age: age,
+            sleep: function(instance) {
+                return function() {
+                    console.log('my name is ' + name + '.I am sleeping');
+                }
+            }(),
+
+            eat: function(instance) {
+                return function() {
+                    console.log('my name is ' + name + '.I am eating');
+                }
+            }(),
+
+            code: function(instance) {
+                return function() {
+                    console.log('my name is ' + name + '.I am coding');
+                }
+            }()
+        };
+
+        return instance;
+    }
+    zhangsan = Person('张三', '120', '175', '20');
+    console.log(zhangsan);
+    zhangsan.sleep();
+    zhangsan.eat();
+    zhangsan.code();
+
+
+    // 遍历对象属性及方法
+
+    for (element in counter) {
+        console.log(element, counter[element]);
+    }
+
+    obj.forEach((element) => {
+        console.log(element, obj[element]);
+    });
+    
+    Object.keys(obj).forEach(element => {
+        console.log(element, obj[element]);
+    });
+
+
+    
+
+
+    <div id="h4"></div>
+    // 三、常用对象
+
+        // 1. Math 对象
+
+        // 补充 ：到整数 parseInt() 到数字 Number() 强制转换
+        // Number 保留小数方法 Number.toFixed(小数位)
+
+
+        // 应用
+        function math() {
+            this.max = function(arr) {
+
+                if (arr.length < 0)
+                    return undefined;
+                max = arr[0];
+                for (num of arr) {
+                    max = num > max ? num : max;
+                }
+                return max;
+
+            }
+            this.random = function(min, max) { //取随机数
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+        }
+        var math = new math();
+
+        arr = [1]
+        // 构造数列
+        for (i in [...new Array(10).keys()]) {
+            arr.push(math.random(55, 1000)); 
+        }
+
+        console.log(math.max(arr));
+        console.log(math.random(1, 1000));
+
+
+    
+        // 2. Date 对象
+        var date = new Date();
+
+        // 获取时间常用方法
+        date.getFullYear();
+        date.getMonth(); //0~11
+        date.getDate();
+        date.getDay(); //0~6
+        date.getHours();
+        date.getMinutes();
+        date.getSeconds();
+
+        // 获取时间戳
+        date.valueOf();
+        date.getTime();
+
+        +new Date();
+
+        Date.now(); // H5新增，兼容性不好
+
+
+        // 倒计时
+        function countdown(date_str) { 
+            sec = (+new Date(date_str) - +new Date()) / 1000;
+            return [parseInt(sec / 60 / 60 / 24), parseInt(sec / 60 / 60 % 24), parseInt(sec / 60 % 60), parseInt(sec % 60)]
+        }
+    
+        date = new Date('2020-02-21 12:24:56')
+        console.log(countdown(date.valueOf()));
+
+
+
+        // 3. 数组对象
+        // 创建数组
+        var arr = [1, 2, 3, 4];
+
+        var arr = new Array(2, 3); //参数两个及以上为数组内容，一个为数组长度
+
+        //instanceof 运算符
+        console.log(arr instanceof Array
+
+        //Array的方法isArray
+        var integer = 1;
+        console.log(Array.isArray(integer));
+
+        // 添加删除数组元素
+        // 1.push方法，入栈，返回数组长度
+        console.log(arr.push('push1', 'push2'));
+        console.log(arr);
+        //2.pop方法，出栈，返回 值（value）
+        console.log(arr.pop());
+        console.log(arr);
+
+        // 3.unshift 方法，添加到头，返回数组长度
+        console.log(arr.unshift('unshift1', 'unshift2'));
+        console.log(arr);
+        // 4.shift方法，删除头，返回数组长度
+        console.log(arr.shift());
+        console.log(arr);
+
+
+        // 反转数组,reverse 方法,返回数组
+        console.log(arr.reverse());
+
+        // 排序，sort方法,提供一个比较函数
+        arr = [1]
+        for (i in [...new Array(10).keys()]) {
+            arr.push(math.random(55, 1000)); //构造数列
+        }
+        console.log(arr.sort(function(a, b) {
+            return a - b;
+        }));
+
+        // 正取索引，indexOf方法
+        console.log(arr.indexOf(1));
+        // 倒取索引，lastIndexOf
+        console.log(arr.lastIndexOf(1));
+
+        // 去重算法
+        function unique(arr) {
+            var newarr = [];
+            for (member of arr) {
+                if (newarr.indexOf(member) === -1) {
+                    newarr.push(member)
+                }
+            }
+            return newarr
+
+        }
+        console.log(unique([111, 222, 111, 1, 1, 1, 1, 1, 12, 2, 2, 2, 2, 12]));
+
+        // 数组转换为字符串
+        // 1.toString方法
+        console.log([12, 3].toString());
+        // 2.join方法，参数指定分隔符
+        console.log([1, 2, 3].join(''));
+
+        // 其他数组方法
+        // concaat() 连接数组
+        // slice(begin, end) 截取数组
+        // spllice(begin, num) 删除指定位置的开始的数个元素
+        // spllice(begin, num, newData) 替换指定位置的开始的数个元素
+
+
+
+        // 4. 字符串对象
+        var str = '123456789abcABC啊'
+        console.log(str.length); //length属性返回字符个数，而不是字节个数
+        console.log(str.indexOf('12', 4)); //第二个参数为查找起始位置
+
+        // 根据索引返回 字符 / ascii
+        console.log(str.charAt(3));
+        console.log(str.charCodeAt(3));
+        console.log(str[3]); //h5新增，存在兼容性问题
+
+        // 方法
+        console.log(str.concat('连接字符串')); //连接字符串
+        console.log(str.substr(2, 1)); //截取字符串，参数:(索引, 长度)
+        console.log(str.replace('1', '替换')); //替换字符串
+        console.log(str.repeat(10)); //重复字符串，参数重复为次数
+        console.log(str.split('3')); //通过分隔符转换数组
+        console.log(str.toLocaleUpperCase()); //转换为大写
+        console.log(str.toLocaleLowerCase()); //转换为小写
+        // 补充：
+        str.includes('str') // 是否包含子串，返回 bool
+
+
+        // 返回出现最多次数的字符及次数
+        function exists_max(str) { 
+            var chars = {};
+            for (char of str) {
+                if (chars[char]) {
+                    chars[char] += 1;
+                } else {
+                    chars[char] = 1;
+                }
+            }
+
+            var maxcount = 0;
+            var maxchar = '';
+            for (char in chars) {
+                if (chars[char] > maxcount) {
+                    maxcount = chars[char];
+                    maxchar = char;
+                }
+
+            }
+            if (maxchar === '')
+                return -1;
+            return {
+                char: maxchar,
+                count: maxcount
+            };
+
+        console.log(exists_max('abcddddadfdhgfd'));
+
+        </pre>
+    </div>
+
+    <div style="text-align: center;" id="h5">
+        <h1 style="padding: 50px;">二、Web api</h1>
+        <h2>DOM 对象模型</h2>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    <div id="h6"></div>
+    // 一、获取元素
+
+    // 常用
+    document.getElementById('')
+    document.getElementsByTagName('')
+    document.getElementsByName('')
+    
+
+    // H5 新增 
+    document.getElementsByClassName('')
+    document.querySelector('')// 所有选择器均可，返回第一个找到的对象
+    document.querySelectorAll('')// 所有选择器均可，返回第找到的对象集合
+
+
+    // 获取特殊标签
+    console.log(document.body);
+
+
+
+
+
+    <div id="h7"></div>
+    // 二、事件回调
+    // 
+    // 鼠标相关
+    document.getElementById('button').onclick = function button1() {
+        var count = 1;
+        return function() {
+            console.log('你点击了按钮' + count++ + '次');
+        }
+    }()
+
+    document.getElementById('button').onmouseover = function button1() {
+        var count = 1;
+        return function() {
+            console.log('你经过了按钮' + count++ + '次');
+        }
+    }()
+
+    document.getElementById('button').onfocus = function button1() {
+        var count = 1;
+        return function() {
+            console.log('按钮获取了焦点' + count++ + '次');
+        }
+    }()
+    document.getElementById('button').onblur = function button1() {
+        var count = 1;
+        return function() {
+            console.log('按钮失去了焦点' + count++ + '次');
+        }
+    }()
+
+    document.getElementById('button').onmousemove = function button1() {
+        var count = 1;
+        return function() {
+            console.log('你在按钮上移动了鼠标' + count++ + '次');
+        }
+    }()
+
+    document.getElementById('button').onmousemdown = function button1() {
+        var count = 1;
+        return function() {
+            console.log('你按下了按钮' + count++ + '次');
+        }
+    }()
+
+    document.getElementById('button').onmouseon = function button1() {
+        var count = 1;
+        return function() {
+            console.log('你松开了按钮' + count++ + '次');
+        }
+    }()
+
+    // 事件解绑
+    // obj.onclick = null
+
+    // 补充：
+    // 'mouseover' 事件，进入子盒也会触发
+    // 'mouseenter' 鼠标进入元素触发，进入子元素不会触发
+    // 'mouseleave' 鼠标离开元素触发，离开子元素不会触发
+    // 原理，over 事件会冒泡，子元素会冒泡到父元素。
+    // enter 和 leave 事件不会冒泡，故不会触发父元素
+
+    // 再补充：
+    // ‘mousewheel’ 事件，鼠标物理滚轮滚动
+
+
+
+
+
+    <div id="h8"></div>
+    // 三、元素属性
+
+        // 1. innerText innerHTML
+
+        // innerHTML保留html标签文本（推荐）
+        // innerText不保留html标签文本
+
+
+
+        // 2. 表单属性
+
+        // 禁止 
+        input.disabled = true / false
+        input.value
+        input.checked
+        input.type
+        input.select
+
+        // 实例: 按下显示密码
+        <div>
+            <input type="password" id="input1" value="123456789"><button id="button1">显示密码</button></div><script>
+                document.getElementById('button1').onmousedown = function () {
+                    document.getElementById('input1').type = 'text';
+                }
+                document.getElementById('button1').onmouseup = function () {
+                    document.getElementById('input1').type = 'password';
+                }</script>
+        document.getElementById('button').onmousedown = function() {
+            document.getElementById('input').type = 'text';
+        }
+        document.getElementById('button').onmouseup = function() {
+            document.getElementById('input').type = 'password';
+        }
+
+
+
+        // 3.修改样式
+
+        // 分别指定 style 样式
+        this.style  
+        // css 封装好后直接指定类名
+        this.className 
+
+
+
+        // 4.获取属性与自定义属性
+
+        // 获取和设置属性值
+        obj.Attribute
+        // 仅获取标签名称（XM L中返回原始大小写，HTML 中始终返回 **大写** ），node.nodeName 可获取任意节点的值
+        obj.tagName 
+
+        // 自定义属性,h5规范要求自定义属性以 data- 开头
+        // 获取自定义属性值
+        obj.getAttribute('attribute_name')
+
+        // h5新增: （所有自定义属性的集合，集合内属性名会自动去掉 data- 前缀，且其他 - 连接的单词会变成驼峰吗命名）
+        obj.dataset
+
+        // 设置自定义属性值
+        obj.setAttribute('attribute_name', value)
+
+
+
+
+
+    <div id="h9"></div>
+    // 四、节点操作
+    // 节点拥有 nodeType nodeName nodeValue等属性
+    // nodeType: 元素节点为1 属性节点为2 文本节点为3
+
+    // ----一、获取节点----
+    // 取父节点 
+    obj.parentNode 获取父节点
+
+    // 取子节点 
+    1. obj.childNodes // 获取所有子节点，包含文本节点（回车等）无用信息，取元素节点只能通过nodeType来判断是否为元素节点
+    2. obj.children // 获取所有子元素节点
+    3. obj.firstChild // 获取第一个子节点，包含文本节点
+    4. obj.lastChild // 获取最后一个子节点，包含文本节点
+    5. obj.firstElementChild // 获取第一个元素节点，ie9以上
+    6. obj.lastElementChild // 获取最后一个元素节点，ie9以上
+
+    // 取兄弟节点
+    1. obj.nextSibling // 获取下一个兄弟节点，包含文本节点
+    2. obj.previousSibling // 获取上一个兄弟节点，包含文本节点
+    3. obj.nexElementSibling // 获取下一个兄弟元素节点，ie9以上
+    4. obj.previousElementSibling // 获取上一个兄弟元素节点，ie9以上
+
+    // ----二、创建节点----
+    // 创建元素节点
+    1. dom.creatElement('tagName') 
+    2. dom.write(element str) // 文档执行完毕后调用会直接重绘文档，且文档内容仅包含参数
+    3. obj.innerHTML = element str // 向节点内直接写入element
+    // 效率 3 > 1，注意 innerHTML 方式效率虽然高，但拼接字符串会花费非常多的时间，创建多个标签应通过数组实现
+
+    // 可以直接对新创建的元素的 innerHTML 赋值来添加当新元素内的元素
+    // 如：
+    dom.creatElement('li').innerHTML = '&lt;a href="javascript:;"&gt; text &lt;/a&gt;';
+
+    // 添加节点
+    1. obj.appendChild(child) // 插入至node的子元素末尾
+    2. obj.insertBefore(child, other) // 插入至node的other元素之前
+
+    // 删除节点
+    obj.removeChild(child) // 子元素将一并删除
+    
+    // 复制节点
+    obj.cloneNode() // 浅拷贝
+    obj.cloneNode(true) // 深拷贝
+    // - - -
+
+    // 阻止链接跳转
+    // 1. href属性填写 javascript:; 或 javascript:void(0); (或者填写一个无意义的字符如##， 1等)
+    // 2. href填写#或空，添加属性onclick值为 return false，即为其添加回调函数返回false阻止跳转(返回true为允许跳转)
+    // = = =
+
+
+
+
+
+    <div id="h10"></div>
+    // 五、事件回调高级
+        // 1. 事件侦听与解绑
+        // 事件侦听
+        obj.addEventListener('event_name', callback, bool) 标准
+        obj.attachEvent('event_name', callback) 非标准，ie9之前独有
+
+        // 事件解绑(与上方对应)
+        obj.removeEventListener('event_name'， callback)
+        obj.detachEvent('event_name'， callback)
+
+
+
+        // 2. DOM 事件流
+        // 事件触发后会向全体元素广播回调，广播存在顺序执行的两种时序：
+        // 1. 由根节点到子节点（捕获）
+        // 2. 由子节点到根节点（冒泡）
+
+        // obj.onclick 与 obj.attachEvent() 仅在冒泡阶段触发
+        // obj.addEventListener() 可通过第三个参数来设置函数将处于哪种时序中被回调
+        // 捕获阶段: true  冒泡阶段: false (缺省)
+
+        // 大部分情况下不会使用捕获阶段
+        // onblur、onfocus、onmouseenter、onmouseleave 不会在冒泡时序中被回调
+
+
+
+        // 3. 事件对象
+        <button id="event_obj">点击后在控制台查看输出</button><script>
+            document.getElementById('event_obj').addEventListener('click', function (event) {
+                console.dir(event || window.event); // 兼容性处理，ie9以前需要从 window 对象中取到事件对象
+                console.log({// 常用属性及方法
+                    '触发对象:': event.target,
+                    // ie9之前不支持 兼容性处理|| event.srcElement，若考虑兼容性，还应使用 obj.onclick 注册事件
+                    // 有可能是子元素触发  
+
+                    '绑定对象:': this,
+                    '绑定对象:': event.currentTarget,
+                    // 非标准，ie9之前不支持，一般使用this
+
+                    '事件类型:': event.type,
+
+                    '-------------': '-------------',
+
+                    '阻止默认行为:': event.preventDefault,
+                    // ie9之前不支持，使用方法 e.returnValue，
+                    // 另外通过 obj.onclick 的回调中返回 false 也可阻止默认行为
+
+                    '阻止冒泡:': event.stopPropagation
+                    // ie9之前不支持，使用属性 e.cancelBubble = true
+                });
+            });</script>
+        // 回调时作为参数传入
+        document.getElementById('event_obj').addEventListener('click', function(event) {
+            console.dir(event || window.event); // 兼容性处理，ie9以前需要从 window 对象中取到事件对象
+            console.log({// 常用属性及方法
+                '触发对象:': event.target, 
+                // ie9之前不支持 兼容性处理|| event.srcElement，若考虑兼容性，还应使用 obj.onclick 注册事件
+                // 有可能是子元素触发  
+
+                '绑定对象:': this,
+                '绑定对象:': event.currentTarget, 
+                // 非标准，ie9之前不支持，一般使用this
+
+                '事件类型:': event.type,
+
+                '-------------': '-------------',
+
+                '阻止默认行为:': event.preventDefault, 
+                // ie9之前不支持，使用方法 e.returnValue，
+                // 另外通过 obj.onclick 的回调中返回 false 也可阻止默认行为
+
+                '阻止冒泡:': event.stopPropagation 
+                // ie9之前不支持，使用属性 e.cancelBubble = true
+            });
+        });
+
+
+
+        // 4. 事件委托 /（jQuery 称事件委派
+
+        // 给父亲注册事件，回调时判断事件对象的 target 属性
+
+        obj_father.addEventListener('click', function(e) {
+            if (event.target == ...') {
+                // ...
+                console.log('我被触发了:' + event.target);
+            }
+
+            // 补充:
+            // 事件触发后会有一个全局变量 event 出现，与传入回调函数的事件对象完全相同
+            console.log(e);
+            console.log(event);
+            console.log(e === event);
+        });
+    
+    
+
+        // 5. 鼠标事件高级
+
+        // 鼠标事件对象常用属性
+        1. clientX clientY 相对于客户区的xy坐标
+        2. pageX pageY 相对于文档的xy坐标 ie9之前不支持
+        3. screenX screenY 相对于屏幕的xy坐标
+
+        // 鼠标事件
+        1.contextmenu 右键菜单被触发
+        2.selectstart 文本选择开始
+        3.mousemove 鼠标被移动
+        4.mousedown 鼠标按下
+        5.mouseup 鼠标抬起
+
+        //demo 阻止
+        <code id="forbid" style="font-size: 30px;"> 阻止右键菜单及选择的文本 </code>
+        <script>
+            // 禁止右键菜单
+            document.getElementById('forbid').addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+            });
+            // 禁止文本选择
+            document.getElementById('forbid').addEventListener('selectstart', function (e) {
+                e.preventDefault();
+            });
+        </script>
+        // 禁止右键菜单
+        document.getElementById('forbid').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+        // 禁止文本选择
+        document.getElementById('forbid').addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+
+
+        
+        // 6. 键盘事件高级
+        // keydown 键盘按下
+        // keyup 键盘弹起
+        // keypress 键盘按下，不识别功能键
+        // 执行顺序 keydown > keypress
+
+        document.addEventListener('keyup', function(e) {
+            // 键盘事件对象常用属性
+            console.log({
+                '按下的键:': e.key, 
+                // 返回按下的键，有很大兼容性问题
+
+                '按下的ascii:': e.keyCode, 
+                // 返回按下键的 ascii，keypress 区分大小写，keyup 和 keydown 不区分大小写
+            });
+        });
+
+
+        // 另：手动调用 obj.{event(click)}()
+
+        </pre>
+    </div>
+
+    <div style="text-align: center;" id="h11">
+        <h2>BOM 对象模型</h2>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // 一、BOM 基础
+
+    // 1. 变量、函数分别为 window 对象的方法
+    // 注意：name 是window对象的一个属性 console.log(window.name);
+    // 注意: 定时器传入的函数由 window 对象回调
+
+    // 2. BOM 事件 'load' 页面完全加载完成后回调
+    // 通过关键字 'load' 注册或直接对 window.onload 赋值函数指针
+    // 另：DOM 事件 'DOMContentLoaded'仅 DOM 加载完后回调 ie9及以上支持
+
+    // 3. BOM 事件 'resize' 窗口大小被改变时回调
+    // 通过关键字 'resize' 注册或直接对 window.onresize 赋值函数指针
+    // 回调函数中通过 e.width 和 e.height 获得窗口当前大小
+
+    // 4. BOM 事件 'pageshow' 页面被重新加载时回调
+    // 火狐中存在'往返缓存'，后退时不会触发 load 系事件
+    // 回调函数中通过 e.persisted 属性可以判断页面是否来源于缓存
+
+
+    // 5. 定时器 
+    // 定时 window.setTimeout(callback, timeout) timeout 缺省为0 返回一个句柄，指向此定时器
+    // 停止定时 window.clearTimeout(hWnd)
+    // 重复定时 window.setInterval(callback, timeout)
+
+    // 6. 异步
+    function asyn_demo() {
+
+        temp = function() {
+            console.log(1); 
+            // 第一个执行
+
+            setTimeout(() => {
+                console.log(2); 
+                //第五个执行
+            }, 0);
+
+            console.log(3); 
+            //第二个执行
+            console.log(4); 
+            //第三个执行
+        }();
+        console.log(5); 
+        //第四个执行
+    };
+    // webapi的异步任务将在主线程空闲时执行
+
+
+
+
+    <div id="h12"></div>
+    // 二、常用对象
+        // 1. location 对象
+        // window.location 对象常用方法属性
+        <button id="locationlog">点击按钮在控制台查看输出</button><script>
+            document.getElementById('locationlog').addEventListener('click', function () {
+                console.log({
+                    'href（url）': location.href, // *常用
+                    'host（域名）': location.host,
+                    'port（端口）': location.port,
+                    'pathname（路径）': location.pathname,
+                    'search（query参数）': location.search, // *常用
+                    'hash（#link）': location.hash,
+                    '-------------': '-------------',
+                    'assign() 跳转，记录浏览历史': location.assign,
+                    'replace() 跳转，不记录浏览地址': location.replace,
+                    'reload() 重载': location.reload // 参数传入 true 则不读取缓存
+                });
+            })</script>
+        console.log({
+            'href（url）': location.href, // *常用
+            'host（域名）': location.host,
+            'port（端口）': location.port,
+            'pathname（路径）': location.pathname,
+            'search（query参数）': location.search, // *常用
+            'hash（#link）': location.hash,
+            '-------------': '-------------',
+            'assign() 跳转，记录浏览历史': location.assign,
+            'replace() 跳转，不记录浏览地址': location.replace,
+            'reload() 重载': location.reload // 参数传入 true 则不读取缓存
+        });
+
+
+
+        // 2. navigator 对象
+        console.log({
+            'Agent': navigator.agent
+        });
+
+
+
+        // 3.history 对象
+        console.log({
+            'forward()（前进）': history.forward,
+            'back() （后退）': history.back,
+            'go() （跳转）': history.go //参数为前进后退的
+        });
+
+
+    <div id="h13"></div>
+    // 三、js 网页特效
+    // offset系列 
+    // 1. obj.offsetParent 带有定位的父元素，若无返回body
+    // 2. obj.offsetTop 距父元素（有定位）顶端的距离（**带边框** 不带margin）
+    // 3. obj.offsetLeft 距父元素（有定位）左端的距离（**带边框** 不带margin）
+    // 4. obj.offsetWidth 元素宽度（**带边框** 不带margin）
+    // 5. obj.offsetHeight 元素高度（**带边框** 不带margin）
+
+    // client系列
+    // 1. obj.clientWidth 元素宽度（**不带边框** 不带margin）
+    // 2. obj.clientHeight 元素高度（**不带边框** 不带margin）
+    // 3. obj.clientTop 上边框宽度
+    // 4. obj.clientLeft 左边框宽度
+
+    // scroll系列
+    // 1. obj.scrollHeight 元素实际内容大小（包含超出边框的部分）（**不带边框** 不带margin）
+    // 2. scrollWidth （包含超出边框的部分）（**不带边框** 不带margin）
+    // 3. obj.scrollTop 元素上方被卷曲的内容高度
+    // 4. obj.scrollLeft 元素左边被卷曲的内容高度
+    // 另: 'scroll' 事件，元素被滚动
+    // 另: 页面被卷曲的内容高度需要通过 window.pageYOffset 及 window.pageXOffset 获取 ie9及以上支持
+
+    // 兼容性解决方法
+    // 声明了 DTD，通过 document.documentElement.scrollTop/Left 获取
+    // 未声明 DTD，通过 document.body.scrollTop/Left 获取
+
+    // 封装
+    function get_scroll(params) {
+        return {
+            Left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+            Top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        };
+    }
+
+
+
+    // js 动画
+
+    animate_event = function(obj, length, target, velocity, interval, callback) {
+        function animate(obj, length, target, velocity, interval, callback) {
+            if (target === undefined) {
+                var target = length + obj.offsetLeft;
+            }
+            obj.timer = setInterval(() => {
+                if (obj.offsetLeft != target) {
+                    step = (target - obj.offsetLeft) / velocity;
+                    obj.style.left = obj.offsetLeft + (step < 0 ? Math.floor(step) : Math.ceil(step)) + 'px';
+                } else {
+                    callback && callback();
+                    clearInterval(obj.timer);
+                }
+            }, interval);
+        }
+
+        return function(e) {
+            clearInterval(obj.timer);
+            animate(obj, length, target, velocity, interval, callback);
+        }
+
+    };
+
+
+    
+    // js 滚动条平滑滚动，本页面的自动滚动即由此代码实现
+
+    function scrollSmooth(y, velocity, interval, callback, stopScroll = true) {
+        // local 声明
+        if (stopScroll) {
+            if (typeof stop_scroll === 'undefined') {
+                stop_scroll = function (e) { // 事件回调函数
+                    e.preventDefault();
+                };
+            }
+        } else {
+            if (typeof get_state === 'undefined') {
+                var fun_list = function () {
+                    var state = false; // false 用户未滚动
+                    return [
+                        function () { // get state
+                            return state;
+                        },
+                        function (state_) {
+                            return function () { // set state
+                                state = state_;
+                            };
+                        }
+                    ];
+                }();
+                var get_state = fun_list[0];
+                var set_state = fun_list[1];
+            }
+        }
+    
+        function animate(y, velocity, interval, callback) {
+            if (stopScroll) {
+                document.addEventListener('mousewheel', stop_scroll, {
+                    passive: false
+                });
+            } else {
+                temp_fun = set_state(true);
+                set_state(false)();
+                // PC 端
+                document.addEventListener('mousewheel', temp_fun);
+                document.addEventListener('DOMMouseScroll', temp_fun);
+                // 移动端
+                document.addEventListener('touchstart', temp_fun);
+            }
+            this.timer = setInterval(() => {
+                if (!stopScroll) {
+                    if (get_state() === true) { // 判断用户滚动
+                        clearInterval(this.timer);
+                        document.removeEventListener('mousewheel', temp_fun);
+                        callback && callback();
+                        return;
+                    }
+                }
+                if (Math.abs(window.pageYOffset - y) > 1) { // 滚动过程
+                    var step = (y - window.pageYOffset) / velocity;
+                    window.scroll(0, window.pageYOffset + (step < 0 ? Math.floor(step) : Math.ceil(step)));
+                } else {
+                    callback && callback();
+                    clearInterval(this.timer);
+                    if (stopScroll) {
+                        document.removeEventListener('mousewheel', stop_scroll);
+                    }
+                }
+            }, interval);
+        }
+        return function () {
+            clearInterval(this.timer);
+            if (stopScroll) { // 清除事件回调
+                document.removeEventListener('mousewheel', stop_scroll);
+            } else {
+                if (typeof temp_fun !== 'undefined') {
+                    document.removeEventListener('mousewheel', temp_fun);
+                }
+            }
+    
+            animate(y, velocity, interval, callback);
+        };
+    }
+        </pre>
+    </div>
+    <script src="css/live2d/autoload.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./plug/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./plug/code-prettify/run_prettify.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

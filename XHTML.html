@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>XHTML</title>
+
+    <h1>list</h1>
+    <br />
+    <a href="#h" target="_self">1.标题标签</a><br />
+    <a href="#p" target="_self">2.段落标签</a><br />
+    <a href="#vi" target="_self">3.视觉标签</a><br />
+    <a href="#img" target="_self">4.img标签</a><br />
+    <a href="#a" target="_self">5.链接标签</a><br />
+    <a href="#f" target="_self">6.相对路径</a><br />
+    <a href="#o" target="_self">7.拓展内容</a><br />
+    <a href="#t" target="_self">8.表格标签</a><br />
+    <a href="#l" target="_self">9.列表标签</a><br />
+    <a href="#form" target="_self">10.表单标签</a>
+    <hr />
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/statistics_baidu.js"></script>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+</head>
+
+<body>
+    <script>NProgress.start();</script>
+    <h1 id="h" align="center">标题标签</h1>
+    <h1>一级</h1>
+    <h2>二级</h2>
+    <h3>三级</h3>
+    <h4>四级</h4>
+    <h5>五级</h5>
+    <h6>六级</h6>
+
+
+    <hr />水平线
+
+    <h1 id="p" align="center">段落标签</h1>
+    <p>段落一</p>
+    <p>段落二</p>
+    <p>段落三</p>
+
+    换行一<br /> 换行二
+    <br /> 换行三
+    <br />
+    <hr />
+    <br />
+
+    <div>div标签</div>
+    <div>div标签</div>
+    <span>span标签</span> <span>span标签</span>
+
+    <hr />
+    <br />
+    <h1 id="vi" align="center">视觉标签</h1>
+    <h2>推荐使用视觉要素，其表达意义更全面</h2>
+    <b>b加粗效果(视觉要素)</b><br /> b标签意为加粗，仅仅为加粗
+
+    <br />
+
+    <strong>strong加粗效果(表达要素)</strong><br /> strong标签意为强调，并不涉及具体形式。
+    <br /> 强调默认加粗，但可以由其他方式强调。web标准主张xhtml不涉及具体的表现形式
+    <br />
+
+    <br /><br />
+
+
+    <i>br /倾斜效果(视觉要素)</i>
+    <br />
+    <em>em倾斜效果(表达要素)</em>
+
+    <br /><br />
+
+    <s>s删除效果(视觉要素)</s>
+    <br />
+    <del>del删除效果(表达要素)</del>
+
+    <br /><br />
+
+    <u>u下划线效果(视觉要素)</u>
+    <br />
+    <ins>ins下划线效果(表达要素)</ins>
+
+    <hr />
+    <br />
+    <h1 id="img" align="center">img标签</h1>
+    <img src="img/ping.gif" alt="我曹图他妈没了（替代文本）" title="高ping战士（悬停文本）" width="600" height="" border="20" />
+    <h2>img属性</h2>
+    alt="我曹图他妈没了（替代文本）"<br /> title="高ping战士（悬停文本）" <br /> width="600" height="" (宽高)<br /> border="20"(边框厚度)
+    <br />
+
+    <hr />
+    <br />
+
+    <h1 id="a" align="center">链接标签</h1>
+    <a href="http://www.baidu.com">baidu外链</a><br />
+
+    <a href="test.html">test.html内链</a><br />
+
+    <a href="#">空链接</a><br />
+
+    <a href="http://www.baidu.com/" target="blank">target = "blank"，新选项卡打开</a><br />
+
+    <a href="http://www.baidu.com"><img src="img/ping.gif" title="图片链接" /></a>
+
+    <!-- 注释标签 -->
+
+    <hr />
+    <br />
+
+    <h1 id="f" align="center">相对路径表示</h1>
+    <p>上级路径：“../sth”</p>
+    <p>同级路径：“sth”</p>
+    <p>下级路径：“/sth/sth”</p>
+
+    <hr />
+    <br />
+
+    <h1 id="o" align="center">拓展内容</h1>
+    <h2>base标签（单标签）</h2>
+    用于设置基础属性target = "_blank"等，最好放在head里
+    <base target="_blank">
+
+
+    <br />
+    <h2>pre标签，预格式化文本</h2>
+
+    <pre>
+里边写啥
+出来啥
+	</pre>
+
+
+    <br />
+
+    <h2>转义字符</h2>
+    <img src="img/table.png">
+
+    <hr /><br />
+
+    <h1 id="t" align="center">表格标签</h1><br />
+    <table border="20" width="670" height="100" cellpadding="5" cellspacing="0">
+        <caption>
+            <h3>标签及解释
+            </h3>
+        </caption>
+        <tr>
+            <th>属性名</th>
+            <th>含义</th>
+            <th>属性值</th>
+        </tr>
+
+        <tr>
+            <th>border</th>
+            <td>设置表格的边框（默认border="0"无边框）</td>
+            <td>像素值</td>
+        </tr>
+
+        <tr>
+            <th>cellpadding</th>
+            <td>设置单元格与单元格边框之间的空白间距</td>
+            <td>像素值（默认为2像素）</td>
+        </tr>
+
+        <tr>
+            <th>cellspacing</th>
+            <td>设置单元格内容与单元格边框之间的空白间距</td>
+            <td>像素值（默认为1像素）</td>
+        </tr>
+
+        <tr>
+            <th>width</th>
+            <td>设置表格的宽度</td>
+            <td>像素值</td>
+        </tr>
+
+        <tr>
+            <th>height</th>
+            <td>设置表格的h高度</td>
+            <td>像素值</td>
+        </tr>
+
+        <tr>
+            <th>align</th>
+            <td>设置表格在网页中的水平对齐方式</td>
+            <td>left center right</td>
+        </tr>
+
+        <tr>
+            <th>caption</th>
+            <td>设置表格标题</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <h2>合并单元格</h2>
+    <table border="20" cellpadding="5" cellspacing="0" width="500" height="400">
+        <tr>
+            <th colspan="3" height="30">
+                简介
+            </th>
+        </tr>
+
+        <tr height="50">
+            <td>姓名</td>
+            <td>高XX</td>
+            <td rowspan="3" align="center">照片</td>
+        </tr>
+
+        <tr height="50">
+            <td>性别</td>
+            <td>男/女</td>
+            <!-- <td>照片2</td> -->
+        </tr>
+
+        <tr height="50">
+            <td>年龄</td>
+            <td>XX</td>
+            <!-- <td>照片3</td> -->
+        </tr>
+
+        <tr align="center">
+            <td colspan="3" height="20">个人简介</td>
+            <!-- 			<td>个人简介2</td>
+			<td>个人简介3</td> -->
+        </tr>
+
+        <tr>
+            <td align="center" colspan="3" align="ceter">无</td>
+            <!-- 			<td>个人简介2</td>
+			<td>个人简介3</td> -->
+        </tr>
+
+    </table>
+
+    <h2>表格头体及尾</h2>
+    <table border="20" cellpadding="5" cellspacing="10" width="500">
+        <thead>
+            <tr>
+                <td>表格头1</td>
+                <td>表格头2</td>
+                <td>表格头3</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>表格体1</td>
+                <td>表格体2</td>
+                <td>表格体3</td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>表格尾1</td>
+                <td>表格尾2</td>
+                <td>表格尾3</td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+    <hr /><br />
+
+    <h1 id="l" align="center">列表标签</h1><br />
+
+    <h2>无序列表</h2>
+
+    <ul>
+        <li>表项1</li>
+        <li>表项2</li>
+        <li>表项3</li>
+        <li>表项4</li>
+        <li>表项5</li>
+        <li>表项6</li>
+    </ul><br />
+
+    <h2>有序列表</h2>
+    <ol>
+        <li>表项1</li>
+        <li>表项2</li>
+        <li>表项3</li>
+        <li>表项4</li>
+        <li>表项5</li>
+        <li>表项6</li>
+    </ol><br />
+
+    <h2>自定义列表</h2>
+    <dl>
+        <dt>术语</dt>
+        <dd>描述1</dd>
+        <dd>描述2</dd>
+        <dd>描述3</dd>
+        <dd>描述4</dd>
+        <dd>描述5</dd>
+    </dl>
+
+    <hr /><br />
+
+    <h1 id="form" align="center">表单标签</h1><br />
+
+    <h2>1.input控件</h2>
+
+    text：<input type="text"><br /><br /> password：
+
+    <input type="password"><br /><br /> radio1：
+
+    <input type="radio" name="radio"> radio2：<input type="radio" name="radio" checked="checked"><br /><br /> checkbox1：
+
+    <input type="checkbox" name="checkbox"> checkbox2：<input type="checkbox" name="checkbox"><br /><br /> button：
+
+    <input type="button" value="button"><br /><br /> submit：
+
+    <input type="submit"><br /><br /> reset：
+
+    <input type="reset"><br /><br /> image：
+
+    <input type="image" src="img/buttonimg.png" width="70"><br /><br /> file：
+
+    <input type="file"><br /><br />
+
+    <img src="img/input.png"><br />
+
+    <h2>2.label标签</h2>
+
+    <label>label包含input控件：<input type="text"></label><br /><br />
+    <label for="sth">label直接包含文本，通过for绑定：</label><input type="text" id="sth">
+
+    <h2>3.textarea文本域控件（不用）</h2>
+    <textarea></textarea>
+
+    <h2>4.select下拉列表</h2>
+    <select>
+        <option>select1</option>
+        <option selected="selected">select2</option>
+        <option>select3</option>
+        <option>select4</option>
+    </select>
+
+    <hr><br />
+
+    <h1 id="area" align="center">表单域</h1><br />
+
+    <form action="" method="POST">
+        <table width="600" align="center">
+            <tr>
+                <td>用户名：</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+
+            <tr>
+                <td>确认密码:</td>
+                <td><input type="password" name="confpassword"></td>
+            </tr>
+
+            <tr>
+                <td>手机号码:</td>
+                <td><input type="text" name="tel"></td>
+            </tr>
+
+            <tr>
+                <td>邮箱:</td>
+                <td><input type="text" name="mail"></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><input type="reset"> <input type="submit"></td>
+            </tr>
+
+        </table>
+    </form>
+
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

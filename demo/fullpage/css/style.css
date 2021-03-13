@@ -1,0 +1,51 @@
+h1 {
+    /* transform: translate(0, -50%); */
+    padding: 0 100px 0 100px;
+    text-align: center;
+    font-size: 40px;
+    opacity: .5;
+    animation: breath 4s ease-in-out infinite;
+    transition: all .9s;
+    font-family: 'en', 'longCang';
+    font-weight: 100;
+    user-select: none;
+}
+
+h2 {
+    /* transform: translate(0, -50%); */
+    padding: 0 200px 0 200px;
+    text-align: center;
+    font-size: 50px;
+    opacity: .5;
+    transition: .9s;
+    animation: breath 4s ease-in-out 2s infinite;
+    font-family: 'en', 'longCang';
+    user-select: none;
+}
+
+h1:hover {
+    animation-name: none;
+    opacity: 1;
+}
+
+@keyframes breath {
+    0% {
+        opacity: .5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .5;
+    }
+}
+
+@font-face {
+    font-family: "longCang";
+    src: url("../font/LongCang.ttf");
+}
+
+@font-face {
+    font-family: "en";
+    src: url("../font/eng.woff2");
+}

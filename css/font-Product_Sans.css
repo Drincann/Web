@@ -1,0 +1,9 @@
+@font-face{
+	font-family:"Product Sans";
+	src: url("../ttf/Product Sans.ttf");
+}
+
+* {
+	font-family:  "Product Sans", "Microsoft YaHei", "微软雅黑";
+}
+

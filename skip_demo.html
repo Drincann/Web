@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skop_demo</title>
+</head>
+
+<body>
+    <script>
+        function getparam(str) {
+            var arr = str.substr(1).split('&');
+            var param = {};
+            for (item of arr) {
+                var temp = item.split('=');
+                param[temp[0]] = temp[1];
+            }
+            return param;
+
+        }
+        console.log((getparam(location.search)));
+
+        alert(getparam(location.search).skip_demo1);
+        alert(getparam(location.search).skip_demo2);
+    </script>
+</body>
+
+</html>

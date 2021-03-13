@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS（二）</title>
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-Product_Sans.css">
+    <script src="js/statistics_baidu.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 10px;
+            font-size: 20px;
+        }
+
+        h1 {
+            color: #0aa;
+            margin: 30px 0;
+        }
+
+        h2 {
+            color: #808080;
+            margin: 25px 0;
+        }
+
+        h3 {
+            margin: 15px 0;
+        }
+
+        p {
+            margin: 20px 0;
+        }
+
+        hr {
+            margin: 10px 0;
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+<body>
+    <style>
+        ul.list {
+            position: fixed;
+            right: 20px;
+            top: 30%;
+            /* bottom: 0;
+            top: 0;
+            margin: auto; */
+            /* transform: translate(-50%, -50%); */
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            transition: all .15s;
+            box-shadow: 0 15px 30px 0 rgba(0, 121, 121, .3);
+        }
+
+        ul.list:hover {
+            background-color: #eee;
+        }
+
+        ul.list:hover a {
+            background-color: #f5f5f5;
+        }
+
+        h1.list:hover~ul.list {
+            background-color: #f5f5f5;
+            color: orange;
+        }
+
+        ul.list li {
+            list-style: none;
+        }
+
+        ul.list li a {
+            display: inline-block;
+            width: 140px;
+            height: 40px;
+            padding: 0 20px;
+            margin: 10px;
+            font-size: 15px;
+            color: orange;
+            line-height: 40px;
+            text-decoration: none;
+            transition: all .15s;
+            border-radius: 20px;
+        }
+
+        ul.list li a:hover {
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, .2);
+            color: #0aa;
+            font-weight: 1000;
+            background-color: #fff;
+        }
+    </style>
+
+
+
+    <ul class="list">
+        <li><a href="#9">九、盒子模型-浮动</a></li>
+        <li><a href="#10">十、CSS书写顺序</a></li>
+        <li><a href="#11">十一、定位</a></li>
+        <li><a href="#12">十二、CSS高级技巧</a></li>
+    </ul>
+
+    <hr />
+
+
+
+
+
+    <h1 id="9">九、盒子模型-浮动</h1>
+
+    <h2>1.浮动</h2>
+    <p>最早用于控制图片（图片文字环绕）</p>
+    <p>浮动的盒子在标准流之外，鼠标移动到下盒子上观察浮动</p>
+    <style>
+        div.float1 {
+            background-color: #ccc;
+            width: 100px;
+            height: 100px;
+            transition: all 1s;
+        }
+
+        div.float1:hover {
+            float: left;
+        }
+
+        div.box1 {
+            background-color: #0aa;
+            width: 300px;
+            height: 300px;
+            color: black;
+        }
+    </style>
+
+    <div class="float1"><span>float</span></div>
+    <div class="box1">标准流</div><br />
+
+
+    <h2>2.float会改变元素的display属性</h2>
+    <style>
+        div.float2,
+        div.float3 {
+            height: 100px;
+            width: 200px;
+            padding: 10px;
+        }
+
+        div.float2 {
+            background-color: #0aa;
+            float: left;
+        }
+
+        div.float3 {
+            background-color: #ccc;
+            float: left;
+        }
+
+        div.box2 {
+            width: 400px;
+            height: 120px;
+        }
+    </style>
+
+    <div class="float2"></div>
+    <div class="float3">会变成inline-block</div>
+    <div class="box2"></div><br />
+
+
+    <h2>3.案例</h2>
+
+    <h3>3.1 简单布局</h3>
+    <style>
+        div.box3 {
+            width: 200px;
+            height: 100px;
+        }
+
+        div.box4 {
+            width: 200px;
+            height: 100px;
+            background-color: orange;
+        }
+
+        div.float4,
+        div.float5 {
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+
+        div.float4 {
+            background-color: #00a;
+        }
+
+        div.float5 {
+            background-color: #ccc;
+        }
+    </style>
+    <p>给浮动盒子套一个标准流的父元素</p>
+    <div class="box3">
+        <div class="float4">float</div>
+        <div class="float5">float</div>
+    </div>
+    <div class="box4">标准流</div><br />
+
+
+    <h3>3.2 小米</h3>
+
+    <style>
+        div.box_grandfather {
+            background-color: #f5f5f5;
+            padding: 50px;
+            transition: all .3s;
+        }
+
+        div.box_grandfather:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .5);
+        }
+
+        div.box_father * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div.box_father {
+            width: 1226px;
+            height: 615px;
+            background-color: #f5f5f5;
+        }
+
+        div.box_left {
+            float: left;
+            width: 234px;
+            height: 615px;
+            background-color: #0aa;
+            transition: all .2s;
+        }
+
+        ul.box_right {
+            float: right;
+            width: 992px;
+            height: 615px;
+            background-color: #f5f5f5;
+            list-style: none;
+        }
+
+        ul.box_right li {
+            margin-left: 14px;
+            margin-bottom: 14px;
+            float: left;
+            width: 234px;
+            height: 300px;
+            background-color: white;
+            transition: all .2s;
+        }
+
+        ul.box_right li:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+            transform: translateY(-2px);
+        }
+
+        div.box_left:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .1);
+            transform: translateY(-2px);
+        }
+
+        div.box_left a {
+            display: inline-block;
+            width: 234px;
+            height: 615px;
+        }
+
+        ul.box_right a {
+            display: inline-block;
+            width: 234px;
+            height: 300px;
+        }
+    </style>
+
+    <div class="box_grandfather">
+        <div class="box_father">
+            <div class="box_left">
+                <a href="#"><img src="img/box_left.png" alt=""></a>
+            </div>
+            <ul class="box_right">
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+                <li>
+                    <a href="#"><img src="img/li_right.png" alt=""></a>
+                </li>
+            </ul>
+        </div>
+    </div><br />
+
+
+
+    <h3>3.3 导航栏</h3>
+
+    <style>
+        div.box1-father * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div.box1-father {
+            padding: 50px;
+            background-color: #f5f5f5;
+            transition: all .3s;
+        }
+
+        div.box1-father:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .5);
+        }
+
+        div.box1-banner {
+            margin: auto;
+            width: 760px;
+            height: 150px;
+        }
+
+        ul.box1-nav {
+            width: 760px;
+            height: 32px;
+            margin: 0 auto;
+            background: url(img/nav_bg.jpg) repeat-x;
+        }
+
+        ul.box1-nav li {
+            float: left;
+            list-style: none;
+        }
+
+        ul.box1-nav li a {
+            display: inline-block;
+            height: 32px;
+            padding: 0 10px;
+            list-style: none;
+            font-size: 14px;
+            line-height: 32px;
+            text-decoration: none;
+            color: #40510a;
+            background: url(img/button1.jpg) rgba(0, 0, 0, .5);
+        }
+
+        ul.box1-nav li a:hover {
+            background: url(img/button2.jpg);
+        }
+    </style>
+
+    <div class="box1-father">
+
+        <div class="box1-banner"><img src="img/banner.jpg" alt=""></div>
+        <ul class="box1-nav">
+            <li><a href="#">导航菜单</a></li>
+            <li><a href="#">导航菜单</a></li>
+            <li><a href="#">导航菜单</a></li>
+            <li><a href="#">导航菜单</a></li>
+            <li><a href="#">导航菜单</a></li>
+            <li><a href="#">导航菜单</a></li>
+        </ul>
+
+    </div>
+
+    <br />
+
+
+
+    <h2>4.清除浮动</h2>
+
+    <h3>清除浮动的原因:</h3>
+    <p>标准流父元素套浮动子元素，用来减少对下方标准流布局的影响。</p>
+    <p>而有些浮动子元素的高度并不确定，故很难给父元素确定的大小，这时候就需要运用清除浮动的布局。</p>
+
+
+
+
+    <h3>4.1 额外标签法（隔墙法）</h3>
+
+
+
+
+    <style>
+        div.box5_father {
+            width: 500px;
+            background-color: #f5f5f5;
+        }
+
+        div.box5_child1 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        div.box5_child2 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        div.box5_bottom {
+            width: 400px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+
+    <div class="box5_father">
+        <div class="box5_child1">float</div>
+        <div class="box5_child2">float</div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="box5_bottom">标准流</div>
+
+
+
+
+    <h3>4.2 父级添加overflow属性方法</h3>
+
+
+
+
+    <style>
+        div.box6_father {
+            width: 500px;
+            background-color: #f5f5f5;
+            overflow: hidden;
+        }
+
+        div.box6_child1 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        div.box6_child2 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        div.box6_bottom {
+            width: 400px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+    <div class="box6_father">
+        <div class="box6_child1">float</div>
+        <div class="box6_child2">float</div>
+    </div>
+    <div class="box6_bottom">标准流</div>
+
+
+
+    <h3>4.3 使用after伪元素清除浮动</h3>
+
+
+
+    <style>
+        .clearfix:after {
+            content: "";
+            display: block;
+            height: 0;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .clearfix {
+            /*IE6、7*/
+            *zoom: 1;
+        }
+
+        div.box7_father {
+            width: 500px;
+            background-color: #f5f5f5;
+        }
+
+        div.box7_child1 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        div.box7_child2 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        div.box7_bottom {
+            width: 400px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+    <div class="box7_father clearfix">
+        <div class="box7_child1">float</div>
+        <div class="box7_child2">float</div>
+    </div>
+    <div class="box7_bottom">标准流</div>
+
+
+
+
+    <h3>4.4 使用双伪元素清除浮动</h3>
+
+
+
+
+    <style>
+        .clearfix1:before,
+        .clearfix1:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix1:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 11;
+        }
+
+        div.box8_father {
+            width: 500px;
+            background-color: #f5f5f5;
+        }
+
+        div.box8_child1 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        div.box8_child2 {
+            float: left;
+            width: 200px;
+            height: 100px;
+            background-color: skyblue;
+        }
+
+        div.box8_bottom {
+            width: 400px;
+            height: 100px;
+            background-color: orange;
+        }
+    </style>
+    <div class="box8_father clearfix1">
+        <div class="box8_child1">float</div>
+        <div class="box8_child2">float</div>
+    </div>
+    <div class="box8_bottom">标准流</div>
+
+
+
+    <hr /><br />
+
+
+
+    <h1 id="10">十、CSS样式书写顺序</h1>
+    <p>1.布局定位（display position float clear visbility overflow）</p>
+    <p>2.自身属性（width height margin padding border background）</p>
+    <p>3.文本属性（color font text-decoration text-align vertical-align white-space break-word）</p>
+    <p>4.其他属性(CSS3)（content cursor border-radius box-shadow text-shadow background）</p>
+
+
+
+    <hr><br>
+
+    <h1 id="11">十一、定位</h1>
+
+    <h2>1.静态定位（static）</h2>
+    <p>就是默认定位，无定位的意思</p><br>
+
+    <h2>2.相对定位（relative）</h2>
+    <p>即相对于其原先在标准流中的位置</p>
+    <p>1. 其他元素会受其标准流位置影响，即标准流的位置影响保留</p>
+    <p>鼠标移动到上盒子观察</p>
+    <style>
+        .box9 {
+            width: 200px;
+            height: 200px;
+            position: static;
+            background-color: #ccc;
+        }
+
+        .box9:hover {
+            position: relative;
+            top: 30px;
+        }
+
+        .box10 {
+            width: 300px;
+            height: 200px;
+            background-color: #0aa;
+        }
+    </style>
+    <div class="box9">relative</div>
+    <div class="box10">标准流</div><br>
+
+    <h2>3.绝对定位（absolute）</h2>
+
+    <p>1. 以最近一层<strong>有定位的（即不为static）</strong>的上级元素为定位参照</p>
+    <p>否则以文档（body）为定位参照（仅左右定位时，以标准流原高度为准）</p>
+    <p>2. 在任何情况下原位置影响不保留</p>
+    <p>后来加上：四个值均存在时，优先使用 top left 的值</p>
+    <p>鼠标移动到上盒子观察</p>
+    <style>
+        .box11-father {
+            width: 500px;
+            height: 500px;
+            background-color: #ccc;
+        }
+
+        .box11-father:hover {
+            position: relative;
+        }
+
+        .box11-child {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            right: 50px;
+            background-color: #a00;
+        }
+
+        .box11-child1 {
+            width: 300px;
+            height: 300px;
+            margin-left: 100px;
+            background-color: #0aa;
+        }
+    </style>
+    <div class="box11-father">
+        relative的父元素
+        <div class="box11-child">absolute</div>
+        <div class="box11-child1">标准流兄弟元素</div>
+    </div><br>
+
+
+    <h2>4.最合适的定位 ——— <em>子绝父相</em></h2>
+    <p>父元素对其他元素无影响，子元素无所谓</p>
+    <style>
+        .box12-top {
+            position: relative;
+            height: 200px;
+            background-color: #ccc;
+        }
+
+        .box12-bottom {
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        .box12-child {
+            width: 200px;
+            height: 50px;
+            position: absolute;
+            top: 75px;
+            background-color: #fff;
+        }
+    </style>
+    <div class="box12-top">
+        relative父元素
+        <div class="box12-child">absolute子元素</div>
+    </div>
+    <div class="box12-bottom">普通标准流元素</div><br>
+
+
+    <h2>5.固定定位（fixed）</h2>
+    <p>见侧边栏</p>
+    <p>无视父元素，仅以文档为定位参照。</p><br>
+
+
+    <h2>6.绝对定位水平居中</h2>
+    <style>
+        .box13-father {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background-color: #ccc;
+        }
+
+        .box13-child {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #0aa;
+            left: 50%;
+            margin-left: -50px;
+        }
+    </style>
+    <div class="box13-father">
+        <div class="box13-child"></div>
+    </div><br>
+
+
+    <h2>7.堆叠顺序</h2>
+    <style>
+        .box14-father {
+            height: 250px;
+        }
+
+        .box14-1,
+        .box14-2,
+        .box14-3 {
+            position: absolute;
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+        }
+
+        .box14-2 {
+            margin: 20px;
+            background-color: #0aa;
+        }
+
+        .box14-3 {
+            margin: 30px;
+            background-color: #a00;
+        }
+
+        .box15-father {
+            height: 250px;
+        }
+
+        .box15-1,
+        .box15-2,
+        .box15-3 {
+            position: absolute;
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+            background-color: #ccc;
+        }
+
+        .box15-2 {
+            margin: 30px;
+            background-color: #0aa;
+        }
+
+        .box15-3 {
+            margin: 50px;
+            background-color: #a00;
+        }
+
+        .box15-1:hover {
+            z-index: 1;
+        }
+
+        .box15-2:hover {
+            z-index: 1;
+        }
+
+        .box15-3:hover {
+            z-index: 1;
+        }
+    </style>
+    <p>拥有定位的盒子，其层级后来者居上：</p>
+    <div class="box14-father">
+        <div class="box14-1"></div>
+        <div class="box14-2"></div>
+        <div class="box14-3"></div>
+    </div>
+
+    <p>通过z-index属性来调整定位元素的层叠性（鼠标移动到盒子上来置z-index 1）：</p>
+    <div class="box15-father">
+        <div class="box15-1"></div>
+        <div class="box15-2"></div>
+        <div class="box15-3"></div>
+    </div><br>
+
+    <h2>7.绝对定位改变display属性</h2>
+    <style>
+        .box16-fa {
+            position: relative;
+            height: 200px;
+        }
+
+        .box16-ch {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        .box16-ch1 {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #ccc;
+        }
+    </style>
+    <p>绝对定位后自动转化为一个类似行内快的display属性</p>
+    <p>需要块级的通栏盒子，则必须给一个w100%</p>
+    <div class="box16-fa">
+        <span class="box16-ch">span</span>
+        <span class="box16-ch1">w100%</span>
+    </div><br>
+
+
+    <p>8.<strong>浮动</strong>和<strong>绝对定位</strong>无塌陷问题</p>
+    <hr><br>
+
+
+
+    <h1 id="12">十二、CSS高级技巧</h1>
+
+
+    <h2>1.显示及隐藏元素</h2>
+
+    <p>隐藏后位置不保留<br>鼠标移动到上方的盒子来观察隐藏：</p>
+    <style>
+        .box17-1,
+        .box17-2 {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .box17-2 {
+            background-color: #0aa;
+        }
+
+        .box17-1:hover~.box17-2 {
+            display: none;
+        }
+
+        .box18-1,
+        .box18-2 {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .box18-2 {
+            background-color: #0aa;
+            display: none;
+        }
+
+        .box18-1:hover~.box18-2 {
+            display: block;
+        }
+    </style>
+    <div class="box17-1"></div>
+    <div class="box17-2">我会隐藏</div>
+    <br>
+    <p>鼠标移动到下方的盒子来观察显示：</p>
+    <div class="box18-1"></div>
+    <div class="box18-2">我会显示</div><br>
+
+    <h2>2.可见性（visibility）</h2>
+    <style>
+        .box19-fa {
+            position: relative;
+            width: 100px;
+            height: 200px;
+        }
+
+        .box19-1,
+        .box19-2 {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .box19-1 {
+            position: absolute;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: #0aa;
+        }
+
+        .box19-1:hover~.box19-2 {
+            visibility: hidden;
+            /* visible */
+        }
+    </style>
+
+    <p>隐藏后位置保留<br>鼠标移动到下方的盒子来观察隐藏：</p>
+    <div class="box19-fa">
+        <div class="box19-1"></div>
+        <div class="box19-2">我会隐藏</div>
+    </div>
+
+
+    <h2>3.溢出隐藏（overflow）</h2>
+    <style>
+        .box20 {
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+        }
+
+        .box20:hover {
+            overflow: hidden;
+            /* scroll auto 显示滚动条（不用） */
+        }
+    </style>
+    <p>鼠标移动到下方来观察溢出隐藏：</p>
+    <div class="box20">text 文本 text 文本 text 文本 text 文本 text 文本</div><br>
+
+
+    <h2>4.CSS用户界面样式</h2>
+    <h3>鼠标样式</h3>
+    <ul>
+        <li style="cursor: default;">default</li>
+        <li style="cursor: pointer;">pointer</li>
+        <li style="cursor: move;">move</li>
+        <li style="cursor: text;">text</li>
+        <li style="cursor: not-allowed;">not-allowed</li>
+    </ul><br>
+    <h3>去除轮廓线：outline: none;</h3>
+    <input type="text" style="outline: none;"><br>
+
+    <h3>防止拖拽文本域</h3>
+    <textarea style="outline: none;resize: none;">resize: none;</textarea><br>
+
+
+    <h3>文本垂直对齐（vertical-align）</h3>
+    <style>
+        .box21 {
+            vertical-align: middle;
+            /* baseline top middle bottom */
+        }
+    </style>
+    <p>仅对inline & inline-block有效</p>
+    <p>常用于图片、表单和文字对齐</p>
+    <img src="img/box_left.png" alt="" class="box21">text 文本 text 文本 text 文本 text 文本 text 文本
+
+
+
+    <h3>去除图片在父元素中的底端空白缝隙</h3>
+
+    <style>
+        .box22 {
+            padding: 0;
+            border: 5px solid black;
+            font-size: 100px;
+        }
+
+        .box22 img:hover {
+            vertical-align: middle;
+        }
+    </style>
+    <p>图片默认与文字基线对齐，下方缝隙是文字基线以下的预留空间</p>
+    <p>解决方法一、图片display:block;则此行不会容纳任何其他元素，则不会预留基线以下的空间。</p>
+    <p>解决方法二、图片与文字基线对齐vertical:(top/middle/bottom);</p>
+    <p>移动鼠标观察方法二：</p>
+    <div class="box22"><img src="img/matrix.png" alt=""></div>
+
+
+
+    <h3>溢出的文字用省略号表示</h3>
+    <style>
+        .box23 {
+            width: 100px;
+            height: 30px;
+            background-color: #ccc;
+            /* 三行：单行显示 → 溢出隐藏 →  省略号替代 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+    <p>单行显示 → 溢出隐藏 → 省略号替代</p>
+    <div class="box23">文本 text 文本 text 文本 text 文本 text</div><br>
+
+    <h2>5.滑动门技术</h2>
+    <p>随意伸缩的固定背景样式</p>
+    <p>微信官网nav：</p>
+    <style>
+        .wx-fa {
+            background-color: #f5f5f5;
+            padding: 50px;
+            transition: all .3s;
+        }
+
+        .wx-fa:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .5);
+        }
+
+        .wx {
+            padding: 20px;
+            height: 74px;
+            list-style-type: none;
+            background: url(img/wx.jpg);
+        }
+
+        .wx li a {
+            float: left;
+            display: inline-block;
+            margin-left: 10px;
+            height: 33px;
+            padding-left: 15px;
+            background: url(img/wx_1.png) no-repeat;
+            text-decoration: none;
+            color: #ccc;
+        }
+
+        .wx li span {
+            display: inline-block;
+            height: 33px;
+            padding-right: 15px;
+            line-height: 35px;
+            background: url(img/wx_1.png) no-repeat right;
+            font-size: 16px;
+        }
+
+        .wx li a:hover,
+        .wx li a:hover span {
+            background-image: url(img/wx_0.png);
+        }
+    </style>
+    <div class="wx-fa">
+        <ul class="wx clearfix">
+            <li>
+                <a href="">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span>首页啊啊啊</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span>首页啊啊啊啊啊啊啊</span>
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <span>首页啊啊啊啊啊啊啊啊啊啊</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <p>滑动门的动态展示：</p>
+    <style>
+        .wx1-fa {
+            background-color: #f5f5f5;
+            padding: 50px;
+            transition: all .3s;
+        }
+
+        .wx1-fa:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .5);
+        }
+
+        .wx1 {
+            padding: 20px;
+            height: 74px;
+            list-style-type: none;
+            background: url(img/wx.jpg);
+        }
+
+        .wx1 li a {
+            position: absolute;
+            left: 50%;
+            height: 33px;
+            padding-left: 15px;
+            background: url(img/wx_1.png) no-repeat;
+            text-decoration: none;
+            color: #ccc;
+            transition: .3s;
+        }
+
+        .wx1 li span {
+            display: inline-block;
+            height: 33px;
+            padding-right: 15px;
+            line-height: 35px;
+            background: url(img/wx_1.png) no-repeat right;
+            font-size: 16px;
+            transition: .3s;
+        }
+
+        .wx1 li a:hover span {
+            padding-right: 340px;
+        }
+
+        .wx1 li a:hover {
+            padding-left: 340px;
+            margin-left: -325px;
+        }
+    </style>
+    <div class="wx1-fa">
+        <ul class="wx1">
+            <li>
+                <a href="">
+                    <span>text</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <h2>6.margin负值应用</h2>
+    <h3>盒子紧邻border变粗的问题，鼠标移动到下方盒子上观察：</h3>
+    <style>
+        .box24-fa {
+            width: 306px;
+            background-color: #f5f5f5;
+        }
+
+        .box24 {
+            float: left;
+            width: 100px;
+            height: 200px;
+            /* margin: -1px 0 0 -1px; */
+            border: 1px solid #ccc;
+        }
+
+        .box24-fa:hover .box24 {
+            margin: -1px 0 0 -1px;
+        }
+    </style>
+    <div class="box24-fa clearfix">
+        <div class="box24">1</div>
+        <div class="box24">2</div>
+        <div class="box24">3</div>
+        <div class="box24">4</div>
+        <div class="box24">5</div>
+        <div class="box24">6</div>
+    </div><br>
+
+    <h3>紧邻盒子border会被周围盒子覆盖</h3>
+    <style>
+        .box25-fa {
+            width: 303px;
+            background-color: #f5f5f5;
+        }
+
+        .box25 {
+            float: left;
+            width: 100px;
+            height: 200px;
+            margin: -1px 0 0 -1px;
+            border: 1px solid #ccc;
+        }
+
+        .box25:hover {
+            border: 1px solid #f40;
+        }
+    </style>
+    <div class="box25-fa clearfix">
+        <div class="box25">1</div>
+        <div class="box25">2</div>
+        <div class="box25">3</div>
+        <div class="box25">4</div>
+        <div class="box25">5</div>
+        <div class="box25">6</div>
+    </div>
+    <h3>解决：</h3>
+    <p>:hover添加定位</p>
+    <style>
+        .box26-fa {
+            width: 303px;
+            background-color: #f5f5f5;
+        }
+
+        .box26 {
+            float: left;
+            width: 100px;
+            height: 200px;
+            margin: -1px 0 0 -1px;
+            border: 1px solid #ccc;
+        }
+
+        .box26:hover {
+            position: relative;
+            border: 1px solid #f40;
+        }
+    </style>
+    <div class="box26-fa clearfix">
+        <div class="box26">1</div>
+        <div class="box26">2</div>
+        <div class="box26">3</div>
+        <div class="box26">4</div>
+        <div class="box26">5</div>
+        <div class="box26">6</div>
+    </div><br>
+
+    <h2>7.制作三角形</h2>
+    <style>
+        .box27-1 {
+            width: 0;
+            height: 0;
+            border-width: 80px;
+            border-style: solid;
+            border-color: transparent transparent transparent #f40;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .box27-2 {
+            width: 0px;
+            height: 0px;
+            border-top: 100px solid orange;
+            border-bottom: 100px solid blue;
+            border-left: 100px solid #0aa;
+            border-right: 100px solid #a00;
+            transition: .3s;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .box27-2:hover {
+            width: 50px;
+            height: 200px;
+            border-color: transparent transparent #f40 transparent;
+        }
+    </style>
+    <h3>三角形的本质是边框：</h3>
+    <div class="box27-1"></div>
+    <h3>调节宽高变换更多形状，鼠标移动到盒子上观察：</h3>
+    <div class="box27-2"></div>
+    <p>为了照顾低版本浏览器的兼容性和定位的准确性，我们还需要加上：<br>font-size:0;<br>line-height:0;</p>
+
+    <h3></h3>
+    <hr /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <hr />
+
+
+
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

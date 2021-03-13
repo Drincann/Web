@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CH">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/calendar.css">
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <main class="calendar" onselectstart="return false;">
+        <!-- 控制 -->
+        <section class="controller clear">
+            <!-- 年 -->
+            <div class="year clear">
+                <span id="yPre" class="btnBase fa fa-angle-double-left"></span>
+                <span id="year" class="preDate"></span>
+                <span id="yNext" class="btnBase fa fa-angle-double-right"></span>
+            </div>
+            <!-- 月 -->
+            <div class="month clear">
+                <span id="mPre" class="btnBase fa fa-angle-left"></span>
+                <span id="month" class="preDate"></span>
+                <span id="mNext" class="btnBase fa fa-angle-right"></span>
+            </div>
+        </section>
+        <!-- 星期 -->
+        <section class="week clear">
+            <span class="weekDay dayBase">一</span>
+            <span class="weekDay dayBase">二</span>
+            <span class="weekDay dayBase">三</span>
+            <span class="weekDay dayBase">四</span>
+            <span class="weekDay dayBase">五</span>
+            <span class="weekDay dayBase">六</span>
+            <span class="weekDay dayBase">日</span>
+        </section>
+        <!-- 日历内容 -->
+        <div class="content" id="content">
+        </div>
+    </main>
+    <script type="text/html" id="contentTpl">
+        {{set preDate = $imports.preDate}}
+        {{each}}
+        <section class="row clear">
+            {{each $value}}
+                <span class="day dayBase 
+                {{@$value.isThisMonth ? '' : 'notThisMonth'}} 
+                {{@preDate == $value.date && $value.isThisMonth ? 'today' : ''}}">{{$value.date}}</span>
+            {{/each}}
+        </section>
+        {{/each}}
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.js"></script>
+    <script src="./plug/template/template.js"></script>
+    <script src="./js/calendar.js"></script>
+</body>
+
+</html>

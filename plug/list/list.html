@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+
+    <link rel="stylesheet" href="list.css">
+    <script src="./jquery.min.js"></script>
+    <script src="list.js"></script>
+
+</head>
+
+<body>
+    <!-- 一定用 list_container 包裹 list-->
+    <div class="list_container">
+        <ul>
+
+
+            <li class="list_child current_li">
+                <!-- 加上 current_li 类以设置默认展开项，同时 span 加上 current_icon 类 -->
+                <!-- 可以不设置默认展开项 -->
+                <!-- 子项 -->
+
+                <div class="title"> Title <span class="current_icon"></span></div>
+                <!-- 子项标题 -->
+
+                <div class="content">
+                    <!-- 子项内容 -->
+                    <ul>
+                        <li> <a href="##" target="_blank">child</a> </li>
+                        <li> <a href="##" target="_blank">child</a> </li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+            <li class="list_child">
+                <div class="title"> CSS <span></span></div>
+                <div class="content">
+                    <ul>
+                        <li> <a href="##" target="_blank">CSS2 part.1</a> </li>
+                        <li> <a href="##" target="_blank">CSS2 part.2</a> </li>
+                        <li> <a href="##" target="_blank">CSS3</a> </li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+            <li class="list_child">
+                <div class="title"> JavaScript <span></span></div>
+                <div class="content">
+                    <ul>
+                        <li><a href="##" target="_blank">JavaScript</a></li>
+                        <li><a href="##" target="_blank">jQuery</a></li>
+                        <li><a href="##" target="_blank">JS_ES6</a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+            <li class="list_child">
+                <div class="title"> Other <span></span></div>
+                <div class="content">
+                    <ul>
+                        <li> <a href="##" target="_blank">Memo</a> </li>
+                        <li> <a href="##" target="_blank">课上笔记</a> </li>
+                    </ul>
+                </div>
+            </li>
+
+
+
+
+        </ul>
+
+    </div>
+</body>
+
+</html>

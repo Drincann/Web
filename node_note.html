@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/statistics_baidu.js"></script>
+    <link rel="stylesheet" href="./plug/code-prettify/prettify.css">
+    <link rel="stylesheet" href="./plug/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/FiraCode.css">
+    <title>Node.js</title>
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+        pre {
+
+            font-family: 'Fira Code';
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        nav ul {
+            position: fixed;
+            z-index: 999;
+            padding: 0;
+            margin: 0;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            list-style: none;
+        }
+
+        nav ul li {
+            display: block;
+            padding: 7px 10px;
+            margin-top: 10px;
+            color: #444;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+            transition: .3s, color .1s;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        nav ul li:hover {
+            box-shadow: 0 0 30px rgba(0, 144, 144, .9);
+            background-color: #0aa;
+            color: #fff;
+        }
+
+        .jumbotron {
+            background: url('./demo/fullpage/images/landscape4.jpg') fixed;
+            color: #aaa;
+            background-size: cover;
+        }
+
+        .jumbotron .container * {
+            mix-blend-mode: color-dodge;
+        }
+    </style>
+    <script src="./js/scrollSmooth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var list = document.getElementsByTagName('nav')[0].children[0].children;
+            for (let i in list) {
+                if (i == 'length') {
+                    break;
+                }
+                list[i].addEventListener('click', function () {
+                    var top = document.querySelector('#' + list[i].getAttribute('data-index')).offsetTop;
+                    scrollSmooth(top, 15, 10, undefined, false)();
+                });
+            }
+        });
+    </script>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+
+</head>
+
+<body>
+    <script>NProgress.start();</script>
+    <nav>
+        <ul>
+            <li data-index="h1">一、node + Gulp 基础</li>
+            <li data-index="h2">Gulp 构建任务 示例代码</li>
+
+            <li data-index="h3">二、服务端编程基础</li>
+            <li data-index="h4">静态资源访问 示例代码</li>
+
+            <li data-index="h5">三、同步、异步编程</li>
+            <li data-index="h6">四、MongoDB 数据库</li>
+            <li data-index="h7">五、模板引擎</li>
+            <li data-index="h8">六、express 框架开发</li>
+            <li data-index="h9">七、部署 https 服务</li>
+            <li data-index="h10">八、blog 项目笔记</li>
+            <li data-index="h11">模块 ls </li>
+        </ul>
+    </nav>
+
+
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <h2>这里是 <a href="./index.html" target="_blank">@高厉害</a> 的 node.js 笔记</h2>
+            <h2>学习中！...</h2>
+        </div>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">一、node + Gulp 基础</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    /// &lt;reference path="../../typings/index.d.ts"/&gt;
+
+    // node.js 的全局对象是 global
+    // 一、node 模块化开发
+    // （一）、模块导出
+    
+    // 1.exprots module.exports 为相同引用
+    // 改变引用后，以 module.exprots 为准
+    // 其可以指向任意数据
+    // 注意，同一进程下，不同文件 require 的同一模块为该模块的引用。
+    
+    // （二）、系统模块 node 提供的 api
+    
+    // 1.文件读写
+    const fs = require('fs');
+    // fs.readFile('file_name'[.'enecode'], callback(err, doc))
+    // fs.writeFile('file_name'[.'enecode'], callback(err))
+    // err 不为 null 说明出错
+    
+    fs.readFile('./exc.xlsx', (err, data) => {
+        if (err !== null) {
+            console.log(err);
+            return;
+        }
+        fs.writeFile('./new.xlsx', data, (err) => {
+            if (err !== null) {
+                console.log(err);
+                return;
+            }
+            console.log('success!');
+        })
+    })
+    
+    
+    
+    // 2.路径拼接
+    const path = require('path');
+    
+    //  path.join(str, str, str...)
+    // 大部分情况下使用绝对路径，因为相对路径以当前工作目录为准，而工作目录可变
+    // __dirname 可以获得当前脚本所在绝对路径，末尾不带 \
+    // 所以一般都这样写 ： path.join(__dirname,str...)
+    
+    
+    
+    // （三）、第三方模块
+    
+    // npmjs.com
+    // npm (node package manager)
+    // npm install [package name] [option]
+    // option -g 代表 global，全局安装
+    
+    // nrm 切换下载地址工具 
+    // nodemon 脚本保存即使执行
+    
+    
+    // （四）、Gulp 模块，前端构建工具
+    
+    // api:
+    // 1. gulp.src()
+    // 2. gulp.dest()
+    //  通过命令行工具执行 gulp task
+    // 3. gulp.task('task_name', callback(done_callback)
+    // 4. gulp.watch()
+    // 另
+    // gulp.series() 按照顺序执行
+    // gulp.paralle() 并行
+    
+    // gulp 功能需要通过插件实现
+    // gulp-htmlmin
+    // file-include
+    
+    // gulp-csso
+    // gulp-less
+    
+    // gulp-uglify
+    // gulp-babel
+    
+    // 执行构建任务时，如果不带参数，gulp 会自动执行 default 任务
+    
+    
+    
+    // （五）、package.json(项目依赖信息) package-lock.json(锁定包版本)
+    /// npm init -y 生成项目依赖描述文件
+    //  npm i(install) 下载依赖
+    //  npm install --production 下载项目依赖
+    
+    // 项目依赖 和 开发依赖
+    // npm install [package] --save-dev 将包信息添加在 devDependencies(开发依赖) 项中
+    // 当 npm install --production 时，仅下载项目依赖
+    
+    
+    // （六）、模块加载机制
+    // 给出路径
+    // 1. 根据模块绝对路径查找模块
+    // 2. 省略模块后缀，则寻找同名 js 文件
+    // 3. 寻找同名文件夹，然后执行其中的 index.js
+    // 4. 寻找 package.json ，执行其中记录的入口文件
+    // 无路径无后缀
+    // 1. 在系统模块中寻找
+    // 2. 在 node_modules 文件夹中寻找 js 文件 (上一级目录也会找)
+    // 3. 在 node_modules 文件夹中寻找文件夹,然后执行其中的 index.js
+    // 4. 寻找 package.json ，执行其中记录的入口文件
+
+
+    // （七）、补充
+    // 实现深拷贝
+    let tmpPackage = JSON.parse(JSON.stringify(API_ROUTES.trademark));
+    let cloned = Object.assign({}, source);
+    let cloned = { ... source };   // 仅限ES6
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h2">Gulp 构建任务</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 示例代码：
+
+    const gulp = require('gulp'),
+    htmlmin = require('gulp-htmlmin'),
+    fileinclude = require('gulp-file-include'),
+    less = require('gulp-less'),
+    csso = require('gulp-csso'),
+    babel = require('gulp-babel'),
+    uglify = require('gulp-uglify');
+
+    // example
+    gulp.task('task1', done => {
+        gulp.src('./src/css/style.css').pipe(gulp.dest('./dist/task1/css/index.css'));
+        console.log('Hollo world!');
+        done();
+
+    })
+
+
+    // htmlmin
+    // file-include
+    gulp.task('htmlmin', (done) => {
+        gulp.src('./src/*.html')
+            .pipe(fileinclude()) // 公共代码块 include
+            .pipe(htmlmin({ collapseWhitespace: true })) // html 压缩
+            .pipe(gulp.dest('./dist/task'));
+        done();
+    })
+
+    // csso
+    // less
+    gulp.task('cssmin', (done) => {
+        gulp.src('./src/css/*.css')
+            .pipe(less()) // less 语法转换
+            .pipe(csso()) // css 压缩
+            .pipe(gulp.dest('./dist/task/css'))
+        done();
+    })
+
+    // babel
+    // uglify
+    gulp.task('jsmin', (done) => {
+        gulp.src('./src/js/*.js')
+            .pipe(babel({
+                presets: ['@babel/env']
+            }))
+            .pipe(uglify())
+            .pipe(gulp.dest('./dist/task/js'));
+        done();
+    })
+
+    // 复制 文件夹
+    gulp.task('copy', (done) => {
+        gulp.src('./src/img/*')
+            .pipe(gulp.dest('./dist/task/img'));
+        gulp.src('./src/media/*')
+            .pipe(gulp.dest('./dist/task/media'));
+        done();
+    })
+
+    // 构建任务
+
+    gulp.task('default', gulp.series('htmlmin', 'cssmin', 'jsmin', 'copy', (done) => {
+        console.log('default success!');
+
+        done()
+    }))
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h3">二、服务端编程基础</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 一、系统模块 http
+
+    // const app = http.createServer() 
+    //创建服务器，返回一个服务器对象
+    
+    // app.listen(port); 
+    // 监听端口
+    
+    // app.on(event, callback(requests, response)) 
+    // 注册回调事件 ，http请求'：request'
+    // response.end(data) 用以结束响应
+    
+    
+    
+    
+    
+    // 二、HTTP 协议（超文本传输协议）
+
+    // 客户端和服务端进行请求和响应的标准
+    
+    // 1. request.herders
+    // 请求报文
+    
+    // request.url
+    // 请求 url
+    
+    // request.method
+    // GET 请求数据   POST 发送数据
+    
+    
+    
+    // 2. response._header
+    // 响应报文
+    
+    // state code (http 状态吗)
+    // 200 请求成功
+    // 404 请求的资源没有找到
+    // 500 服务器端错误
+    // 400 客户端请求有语法错误
+    
+    
+    // content-type (内容类型)
+    // 内容类型
+    // text/html
+    // text/css
+    // application/javascript
+    // image/jpeg
+    // application/json
+    
+    // 编码类型
+    // charset=tuf-8
+    // 例如: 'content-type':'text/html;charset=utf-8;'
+    
+    // response.writeHead(StatusCode, herder) 
+    // 置相应报文
+    
+    // 重定向
+    res.writeHead(301, {
+        Location: '/list'
+    });
+    res.end();
+    // --
+    res.writeHead(200, {
+        'content-type': 'text/html;charset=utf-8;'
+    });
+    res.end();
+    
+    
+    
+    // 3. HTTP 请求与响应处理
+    
+    // GET
+    // 查询参数在 url 中
+    // 系统模块 url，用于处理 url
+    // url.parse(String_url, bool_parseQueryString) 解析 url
+    // 返回对象的属性：
+    // query ,查询参数对象 (若第二个参数传 true)
+    // pathname ,请求地址
+    
+    // POST
+    // post 参数通过 data 和 end 事件接受
+    // data 参数开始传递时回调
+    // end 参数传递完成后回调
+    // request.on('data', params => {
+    //     postData += params;
+    // })
+    // request.on('end', params => {
+    //     console.log(querystring.parse(postData));
+    // })
+    
+    // 系统模块 querystring，处理 post 请求信息
+    
+    
+    // 路由
+    // 客户端请求地址与服务端程序代码的对应关系
+    
+    
+    // 静态资源访问
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h4">静态资源访问</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 示例代码
+
+    const http = require('http'),
+        url = require('url'),
+        fs = require('fs'),
+        path = require('path'),
+        mime = require('mime');
+    
+    // 设置主页及路由
+    const index = 'index.html',
+        route = path.join(__dirname, 'web');
+    
+    app = http.createServer();
+    
+    app.on('request', (request, response) => {
+        let pathname = url.parse(request.url).pathname,
+            method = request.method;
+        pathname = decodeURI(pathname);
+    
+        if (method == 'GET') {
+            let realPath = path.join(route, pathname, (pathname == '/' ? index : ''));
+            let type = mime.getType(realPath);
+    
+            console.log('method: ', method);
+            console.log('realPath: ', realPath);
+            console.log('type: ', mime.getType(realPath));
+            console.log('*********');
+    
+            fs.readFile(realPath, (err, data) => {
+                if (err != null) {
+                    console.log(err);
+    
+                    response.writeHead(404, {
+                        'content-type': 'text/html;charset=utf-8;',
+    
+                    });
+                    response.end('&lt;h1 style="text-align:center;"&gt;404 Not Found&lt;/h1&gt;');
+                    return;
+                }
+    
+                response.writeHead(200, {
+                    'content-type': type
+                });
+                response.end(data)
+            });
+        } else if (method == 'POST') {}
+    });
+    
+    app.listen(80);
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h5">三、异步编程</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 1. 异步 api 执行顺序
+    // 异步代码将会被暂时挂起，直到完成所有同步任务
+    
+    // 例1、
+    // 如下方代码，当循环结束后才开始调用定时器，运行观察 callback: 字样输出
+    function asyncFun(callback) {
+        setTimeout(() => {
+            callback('data');
+        }, 500)
+    }
+    let time = +new Date;
+    asyncFun((data) => {
+        console.log('callback:' + (+new Date - time));
+    })
+    for (let i = 0; i < 1000000000; i++);
+    console.log('sync:' + 　(+new Date - time));
+    
+    // 例2、观察最先输出的内容
+    let time = +new Date;
+    setTimeout(() => {
+        console.log('async' + 1);
+    }, 2)
+    setTimeout(() => {
+        console.log('async' + 2);
+    }, 1)
+    setTimeout(() => {
+        console.log('async' + 3);
+    }, 0)
+    for (let i = 0; i < 10000000; i++);
+    console.log('sync' + 　(+new Date - time));
+    
+    
+    // 过度调用异步 api 会陷入 "回调地狱"
+    // 例3、回调地狱
+    
+    // 依次读取 1、2、3 三个文件 
+    fs.readFile('./1.txt', (err, data) => {
+        console.log('a:', data);
+    
+        fs.readFile('./2.txt', (err, data) => {
+            console.log('b:', data);
+    
+            fs.readFile('./3.txt', (err, data) => {
+                console.log('c:', data);
+            })
+        })
+    })
+    
+    
+    
+    // 2. Promise 将异步执行和结果处理进行分离
+    // Promise 本质上是一个构造函数，其提供了两个回调函数供我们处理异步函数的结果
+    let pro = new Promise((resolve, reject) => {
+        resolve();
+        // 对应 then
+    
+        reject();
+        // 对应 catch
+    })
+    pro.then(() => {
+            // resolve
+        })
+        .catch(() => {
+            // reject
+        });
+    
+    
+    // 例1、读取文件
+    const fs = require('fs');
+    
+    let time = +new Date;
+    let pro = new Promise((resolve, reject) => {
+        fs.readFile('./form.html', 'utf-8', (err, data) => {
+            if (err == null) {
+                resolve(data);
+            } else {
+                reject(err);
+            }
+        });
+    });
+    
+    pro.then((data) => {
+            // console.log(data);
+            console.log('callback:' + (+new Date - time));
+            // ...
+        })
+        .catch((err) => {
+            // console.log(err);
+            console.log('callback:' + (+new Date - time));
+            // ...
+        });
+    for (let i = 0; i < 1000000000; i++);
+    console.log('sync:' + 　(+new Date - time));
+    
+    
+    // 例2、依次读取三个文件
+    const fs = require('fs');
+    
+    function p1() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./1.txt', 'utf8', (err, data) => {
+                if (err == null) {
+                    resolve(data);
+                } else {
+                    reject(err);
+                }
+            });
+        });
+    }
+    
+    function p2() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./2.txt', 'utf8', (err, data) => {
+                if (err == null) {
+                    resolve(data);
+                } else {
+                    reject(err);
+                }
+            });
+        });
+    }
+    
+    function p3() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./3.txt', 'utf8', (err, data) => {
+                if (err == null) {
+                    resolve(data);
+                } else {
+                    reject(err);
+                }
+            });
+        });
+    }
+    
+    p1().then((data) => {
+            console.log(data);
+            return p2();
+        })
+        .then((data) => {
+            console.log(data);
+            return p3();
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err);
+    
+        });
+    
+    
+    // 20,04,09 回来补充, “只能对末尾进行异常处理” 说法是错误的
+    // promise 对象允许这样使用
+    promise.then((data) => {
+        data;
+    }, (err) => {
+        // 错误处理
+    })
+    // 即 
+    promise.catch(err => { })
+    // 等价于
+    promise.then(null, err => { })
+
+    
+    // Promise 允许我们使用链式编程的方法，也为此提供了方便，但这只能对末尾进行异常处理
+    // 所以可以这样写
+    
+    const fs = require('fs');
+    
+    function p1() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./1.txt', 'utf8', (err, data) => {
+                resolve(data, err);
+            });
+        });
+    }
+    
+    function p2() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./2.txt', 'utf8', (err, data) => {
+                resolve(data, err);
+            });
+        });
+    }
+    
+    function p3() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./3.txt', 'utf8', (err, data) => {
+                resolve(data, err);
+            });
+        });
+    }
+    
+    p1().then((data, err) => {
+            console.log(data);
+            return p2();
+        })
+        .then((data, err) => {
+            console.log(data);
+            return p3();
+        })
+        .then((data, err) => {
+            console.log(data);
+        });
+    
+    
+    
+    
+    // 4. 异步编程回调地狱的最佳解决方案
+    // ES7 新增语法， async、await 关键字
+    // async 函数中: return 相当于调用 resolve ,throw 相当于调用 reject
+    // await 后跟一个 promise 对象，它可以暂停 async 函数的执行，等待 promise 对象返回结果后再继续执行
+    // await 必须在 async 函数中出现
+    // 例1、
+    const fs = require('fs'),
+        promisify = require('util').promisify;
+    const readFile = promisify(fs.readFile);
+    
+    async function fun() {
+        console.log(await readFile('./backEnd/1.txt', 'utf8'));
+        console.log(await readFile('./backEnd/2.txt', 'utf8'));
+        console.log(await readFile('./backEnd/3.txt', 'utf8'));
+    }
+    fun();
+    
+    // 理解 Promise 的机制:
+    // Promise 的 status 有三个值，对应三个状态，peending、resolve、reject
+    // Promise 通过我们在异步任务执行结束后调用回调函数来改变状态
+    // 即三种状态分别对应"实例化后" "异步任务调用 resolve 后"  和 "异步任务调用 reject 后" 
+    
+    // Promise 实例化后，异步代码段将会在合适的时间执行，当 Promise 实例返回时，异步代码段并未执行，处于 peending 状态
+    
+    // 而 async 函数，我们可以把它理解为一个装有一系列异步函数的集合，而这些异步函数我们都需要同步执行
+    // 调试例2，观察其调用顺序
+    // 例2、
+    
+    async function fun() {
+        var local_time = +new Date();
+        console.log('async function called');
+    
+        let a = await new Promise(resolve => setTimeout(() => {
+            console.log('A');
+            resolve('a')
+        }, 2000));
+    
+        console.log('local_clickA:' + (+new Date - local_time));
+    
+        let b = await new Promise(resolve => setTimeout(() => {
+            console.log('B');
+            resolve('b')
+        }, 1000));
+    
+        console.log('local_clickB:' + (+new Date - local_time));
+    
+        return { a, b };
+    }
+    var time = +new Date();
+    fun().then((result) => {
+        console.log(result);
+    })
+    for (let index = 0; index < 100000000; index++) {}
+    console.log('click:' + (+new Date - time));
+    
+    // for 循环在我的机器上耗时约 1000ms
+    // 输出为：
+    
+    // async function called  // 此时 local_time 开始计时
+    // click:1172
+    // A
+    // local_clickA:2014
+    // B
+    // local_clickB:3016
+    // Object {a: "a", b: "b"}
+    
+    //　从这里能看出来什么？
+    // async 函数在运行同步代码时与其他函数并无不同
+    // 而一旦在 async 内部碰到 await 关键字，当前函数会被挂起，解释器转而运行外部的下一条代码
+    // 直到所有同步任务完成前，该函数不会被继续调用
+    
+    // 例2 使用 setTimeout 来举例子
+    // 这是为了使结果更明显，但理解起来可能比较奇怪，比如，我为什么要 new Promise
+    
+    // 下面我来揭示一些最核心的东西
+    // 观察下面这些代码，它们是将 例2 的 setTimeout 换成 readFile 的结果，它们的结构是等价的
+    
+    // 例3、
+    const fs = require('fs'),
+        promisify = require('util').promisify;
+    const readFile = promisify(fs.readFile);
+    
+    async function fun() {
+        var local_time = +new Date();
+        console.log('async function called');
+    
+        let a = await readFile('./backEnd/a.txt', 'utf8');
+    
+        console.log('local_clickA:' + (+new Date - local_time));
+    
+        let b = await readFile('./backEnd/b.txt', 'utf8');
+    
+        console.log('local_clickB:' + (+new Date - local_time));
+    
+        return { a, b };
+    }
+    var time = +new Date();
+    fun().then((result) => {
+        console.log(result);
+    })
+    for (let index = 0; index < 100000000; index++) {}
+    console.log('click:' + (+new Date - time));
+    
+    // 注意到我将
+    let a = await new Promise(resolve => setTimeout(() => {
+        console.log('A');
+        resolve('a')
+    }, 2000));
+    // 替换为
+    const readFile = promisify(fs.readFile);
+    let a = await readFile('./backEnd/a.txt', 'utf8');
+    // 也可以写成
+    let a = await promisify(fs.readFile)('./backEnd/a.txt', 'utf8');
+    
+    // await 在等待什么？其实与我们之前仅使用 Promise 并无不同，它在等待 resolve 被回调
+    //　promisify 将 fs.readFile 用 Promise 包装起来，然后为我们做了一些工作
+    // 也就是说，它为我们调用了 resolve
+    // 这也是我在 setTimeout 中手动调动 resolve 的原因
+    
+    // 现在一切都很清晰了，我们之前仅使用 Promise 进行文件读写时对 fs.readFile 做的包装工作，实际上与 promisify 是一样的
+    // 我们回顾一下
+    function readFile(fileName, decode) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(fileName, decode, (err, data) => {
+                if (err == null) {
+                    resolve(data);
+                } else {
+                    reject(err);
+                }
+            });
+        });
+    }
+    
+    // 如果懒得 try，可以这样写
+    function readFile(fileName, decode) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(fileName, decode, (err, data) => {
+                resolve({ err, data });
+            });
+        });
+    }
+    // await 是 ES7 给出的语法糖，他只是在等待和接收 resolve 而已
+    // 总结一下，await 用于接收[Promise 实例的异步任务]回调 resolve 的实参
+    
+    // 所以我们可以自己包装 Promise，自己调用
+    
+    // 例4、
+    const fs = require('fs'),
+        promisify = require('util').promisify;
+    // const readFile = promisify(fs.readFile);
+    function readFile(fileName, decode) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(fileName, decode, (err, data) => {
+                resolve({ data, err });
+            });
+        });
+    }
+    
+    async function fun() {
+        var local_time = +new Date();
+        console.log('async function called');
+    
+        let a = await readFile('./backEnd/a.txt', 'utf8');
+    
+        console.log('local_clickA:' + (+new Date - local_time));
+    
+        let b = await readFile('./backEnd/b.txt', 'utf8');
+    
+        console.log('local_clickB:' + (+new Date - local_time));
+    
+        return { a, b };
+    }
+    var time = +new Date();
+    fun().then((result) => {
+        console.log(result);
+    })
+    for (let index = 0; index < 100000000; index++) {}
+    console.log('click:' + (+new Date - time));
+
+
+    // 我们还可以并发执行，语法大概是这样
+    // 例5、
+    async function fun() {
+        let a = await Promise.all([await readFile('./backEnd/a.txt', 'utf8'), readFile('./backEnd/b.txt', 'utf8')])
+        return a;
+    }
+
+    fun().then((data) => {
+        data.forEach((i) => {
+            console.log(i);
+
+        })
+    });
+    // 任务结束后，会将结果打包成一个数组，传入resolve。
+        </pre>
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h6">四、MongoDB 数据库</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 一、概念
+    // 层次关系:
+    // database => collection => document => fieeld
+    // 数据库(应用)  集合(类别)     文档(data)   字段(prop)
+
+    // 启动 MongoDB
+    // 命令行输入 net start / stop mongodb
+
+
+
+    // 二、MongoDB api
+    <a href="https://mongoosejs.com/docs/">Doc -> https://mongoosejs.com/docs/</a>
+    // 如果数据库不存在，会自动建立
+    // 注意，mongodb 的默认端口为 27017，可以省略
+    const mongoose = require('mongoose');
+    mongoose.connect('mongodb://localhost/firstDB', { useNewUrlParser: true, useUnifiedTopology: true })
+        .then(() => {
+            console.log('\033[42;30mDone\033[0m DB connected successfully!');
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
+
+    // 增删改查
+
+    // 1. 创建集合并保存一个文档
+
+    // 设定集合规则
+    const courseSchema = new mongoose.Schema({
+        name: String,
+        author: String,
+        isPublished: Boolean
+    });
+
+    // 创建文档
+    // 参数 集合名称 集合规则
+    const Course = mongoose.model('Course', courseSchema);
+    // 返回一个当前集合的构造函数
+    // 数据库中集合名字为 'courses'
+    // 注意, 对于一个集合的名字 Name, 'name''names''Name''Names' 指的是同一个集合
+
+    // 实例化文档
+    const course = new Course({
+        name: 'Web',
+        author: 'Gaolihai',
+        isPublished: true
+    });
+
+    // 保存数据
+    course.save();
+
+
+
+    // 2. 创建并保存文档
+    Course.create({
+        name: 'java',
+        author: 'jiazhouyuan',
+        isPublished: false
+    }, (err, doc) => {
+        console.log(err);
+        console.log(doc);
+    });
+    // 注意, 当传入的字段不存在时，不会插入不存在的字段
+    //
+    // 3. mongodb 的异步操作
+    // mongodb 提供的 api 均为异步 api
+    // 故上方的 create 等一些 api 可以使用 Promise 异步获得返回
+    // 以 create 方法为例
+    Course.create({
+            name: 'java',
+            author: 'jiazhouyuan',
+            isPublished: false
+        })
+        .then((doc) => {
+            console.log(doc);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
+
+    // 4. 删除
+    // 删除 api
+    // 找到一条数据并删除, 若想要操作成功, 一定要用 then 接收结果, 返回删除的数据对象
+    User.findOneAndDelete({ name: '王五' }).then((re) => {
+        console.log(re);
+    })
+
+    // 删除多条数据 返回一个对象 { n: 5, ok: 1, deletedCount: 5 }，ok字段 为 1 说明成功。
+    User.deleteMany({}).then((re) => {
+        console.log(re);
+    })
+
+
+
+    //　5. 修改 
+    // 修改 api
+    // 修改单个数据: 返回一个对象 { n: 1, nModified: 1, ok: 1 } n 查询到的个数 nModified 修改的个数 ok 结果状态
+    User.updateOne({ age: { $gt: 40 } }, { name: '老年狗' }).then((re) => {
+        console.log(re);
+    })
+
+    // 修改多个数据: 返回值同上
+    User.updateMany({ age: { $lt: 40 } }, { name: '年轻狗' }).then((re) => {
+        console.log(re);
+    })
+
+
+
+    // 6. 查询
+    // 命令行导入 json 数据
+    // mongoimport -d firstDB -c users --file .\user.json
+    // 数据库名称 集合名称 欲导入数据的文件名称
+
+    // 查询 api
+
+    // 返回一个数组，包含查询到的所有文档
+    User.find({
+        name: '王五'
+    }).then((result) => {
+        console.log(result);
+    })
+
+    // 返回一个文档对象，注意空对象为 null
+    User.findOne({
+        name: '王五'
+    }).then((result) => {
+        console.log(result);
+    })
+
+    // 更多查询条件
+    // 大于小于: age 字段传入一个对象, $gt 字段代表大于 $lt 代表小于
+    User.find({
+        age: { $gt: 20, $lt: 40 }
+    }).then((result => {
+        console.log(result);
+    }));
+
+    // 字符串包含:　$in 字段
+    User.find({
+        hobbies: { $in: '吃饭' }
+    }).then((result => {
+        console.log(result);
+    }));
+
+    // 仅返回需要的字段: select 方法 - 后跟字段代表不想返回的字段
+    User.find({}).select('name email -_id').then((result => {
+        console.log(result);
+    }));
+
+    // 查询结果排序: sort 方法 加 - 代表降序排列
+    User.find().sort('age').then((result => {
+        console.log(result);
+    }));
+    // 或 1 代表升序  -1 代表降序
+    User.find().sort({ _id: -1 }).then((result => {
+        console.log(result);
+    }));
+
+    // 跳过几条数据: skip 方法
+    User.find().skip(1).then((result => {
+        console.log(result);
+    }));
+
+    // 限制返回数据条数
+    User.find().limit(1).then((result => {
+        console.log(result);
+    }));
+
+
+
+    // 7. 验证
+    // 即设置插入规则
+    // 在置定文档规则时, 在某字段填写对象, 设置验证规则
+    const articleSchema = new mongoose.Schema({
+        title: {
+            type: String,
+            require: true
+        }
+    });
+
+    // 自定义错误信息
+    const articleSchema = new mongoose.Schema({
+        title: {
+            type: String,
+            require: [true, '\033[41;37m 请传入文章标题 \033[0m']
+        }
+    });
+
+    // 字符串的一些规则
+    const articleSchema = new mongoose.Schema({
+        title: {
+            type: String,
+            require: [true, '\033[41;37m 请传入文章标题 \033[0m'],
+
+            minlength: 5,
+            maxlength: 20,
+            // 设置字段 size minlength maxlength
+
+            trim: true,
+            // 去除字符串两边空格 trim
+
+            enum: [
+                    ['limit value'], 'error string'
+                ]
+                // 指定字段值的限定词, 此外的值会被拒绝从而插入失败
+        }
+    });
+
+    //　数字的一些规则
+    const articleSchema = new mongoose.Schema({
+        author_count: {
+            type: Number,
+            max: 20,
+            min: 0,
+            // 针对数字的大小
+        },
+        publishDate: {
+            type: Date,
+            default: Date.now
+                // 指定默认值, 不提供该字段时，即便 required 字段为 true, 也能插入成功
+        }
+
+    });
+
+    // 自定义规则
+    const articleSchema = new mongoose.Schema({
+        title: {
+            type: String,
+
+            validate: {
+                validator: (value) => {
+                    // 验证代码
+                    return true / false;
+                }
+            },
+
+            message: 'error string'
+        }
+    });
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h7">五、模板引擎 atr-template</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 安装
+    npm i art-template
+    
+    // 引入
+    const template = require('art-template');
+    const html = template('./path', data);
+    // path 文件名后缀为 .art
+    // data 为一对象，描述模板文件的对应数据
+
+    // 标准语法
+    {{字段}}
+
+    // 原始语法
+    <%= 字段 %>
+    // 两种语法可以混用
+
+
+    // 1. 替换方式
+
+    // 模板引擎默认对尖括号等字符进行替换
+    // 想要按照原文替换，即令浏览器解析代码，需要这样写
+
+    {{@字段}}
+    <%- 字段 %>
+
+
+    // 2. 条件
+    {{if condition1}} 
+        {{content1}} 
+    {{else if condition2}} 
+        {{content2}} 
+    {{else}} 
+    {{/if}}
+
+    <% if (condition1)  { %> 
+        content1 
+    <% } else if (condition2){ %> 
+        content2 
+    <% } %>
+
+
+    // 3. 循环
+    {{each target}} 
+        {{$index}} {{$value}}
+        content
+    {{/each}}
+
+    <% for(i in target) { %>
+        <%= i %>  <%= target[i] %>
+        content
+    <% } %>
+
+
+    // 4. 子模板
+    {{include './path'}}
+    <%include('./path')%>
+
+
+    // 5. 模板继承
+    // 模板文件 
+    // {{block 'name'}}  {{/block}}
+    
+    // 继承 
+    // {{extend './path'}}
+    // {{block 'name'}} <tag> content </tag> {{/block}}
+    
+    
+    // 6. 模板配置
+    // 向模板中导入模块
+    // template.defaults.imports.var = var
+    
+    // 设置模板根目录
+    // template.defaults.root = './path'
+    
+    // 设置模板后缀
+    // template.defaults.extname = '.ext'
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h8">六、Express 框架开发</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 安装
+    // npm i express
+    
+    // 引入
+    const express = require('express');
+    
+    const app = express();
+    app.get('/', (req, res) => {
+        res.send('ok');
+    })
+    app.listen(prot)
+    
+    // 1. 基本语法
+    const express = require('express');
+    
+    const app = express();
+    app.get('/', (req, res) => {
+        res.send('ok');
+        // 自动检测响应内容类型
+        // 自动设置 http 状态吗
+        // 自动设置响应内容的类型和编码
+        // send 后相当于已经调用了 end
+        // send 里可以填 JSON 对象
+    })
+    app.listen(prot);
+    
+    
+    
+    // 2. 中间件
+    // 用来处理 HTTP 请求
+    // 例如:
+    app.get('/route', (req, res, next) => {
+        // do sth.
+        next();
+        // 交由下一个中间件继续处理
+    });
+    
+    
+    // app.use 中间件方法, 接收任何类型请求
+    // 第一个参数可以省略, 代表接收所有请求路径的请求
+    // 注意, 中间件是有顺序的
+    app.use('./path', (req, res, next) => {
+        // do sth.
+        next();
+    });
+    
+    
+    // 中间件应用
+    // 路由保护, 判断用户状态, 拦截请求. 
+    app.use((req, res, next) => {
+        if (loginState) {
+            next();
+        } else {
+            res.send('未登陆');
+        }
+    });
+    
+    
+    // 通过第一个中间件发布网站维护公告
+    app.use((req, res) => {
+        res.send('网站正在维护...');
+    });
+    
+    
+    // 通过末尾中间件, 定义 404 页面
+    app.use((req, res) => {
+        res.status(404).send('404 Not Found');
+    });
+    
+    
+    // 错误处理中间件
+    // 对同步任务
+    app.use((req, res) => {
+        throw new Error('404 ');
+    });
+    // 当传入 use 回调函数有四个形参时, 该中间件会被认为是一个错误处理中间件
+    app.use((err, req, res, next) => {
+        res.status(500).send(err.message);
+    })
+    
+    // 对回调的异步任务 
+    // 当 next 传入参数时, 会触发错误处理
+    app.use((req, res) => {
+        fs.readFile('./123', (err, data) => {
+            if (err != null) {
+                next(err);
+            } else {
+                res.send(data);
+            }
+        })
+    });
+    // 当传入 use 回调函数有四个形参时, 该中间件会被认为是一个错误处理中间件
+    app.use((err, req, res, next) => {
+        res.status(500).send(err.message);
+    })
+    
+    // 对异步函数
+    app.get('/index', async(req, res, next) => {
+        try {
+            res.send(await promisify(fs.readFile)('./path'));
+        } catch (err) {
+            next(err);
+        }
+    });
+    // 当传入 use 回调函数有四个形参时, 该中间件会被认为是一个错误处理中间件
+    app.use((err, req, res, next) => {
+        res.status(500).send(err.message);
+    })
+    
+    
+    
+    // 3. 模块化路由
+    
+    // 多级路由
+    const home = express.Router();
+    // 返回一个路由对象
+    
+    app.use('/home', home);
+    // home 为一级路由
+    
+    home.get('/index', (req, res) => {
+        // 二级路由
+        // 此处路由为 /home/index
+        // do sth.
+    });
+    
+    
+    // 模块化路由
+    // home.js
+    const express = require('express');
+    const home = express.Router();
+    home.get('/index', (req, res) => {
+        res.send('/home 页面');
+    });
+    module.exports = home;
+    
+    // admin.js
+    const express = require('express');
+    const admin = express.Router();
+    admin.get('/index', (req, res) => {
+        res.send('/admin 页面');
+    });
+    module.exports = admin;
+    
+    // app.js
+    const express = require('express');
+    const home = require('./route/home');
+    const admin = require('./route/admin');
+    
+    const app = express();
+    
+    app.use('/home', home);
+    app.use('/admin', admin);
+    
+    app.listen(80);
+    console.log(' \033[42;1m Done \033[0m 服务器启动成功！')
+    
+    
+    
+    // 4. 参数获取
+    // GET
+    req.query
+    
+    // POST
+    // 安装
+    // npm i body - parser
+    
+    // 引入
+    const bodyParser = require('body-parser');
+    app.use(bodyParser.urlencoded({ extended: false }));
+    // 当 extended 为 false 时, 会使用系统模块 queryString 进行处理, 反之则使用第三方模块 qs
+    app.post('/path', (req, res) => {
+        req.body;
+    });
+    
+    
+    // 5. 路由参数, 获取 GET 请求的一种方式
+    app.get('/route/:param1/:param2', (req, res) => {
+        req.params;
+    });
+    
+    
+    // 6. 静态资源访问
+    app.use(express.static('./path', { index: 'default.html' }));
+    
+    
+    // 7.express-art-template
+    // npm i art-template express-art-template
+    
+    // 使用
+    app.engine('art', require('express-art-template'));
+    // 为引入的模板引擎设置一标识 art, 此标识也是默认后缀
+    app.set('views', './path');
+    // 模板位置
+    app.set('view engine', 'art');
+    // 通过标识选择模板引擎
+    app.get('/route', (req, res) => {
+        res.render('fileName', {});
+        // 调用 render 的同时响应了客户端
+    })
+    
+    // app.locals 对象
+    // 当 app.locals 对象下的属性存在时
+    // 模板会直接额获取到这些属性并渲染, 不需要向 render 内传参
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h9">七、部署 https 服务</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    const express = require('express');
+    const fs = require('fs');
+    const http = require('http');
+    const https = require('https');
+    
+    // options
+    const options = {
+        key: fs.readFileSync('./xxx.key'),
+        cert: fs.readFileSync('./xxx.crt')
+    };
+    const app = express();
+    // server
+    const httpServer = http.createServer(app);
+    const httpsServer = https.createServer(options, app);
+    
+    // https redirect
+    app.use((req, res, next) => {
+        if (process.env.NODE_ENV == 'development') {
+        } else {
+            if (!req.secure) {
+                return res.redirect('https://' + req.get('host') + req.url);
+            }
+        }
+        next();
+    });
+    
+    // router
+    app.use((req, res, next) => {
+        res.send('Hello world!')
+    })
+    
+    // listen
+    httpServer.listen(80, () => {
+        console.log('Server starts listening on port 80');
+    });
+    httpsServer.listen(443, () => {
+        console.log('Server starts listening on port 443');
+    });
+        </pre>
+    </div>
+
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h10">八、blog 项目笔记 </h1>
+        <h1><small> 项目演示地址 → <a target="_blank"
+                    href="http://gaolihai.top:81/blog/home/index">http://gaolihai.top:81/blog/home/index</a></small>
+        </h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 1. 模板文件外链文件的路径
+    // 外链文件的相对路径, 请求地址为相对于当前路由的路径
+    // 如 
+    // 当前路由为 localhost/blog，外链相对路径为 admin/style.css
+    // 此时请求 url 为 localhost/blog/admin/style.css
+    
+    // 外链文件的绝对路径，请求地址为相对于一级路由的路径
+    // 如
+    // 当前路由为 localhost/blog，外链相对路径为 admin/style.css
+    // 此时请求 url 为 localhost/admin/style.css
+    
+    // 2. 数据库集合规则 unique:true 意为字段数据必须唯一
+    
+    // 3. 在 ES6 中, 若对象的某成员键与值相同, 则写一个即可
+    // 如: {User:User} <==> {User}
+    
+    // 4. JQ 获取表单用户输入的内容 serializeArray() 返回一数组, 数组中包含对象
+    // 键值对以该形式给出: [{name:'username', value:'gaolihai'}, {name:'password', value:'123456'}]
+    // 封装优化
+    function serializeToJson(form) {
+        var re = {};
+        var data = form.serializeArray();
+        for (item of data) {
+            re[item.name] = item.value;
+        };
+        return re;
+    }
+    // 5. str.trim() 返回去除两端空格的 str
+    
+    // 6. 密码加密
+    // 安装
+    // npm i bcrypt
+    // 依赖
+    // python
+    // npm i -g node-gyp
+    // npm i --global --production windows-build-tools
+    // 引入和使用
+    const bcrypt = require('bcrypt');
+    let salt = await bcrypt.genSalt(10);
+    let pass = await bcrypt.hash('password', salt);
+    // 密码比对
+    let isEqual = await bcrypt.compare('password', 'cryptPass');
+    //
+    // 7. http 协议的无状态性, 当服务端与客户端进行一次交互后即断开
+    
+    // 8. cookie 与 session
+    // cookie
+    // cookie 为在客户端本地储存的数据, 可以储存多条数据
+    // cookie 会随 http 请求发送到客户端
+    // cookie 可由服务端或前端 webapi 存储
+    // cookie 存在过期时间, 过期后会被删除
+    // 
+    // session
+    // session 是一个对象, 在服务端内存中储存
+    // session 对象中可以存储多条数据, 每条数据均对应一个唯一的 sessionid
+    //
+    // 客户端登录 → 服务端生成 sessionid 写入 cookie
+    // 客户端访问 → 将 cookie 与 sessionid 比对
+    // 插件 express-session
+    // 引入及使用
+    const session = require('express-session');
+    const session = require('express-session');
+    router.use(session({
+        secret: 'secret key',
+        resave: false,
+        // 每次强制重新保存(即使未修改)
+        saveUninitialized: false,
+        // 保存未初始化的 cookie
+        cookie: { maxAge: 1000 * 60 * 60 * 24 }
+        // 过期时间
+    }));
+    router.get('/route', (req, res) => {
+        // 客户端的 cookie 位于随请求发送的 session 对象中
+        req.session;
+        // 获取session
+        req.session.destroy();
+        // 删除 session
+    });
+    //
+    // 9. 在多级路由中，下层路由可由 req.app 获取当前 application
+    //
+    // 10. 为 req 添加一个 fullUrl 属性的中间件
+    module.exports = (req, res, next) => {
+        req.fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        next();
+    };
+    //
+    // 11. 第三方模块 Joi js 对象的规则描述语言和验证器
+    // 安装
+    // npm i Joi
+    // 引入及使用
+    const joi = require('joi');
+    const schema = {
+        username: joi.string().alphanum().min(2).max(20).required().error(new Error('username 格式出错')),
+        password: joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
+        access_token: [joi.string(), joi.number()],
+        email: joi.string().email()
+    };
+    async function run() {
+        try {
+            let re = await joi.validate(obj, schema)
+            console.log(re);
+            // 返回验证对象
+        } catch (error) {
+            console.log(error.message);
+            return;
+        }
+        console.log('ok');
+
+    }
+    run();
+
+    // string() 字符串   alphanum() 只能是字母或数字字符串   min() / max() 最大最小长度
+    // required() 必须的   regex(/ /) 正则验证   number() 数值类型   integer() 整数   valid('',''...) 枚举
+    // [joi.string(), joi.number()] 用数组指定不同的规则   error() 错误信息
+    // 注意, 必须先指定数据类型
+    //
+    // 11. 登录等页面提示信息
+    // 第一种方法:　做重定向, url 带参, 目标路由把 req.query 传进 render 里
+    // 第二种方法: 在当前路由直接 render
+    // 第一种方法比较方便不用, 而且更加模块化, 不耦合 
+    //
+    // 12. 数据库查询文档数目
+    Doc.countDocuments({});
+    //
+    // 13. res.send 不可仅发送一个 number
+    //
+    // 14. 涉及到文件上传的表单，需要在 &lt;form&gt; 中添加属性 enctype(编码类型)
+    // 默认类型为 application/x-www-form-urlencoded
+    // 设置为 multipart/form-data
+    //
+    // 15. 第三方面模块 formidable 解析二进制请求体数据
+    // 引入及使用
+    const formidable = require('formidable');
+    // 创建解析对象
+    const form = new formidable.IncomingForm();
+    form.uploadDir = '/my/dir';
+    form.keepExtensions = true;
+    // 解析
+    form.parse(req, (err, fields, files) => {
+        // fields 请求参数
+        // files 文件信息
+    });
+
+    // 16. 前端 js 读取文件
+    var reader = new FileReader();
+    reader.readAsDataURL(fileObj);
+    reader.onload = function() {
+        reader.result;
+    };
+    //
+    // 17. express-art-template 全局配置
+    // 导入 art-template 然后直接正常配置
+    const dateFormat = require('dateformat');
+    const template = require('art-template');
+    template.defaults.imports.dateFormat = dateFormat;
+    //
+    // 18. 第三方模块 mongoose-sex-page 实现数据分页
+    const pagination = require('mongoose-sex-page');
+    pagination(User)
+        .page() // 当前页
+        .size() // 每页数据条数
+        .display() // 总条数
+        .find() // 条件，可缺省
+        .exec(); // 查询
+    //
+    //
+    // 19. mongoDB 数据库添加账号
+    // 1. 以管理员方式运行 powershell
+    // 2. 连接数据库 mongo
+    // 3. show dbs, 切换到 admin 数据库 use admin 
+    // 4. 创建管理员账户 db.createUser()   db.createUser({user:'gaolihai',pwd:'745663',roles:['root']})
+    // 5. 切换到其他数据库 use dbName
+    // 6. 创建普通账号db.createUser()   db.createUser({user:'gaolihai',pwd:'745663',roles:['readWrite']})
+    // 7. 卸载服务 1. net stop mongodb 停止服务  2. mongod --remove 卸载服务
+    // 8. 创建服务 1.  mongod --logpath="A:\Others\MongoDB\log\mongod.log" --dbpath="A:\Others\MongoDB\data" --install -auth 创建服务 \
+    // 参数说明: 1. 日志目录  2. mongo data目录  3. 安装服务  4. 设置当前数据库必须进行登录验证才能操作
+    // 2. net start mongodb 开启服务
+    
+    // 命令行 操作过程
+    // PS C:\windows\system32> mongo
+    // MongoDB shell version v4.2.3
+    // connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+    // Implicit session: session { "id" : UUID("55a613b5-4e5b-4bdd-9674-da0b9a2676b9") }
+    // MongoDB server version: 4.2.3
+    // Welcome to the MongoDB shell.
+    // For interactive help, type "help".
+    // For more comprehensive documentation, see
+    //         http://docs.mongodb.org/
+    // Questions? Try the support group
+    //         http://groups.google.com/group/mongodb-user
+    // Server has startup warnings:
+    // 2020-04-02T10:00:27.919+0800 I  CONTROL  [initandlisten]
+    // 2020-04-02T10:00:27.919+0800 I  CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+    // 2020-04-02T10:00:27.919+0800 I  CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+    // 2020-04-02T10:00:27.919+0800 I  CONTROL  [initandlisten]
+    // ---
+    // Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+    // metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+    
+    // The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+    // and anyone you share the URL with. MongoDB may use this information to make product
+    // improvements and to suggest MongoDB products and deployment options to you.
+    
+    // To enable free monitoring, run the following command: db.enableFreeMonitoring()
+    // To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+    // ---
+    
+    // > show dbs
+    // admin    0.000GB
+    // blog     0.000GB
+    // config   0.000GB
+    // firstDB  0.000GB
+    // local    0.000GB
+    // > use admin
+    // switched to db admin
+    // > db.createUser({user:'gaolihai',pwd:'745663',roles:['root']})
+    // Successfully added user: { "user" : "gaolihai", "roles" : [ "root" ] }
+    // > use blog
+    // switched to db blog
+    // > db.createUser({user:'gaolihai',pwd:'745663',roles:['readWrite']})
+    // Successfully added user: { "user" : "gaolihai", "roles" : [ "readWrite" ] }
+    // > exit
+    // bye
+    // PS C:\windows\system32> net stop mongodb
+    // MongoDB Server 服务正在停止.
+    // MongoDB Server 服务已成功停止。
+    
+    // PS C:\windows\system32> mongod --remove
+    // 2020-04-02T10:38:19.819+0800 I  CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
+    // 2020-04-02T10:38:20.290+0800 I  CONTROL  [main] Trying to remove Windows service 'MongoDB'
+    // 2020-04-02T10:38:20.300+0800 I  CONTROL  [main] Service 'MongoDB' removed
+    // PS C:\windows\system32> mongod --logpath="A:\Others\MongoDB\log\mongod.log" --dbpath="A:\Others\MongoDB\data" --install -auth
+    // 2020-04-02T10:42:31.305+0800 I  CONTROL  [main] log file "A:\Others\MongoDB\log\mongod.log" exists; moved to "A:\Others\MongoDB\log\mongod.log.2020-04-02T02-42-31".
+    // PS C:\windows\system32> net start mongodb
+    // MongoDB 服务正在启动 ..
+    // MongoDB 服务已经启动成功。
+    
+    // PS C:\windows\system32>
+    
+    // 通过账号密码连接数据库
+    // mongoose.connect('mongodb://username:pwd@localhost:port/databaseName')
+    
+    // 总结:
+    // 1、进入mongodb的shell ：
+    // mongo
+    // 2、切换数据库
+    // use admin
+    // 3、创建admin超级管理员用户
+    // 指定用户的角色和数据库：
+    // (注意此时添加的用户都只用于admin数据库，而非你存储业务数据的数据库)
+    // (在cmd中敲多行代码时，直接敲回车换行，最后以分号首尾)
+    // db.createUser(  
+    //   { user: "admin",  
+    //     customData：{description:"superuser"},
+    //     pwd: "admin",  
+    //     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]  
+    //   }  
+    // )  
+    // user字段，为新用户的名字；
+    // pwd字段，用户的密码；
+    // cusomData字段，为任意内容，例如可以为用户全名介绍；
+    // roles字段，指定用户的角色，可以用一个空数组给新用户设定空角色。在roles字段,可以指定内置角色和用户定义的角色。
+    // 超级用户的role有两种，userAdmin或者userAdminAnyDatabase(比前一种多加了对所有数据库的访问,仅仅是访问而已)。
+    // db是指定数据库的名字，admin是管理数据库。
+    // 不能用admin数据库中的用户登录其他数据库。注：只能查看当前数据库中的用户，哪怕当前数据库admin数据库，也只能查看admin数据库中创建的用户。
+    // 4、创建一个不受访问限制的超级用户
+    // (跳出三界之外，不在五行之中)
+    // db.createUser(
+    //     {
+    //         user:"root",
+    //         pwd:"pwd",
+    //         roles:["root"]
+    //     }
+    // )
+    // 5、创建一个业务数据库管理员用户
+    // (只负责某一个或几个数据库的増查改删)
+    // > db.createUser({
+    //     user:"user001",
+    //     pwd:"123456",
+    //     customData:{
+    //         name:'jim',
+    //         email:'jim@qq.com',
+    //         age:18,
+    //     },
+    //     roles:[
+    //         {role:"readWrite",db:"db001"},
+    //         {role:"readWrite",db:"db002"},
+    //         'read'// 对其他数据库有只读权限，对db001、db002是读写权限
+    //     ]
+    // })
+    // 数据库用户角色：read、readWrite；
+    // 数据库管理角色：dbAdmin、dbOwner、userAdmin;
+    // 集群管理角色：clusterAdmin、clusterManager、4. clusterMonitor、hostManage；
+    // 备份恢复角色：backup、restore；
+    // 所有数据库角色：readAnyDatabase、readWriteAnyDatabase、userAdminAnyDatabase、dbAdminAnyDatabase
+    // 超级用户角色：root
+    // 内部角色：__system
+    // Read：允许用户读取指定数据库
+    // readWrite：允许用户读写指定数据库
+    // dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile
+    // userAdmin：允许用户向system.users集合写入，可以在指定数据库里创建、删除和管理用户
+    // clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。
+    // readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限
+    // readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限
+    // userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限
+    // dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。
+    // root：只在admin数据库中可用。超级账号，超级权限
+    // 6、查看创建的用户
+    // show users 或 db.system.users.find() 或 db.runCommand({usersInfo:"userName"})
+    // 7、修改密码
+    // use admin
+    // db.changeUserPassword("username", "xxx")
+    // 8、修改密码和用户信息
+    // db.runCommand(
+    //     {
+    //         updateUser:"username",
+    //         pwd:"xxx",
+    //         customData:{title:"xxx"}
+    //     }
+    // )
+    // 9、删除数据库用户
+    // use admin
+    // db.dropUser('user001')
+    // 10、创建其他数据管理员
+    // // 登录管理员用户
+    // use admin
+    // db.auth('admin','admin')
+    // // 切换至db001数据库
+    // use db001
+    // // ... 増查改删该数据库专有用户
+    // 重要的一步
+    // 启用权限验证(别TM的武装了大半天，大门还一直开着，还抱怨我方防御塔怎么一直被摧毁)
+    // mongo --auth
+    // 或者修改mongo.conf，最后一行添加
+    
+    // #启用权限访问
+    // auth=true
+    // 11、重新启动mongodb
+    // net stop mongodb;
+    // net start mongodb;
+    // 和用户管理相关的操作基本都要在admin数据库下运行，要先use admin;
+    // 如果在某个单一的数据库下，那只能对当前数据库的权限进行操作;
+    // db.addUser是老版本的操作，现在版本也还能继续使用，创建出来的user是带有root role的超级管理员。
+    
+    
+    // 20. 生产环节与开发环境
+    // 通过设置电脑和服务器的环境变量 NODE_ENV : development / production
+    if (process.env.NODE_ENV == 'development') {
+    
+    } else {
+    
+    }
+    
+    // 21. 第三方模块 morgan 中间件, 输出请求信息
+    const morgan = require('morgan');
+    app.use(morgan('dev'));
+    
+    
+    // 22. 第三方模块 config 方便切换配置信息
+    // 1. 在项目根目录建立 config 文件夹
+    // 2. config 文件夹下三个文件 default.json development.json production.json
+    const config = require('config');
+    
+    // 将敏感配置信息存储在环境变量中
+    // 在 config 文件夹中建立 custom-environment-variables.json 
+    // 在值中填写环境变量的名称, config 优先从用户变量读取
+    
+    // 23. mongodb 连接时的query string 
+    // authSource=admin 依赖 admin 验证登录    
+        </pre>
+    </div>
+
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h11">模块等其他补充</h1>
+        <h1><small>Mark 一下,以后用到再看 → <a
+                    href="https://www.cnblogs.com/fandx/p/12130367.html">https://www.cnblogs.com/fandx/p/12130367.html</a>
+            </small></h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // 一、模块
+    // dateformat 日期时间格式化
+    // nrm 切换下载源
+    // mongoose mongodb数据库
+    // mime 使用 getType 方法获取文件类型
+    // art-template 模板 (express-art-template)
+    // nodemon 运行工具
+    // gulp 构建工具
+    
+    
+    // router 路由
+    const router = require('router')();
+    router().get('./path', (req, res) => {});
+    router().post('./path', (req, res) => {});
+    server.on('request', (req, res) => router(req, res, callback));
+    
+    // serve-static 静态资源访问
+    const serve = require('serve-static')('./path');
+    server.on('request', (req, res) => serve(req, res, callback));
+    
+    
+    // body-parser
+    // 引入
+    const bodyParser = require('body-parser');
+    app.use(bodyParser.urlencoded({ extended: false }));
+    // 当 extended 为 false 时, 会使用系统模块 queryString 进行处理, 反之则使用第三方模块 qs
+    app.post('/path', (req, res) => {
+        req.body;
+    });
+    
+    
+    // bcrypt
+    // 依赖
+    // python
+    // npm i -g node-gyp
+    // npm i --global --production windows-build-tools
+    // 引入和使用
+    const bcrypt = require('bcrypt');
+    let salt = await bcrypt.genSalt(10);
+    let pass = await bcrypt.hash('password', salt);
+
+    
+    // express-session
+    // 引入及使用
+    const session = require('express-session');
+    router.use(session({
+        secret: 'secret key',
+        resave: false,
+        // 每次强制重新保存(即使未修改)
+        saveUninitialized: false,
+        // 保存未初始化的 cookie
+        cookie: { maxAge: 1000 * 60 * 60 * 24 }
+        // 过期时间
+    }));
+    router.get('/route', (req, res) => {
+        // 客户端的 cookie 位于随请求发送的 session 对象中
+        req.session;
+        // 获取session
+        req.session.destroy();
+        // 删除 session
+    });
+    
+    
+    // formidable 解析二进制请求体数据
+    // 引入及使用
+    const formidable = require('formidable');
+    // 创建解析对象
+    const form = new formidable.IncomingForm();
+    form.uploadDir = '/my/dir';
+    form.keepExtensions = true;
+    // 解析
+    form.parse(req, (err, fields, files) => {
+        // fields 请求参数
+        // files 文件信息
+    });
+
+
+    // 二、控制台输出彩色文字
+    console.log("\033[30m 黑色字 \033[0m", '黑色')
+    console.log("\033[31m 红色字 \033[0m")
+    console.log("\033[32m 绿色字 \033[0m")
+    console.log("\033[33m 黄色字 \033[0m")
+    console.log("\033[34m 蓝色字 \033[0m")
+    console.log("\033[35m 紫色字 \033[0m")
+    console.log("\033[36m 天蓝字 \033[0m")
+    console.log("\033[37m 白色字 \033[0m")
+    
+    console.log("\033[40;37m 黑底白字 \033[0m")
+    console.log("\033[41;37m 红底白字 \033[0m")
+    console.log("\033[42;37m 绿底白字 \033[0m")
+    console.log("\033[43;37m 黄底白字 \033[0m")
+    console.log("\033[44;37m 蓝底白字 \033[0m")
+    console.log("\033[45;37m 紫底白字 \033[0m")
+    console.log("\033[46;37m 天蓝底白字 \033[0m")
+    console.log("\033[47;30m 白底黑字 \033[0m")
+    
+    // \33[0m 关闭所有属性
+    // \33[1m 设置高亮度
+    // \33[4m 下划线
+    // \33[5m 闪烁
+    // \33[7m 反显
+    // \33[8m 消隐
+    // \33[30m — \33[37m 设置前景色
+    // \33[40m — \33[47m 设置背景色
+    // \33[nA 光标上移n行
+    // \33[nB 光标下移n行
+    // \33[nC 光标右移n行
+    // \33[nD 光标左移n行
+    // \33[y;xH设置光标位置
+    // \33[2J 清屏
+    // \33[K 清除从光标到行尾的内容
+    // \33[s 保存光标位置
+    // \33[u 恢复光标位置
+    // \33[?25l 隐藏光标
+    // \33[?25h 显示光标
+    
+    // 封装
+    let customizeFn = {
+            error(str) {
+                console.log("\033[31m " + str + " \033[0m")
+            },
+            info(str) {
+                console.log("\033[36m " + str + " \033[0m")
+            },
+            warn(str) {
+                console.log("\033[43;37m " + str + " \033[0m")
+            },
+            success(str) {
+                console.log("\033[32m " + str + " \033[0m")
+            }
+        }
+    console = Object.assign(console, customizeFn)
+        </pre>
+    </div>
+    <script src="css/live2d/autoload.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./plug/code-prettify/run_prettify.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

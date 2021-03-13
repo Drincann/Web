@@ -1,0 +1,1835 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<body>
+    <!--html解析时会自动合并 -->
+    <ul>
+        <li>123</li>
+        <li>546</li>
+        <li>879</li>
+        <li>564352</li>
+        <li>789</li>
+    </ul>
+    <hr>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript</title>
+    <script src="css/font-awesome-4.7.0/css/font-awesome.min.css"></script>
+    <script src="js/statistics_baidu.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 20000px;
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+
+
+<body>
+    <!-- 随便写个冒泡 -->
+    <script>
+        // 
+        // function sort(arr) {
+        //     for (let i = 0; i < arr.length - 1; i++) {
+        //         for (let j = 0; j < arr.length - i - 1; j++) {
+        //             if (arr[j] > arr[j + 1]) {
+        //                 temp = arr[j];
+        //                 arr[j] = arr[j + 1];
+        //                 arr[j + 1] = temp;
+        //             }
+        //         }
+        //     }
+        //     return arr
+        // }
+
+        // arguments 参数
+        // 函数内部隐式存在一个 argument 参数, 其以为数组形式存有所有传入的参数。
+        // 示例代码:实现 python 里的 range() 函数, 用于方便 for(index in range(number)){}
+        function range() {
+            if (arguments.length == 2) {
+                var arr = [...new Array(arguments[1]).keys()];
+                for (i in arr) {
+                    arr[i] += arguments[0];
+                }
+                return arr;
+            } else {
+                return [...new Array(arguments).keys()];
+            }
+        }
+    </script>
+
+    <!-- 闭包 -->
+    <script>
+        // //
+        // //简单闭包例子：
+        // function fun_out(x) {
+        //     var x = 0;
+
+        //     function fun_in() {
+        //         x += 1;
+        //         return x;
+        //     }
+        //     return fun_in;
+        // }
+        // counter = fun_out();
+        // console.log(counter());
+        // console.log(counter());
+
+
+
+        // //通过闭包来解决 [(通过创建空对象来创建对象)时无法创建私有成员]的问题
+        // var counter = new Object();
+        // fun_list = (function() {
+        //     //两个私有成员
+        //     var count = 0;
+        //     var name = 'adder';
+
+        //     //四个闭包（方法）
+        //     function fun() {
+        //         count += (name == 'adder' ? 1 : -1);
+        //         return count;
+        //     }
+
+        //     function get_count() {
+        //         return count;
+        //     }
+
+        //     function ch_name(param) {
+        //         if (param == 'adder')
+        //             name = param;
+        //         else if (param == 'minus')
+        //             name = param;
+        //         return name;
+        //     }
+
+        //     function get_name(params) {
+        //         return name;
+        //     }
+        //     return [get_count, fun, ch_name, get_name];
+
+        // })()
+        // counter.get_count = fun_list[0];
+        // counter.fun = fun_list[1];
+        // counter.ch_fun = fun_list[2];
+        // counter.get_fun = fun_list[3];
+        // console.log(counter.get_count(), counter.fun(), counter.get_count());
+        // console.log(counter.get_fun(), counter.ch_fun('minus'), counter.get_fun());
+        // console.log(counter.get_count(), counter.fun(), counter.get_count());
+    </script>
+    <!-- 创建对象 -->
+    <script>
+        // 
+        // //创建对象方法1:字面量创建对象
+        // var counter = {
+        //     name: "counter",
+        //     count: 0,
+        //     add: function() {
+        //         return ++this.count;
+        //     }
+        // }
+        // console.log(counter.add());
+        // console.log(counter.add());
+
+
+
+        // //创建对象方法2:创建空对象
+        // var counter = new Object();
+        // counter.name = "counter";
+        // counter.count = 0;
+        // counter.add = function() {
+        //     return ++this.count;
+        // }
+        // console.log(counter.add());
+        // console.log(counter.add());
+
+
+
+
+        // // 创建对象方法3:构造函数
+        // function Counter(name, count) {
+        //     this.name = name;
+        //     this.count = 0;
+        //     this.add = function() {
+        //         return ++this.count;
+        //     }
+        // }
+        // var counter = new Counter('counter', 0);
+        // console.log(counter['add']());
+        // console.log(counter.add());
+    </script>
+    <!-- 遍历对象属性及方法 -->
+    <script>
+        //
+        // function Counter(name, count) {
+        //     this.name = name;
+        //     this.count = 0;
+        //     this.add = function() {
+        //         return ++this.count;
+        //     }
+        // }
+        // var counter = new Counter('counter', 0);
+        // for (sth in counter) {
+        //     console.log(sth, counter[sth]);
+        // }
+    </script>
+    <!-- Math对象 -->
+    <script>
+        // 补充 ：到整数 parseInt() 到数字 Number() 强制转换
+        // Number 保留小数方法 Number.toFixed(小数位)
+        //
+        // arr = [];
+        // for (let i = 0; i　 < 10; i++) {
+        //     arr[i] = random(1, 3);
+        //     console.log(arr[i]);
+        // }
+        // console.log('max', max(arr));
+
+
+
+        //自己写一个
+        function math() {
+            this.max = function (arr) {
+
+                if (arr.length < 0)
+                    return undefined;
+                max = arr[0];
+                for (num of arr) {
+                    max = num > max ? num : max;
+                }
+                return max;
+
+            }
+            this.random = function (min, max) { //取随机数
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+        }
+        var math = new math();
+        // console.log(math.random(1, 100000000000000000));
+    </script>
+    <!-- Data对象 -->
+    <script>
+        // //
+        // var date = new Date();
+        // //获取时间常用方法
+        // date.getFullYear();
+        // date.getMonth(); //0~11
+        // date.getDate();
+        // date.getDay(); //0~6
+        // date.getHours();
+        // date.getMinutes();
+        // date.getSeconds();
+        // //获取时间戳
+        // date.valueOf();
+        // date.getTime();
+
+        // +new Date();
+
+        // Date.now(); //H5新增，兼容性不好
+
+
+
+        // date = new Date('2020-02-21 12:24:56')
+        // console.log(countdown(date.valueOf()));
+        // function countdown(date_str) { //倒计时
+        //     sec = (+new Date(date_str) - +new Date()) / 1000;
+        //     return [parseInt(sec / 60 / 60 / 24), parseInt(sec / 60 / 60 % 24), parseInt(sec / 60 % 60), parseInt(sec % 60)]
+        // }
+    </script>
+    <!-- 数组对象 -->
+    <script>
+        // //
+        // //创建数组
+        // //1.
+        // // var arr = [1, 2, 3, 4];
+
+        // //2.
+        // var arr = new Array(2, 3); //参数两个及以上为数组内容，一个为数组长度
+
+        // // //instanceof 运算符
+        // // console.log(arr instanceof Array);
+
+        // // //Array的方法isArray
+        // // var integer = 1;
+        // // console.log(Array.isArray(integer));
+
+        // //添加删除数组元素
+        // //1.push方法，入栈，返回数组长度
+        // console.log(arr.push('push1', 'push2'));
+        // console.log(arr);
+        // //2.pop方法，出栈，返回 值（value）
+        // console.log(arr.pop());
+        // console.log(arr);
+
+        // //3.unshift方法，添加到头，返回数组长度
+        // console.log(arr.unshift('unshift1', 'unshift2'));
+        // console.log(arr);
+        // //4.shift方法，删除头，返回数组长度
+        // console.log(arr.shift());
+        // console.log(arr);
+
+
+
+        // //反转数组,reverse方法,返回数组
+        // console.log(arr.reverse());
+
+        // //排序，sort方法,提供一个比较函数
+        // arr = [1]
+        // for (i in [...new Array(10).keys()]) {
+        //     arr.push(math.random(55, 1000)); //构造数列
+        // }
+        // console.log(arr.sort(function(a, b) {
+        //     return a - b;
+        // }));
+
+        // //z正取索引，indexOf方法
+        // console.log(arr.indexOf(1));
+        // //倒取索引，lastIndexOf
+        // console.log(arr.lastIndexOf(1));
+
+        // //去重算法
+        // function unique(arr) {
+        //     var newarr = [];
+        //     for (member of arr) {
+        //         if (newarr.indexOf(member) === -1) {
+        //             newarr.push(member)
+        //         }
+        //     }
+        //     return newarr
+
+        // }
+        // console.log(unique([111, 222, 111, 1, 1, 1, 1, 1, 12, 2, 2, 2, 2, 12]));
+
+        // //数组转换为字符串
+        // //1.toString方法
+        // console.log([12, 3].toString());
+        // //2.join方法，参数指定分隔符
+        // console.log([1, 2, 3].join(''));
+
+        // //其他数组方法
+        // //concaat() 连接数组
+        // //slice(begin, end) 截取数组
+        // //spllice(begin, num) 删除指定位置的开始的数个元素
+        // //spllice(begin, num, newData) 替换指定位置的开始的数个元素
+    </script>
+    <!-- 字符串对象 -->
+    <script>
+        // var str = '123456789abcABC啊'
+        // console.log(str.length); //length属性返回字符个数，而不是字节个数
+        // console.log(str.indexOf('12', 4)); //第二个参数为查找起始位置
+
+        // //根据索引返回字符/ascii
+        // console.log(str.charAt(3));
+        // console.log(str.charCodeAt(3));
+        // console.log(str[3]); //h5新增，存在兼容性问题
+
+        // //方法
+        // console.log(str.concat('连接字符串')); //连接字符串
+        // console.log(str.substr(2, 1)); //截取字符串，参数:(索引, 长度)
+        // console.log(str.replace('1', '替换')); //替换字符串
+        // console.log(str.repeat(10)); //重复字符串，参数重复为次数
+        // console.log(str.split('3')); //通过分隔符转换数组
+        // console.log(str.toLocaleUpperCase()); //转换为大写
+        // console.log(str.toLocaleLowerCase()); //转换为小写
+
+        // console.log(exists_max('wocao这这这他妈'));
+
+
+        // function exists_max(str) { //返回出现最多次数的字符及次数
+        //     var chars = {};
+        //     for (char of str) {
+        //         if (chars[char]) {
+        //             chars[char] += 1;
+        //         } else {
+        //             chars[char] = 1;
+        //         }
+        //     }
+
+        //     var maxcount = 0;
+        //     var maxchar = '';
+        //     for (char in chars) {
+        //         if (chars[char] > maxcount) {
+        //             maxcount = chars[char];
+        //             maxchar = char;
+        //         }
+
+        //     }
+        //     if (maxchar === '')
+        //         return -1;
+        //     return {
+        //         char: maxchar,
+        //         count: maxcount
+        //     };
+
+        // }
+    </script>
+
+    <!-- Web apis -->
+    <ul>
+        <li>li_text1</li>
+        <li>li_text2</li>
+        <li>li_text3</li>
+        <li>li_text4</li>
+        <li>li_text5</li>
+    </ul>
+    <ul>
+        <li>li_text6</li>
+        <li>li_text7</li>
+        <li>li_text8</li>
+        <li>li_text9</li>
+        <li>li_text10</li>
+    </ul>
+    <hr>
+    <script>
+        // 获取元素方法
+        /*
+        document.getElementById('')
+
+        document.getElementsByTagName('')
+        document.getElementsByName('')
+        */
+
+        // console.log(document.getElementsByTagName('li')[5])
+        // console.dir(document.getElementsByTagName('ul')[1])
+
+
+        // h5新方法
+        /*
+        document.getElementsByClassName('')
+        document.querySelector('')//所有选择器均可，返回第一个找到的对象
+        document.querySelectorAll('')//所有选择器均可，返回第找到的对象集合
+         */
+        // console.dir(document.querySelector('ul'))
+        // console.log(document.querySelectorAll('li'))
+
+
+        // 获取特殊标签
+        // console.log(document.body);
+    </script>
+
+    <!-- 事件回调 -->
+    <button id='button' style="width: 100px;height: 100px;">onclick</button>
+    <script>
+        // 
+        // 鼠标相关
+        // document.getElementById('button').onclick = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('你点击了按钮' + count++ + '次');
+        //     }
+        // }()
+
+        // document.getElementById('button').onmouseover = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('你经过了按钮' + count++ + '次');
+        //     }
+        // }()
+
+        // document.getElementById('button').onfocus = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('按钮获取了焦点' + count++ + '次');
+        //     }
+        // }()
+        // document.getElementById('button').onblur = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('按钮失去了焦点' + count++ + '次');
+        //     }
+        // }()
+
+        // document.getElementById('button').onmousemove = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('你在按钮上移动了鼠标' + count++ + '次');
+        //     }
+        // }()
+
+        // document.getElementById('button').onmousemdown = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('你按下了按钮' + count++ + '次');
+        //     }
+        // }()
+
+        // document.getElementById('button').onmouseon = function button1() {
+        //     var count = 1;
+        //     return function() {
+        //         console.log('你松开了按钮' + count++ + '次');
+        //     }
+        // }()
+
+        // 后来补充：
+        // 'mouseover' 事件，进入子盒也会触发
+        // 'mouseenter' 鼠标进入元素触发，进入子元素不会触发
+        // 'mouseleave' 鼠标离开元素触发，离开子元素不会触发
+        // 原理，over 事件会冒泡，子元素会冒泡到父元素。
+        // enter 和 leave 事件不会冒泡，故不会触发父元素
+
+        // 再后来补充：
+        // ‘mousewheel’ 事件，鼠标物理滚轮滚动
+
+        // 事件解绑
+        // obj.onclick = null
+    </script>
+
+    <style>
+        .click_box {
+            /* display: inline-block; */
+            position: relative;
+            margin: 50px;
+            width: 75px;
+            height: 65px;
+            background: url(img/50.gif);
+            background-size: contain;
+            cursor: pointer;
+        }
+
+        .click_count {
+            position: absolute;
+            padding: 0 4px 0 4px;
+            right: 3px;
+            top: 13x;
+            background-color: #FF4136;
+            font-size: 12px;
+            color: #fff;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+
+    <div class="click_box">
+        <span class="click_count"></span>
+    </div>
+    <!-- innerText，innerHTML属性 -->
+    <script>
+        document.getElementsByClassName('click_box')[0].onclick = function () {
+            var span = document.getElementsByClassName('click_count')[0]
+            var count = 1;
+            return function () {
+                span.innerHTML = count++;
+                // innerHTML保留html标签文本（推荐）
+                // innerText不保留html标签文本
+            }
+        }()
+    </script>
+
+
+    <hr>
+
+    <div>
+        <label for=""></label>
+        <input type="password" id="input1" value="123">
+        <button id="button2">显示密码</button>
+    </div>
+    <!-- 表单属性 -->
+    <script>
+        // 
+        // 禁止 input.disabled = true / false
+        // 文本框的内容 input.value
+        // 文本框的 input.checked
+        // 文本框的类型 input.type
+        // 文本框的 input.select
+
+        document.getElementById('button2').onmousedown = function () {
+            document.getElementById('input1').type = 'text';
+        }
+        document.getElementById('button2').onmouseup = function () {
+            document.getElementById('input1').type = 'password';
+        }
+    </script>
+    <hr>
+    <style>
+        .time_color {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            margin-top: 50px;
+            color: #fff;
+        }
+
+        .fa {
+            display: inline;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .time_color span {
+            font-size: 50px;
+        }
+    </style>
+    <div class="time_color">
+        <div class="fa">
+            <span></span>
+        </div>
+
+    </div>
+    <!-- 修改样式属性 -->
+    <script>
+        // 
+        // 1.  this.style  分别指定style样式
+        // 2.  this.className css封装好之后直接指定类名
+
+        function get_time_str() {
+            var now = new Date()
+
+            var hour = now.getHours()
+            var minute = now.getMinutes()
+            var second = now.getSeconds()
+
+            return String(hour > 10 ? hour : '0' + hour) +
+                String(minute > 10 ? minute : '0' + minute) +
+                String(second > 10 ? second : '0' + second);
+        }
+
+        refresh = function () {
+            var box = document.getElementsByClassName('time_color')[0];
+            var span = box.firstElementChild.firstElementChild;
+            fun = function () {
+                box.style.backgroundColor = '#' + get_time_str();
+                span.innerHTML = '#' + get_time_str();
+            }
+            fun();
+            return setInterval(fun, 1000);
+        };
+        refresh();
+    </script>
+    <hr>
+
+    <style>
+        .active {
+            color: orange;
+        }
+
+        .quiet {
+            color: #000;
+        }
+    </style>
+
+    <!-- 排他Demo -->
+    <button class="button3">按钮</button>
+    <button class="button3">按钮</button>
+    <button class="button3">按钮</button>
+    <button class="button3">按钮</button>
+    <button class="button3">按钮</button>
+    <script>
+        // 
+        // 1.
+        // for (let button of document.getElementsByClassName('button3')) {
+        //     button.onfocus = function() {
+        //         let buttons = document.getElementsByClassName('button3')
+        //         return function() {
+        //             for (let button of buttons) {
+        //                 button.className = 'button3 quiet';
+        //             }
+        //             this.className = 'button3 active';
+
+        //         }
+        //     }()
+        // }
+
+        //2.
+        for (let button of document.getElementsByClassName('button3')) {
+            button.onfocus = function () {
+                this.style.color = 'orange';
+            }
+            button.onblur = function () {
+                this.style.color = 'black';
+            }
+
+        }
+    </script>
+
+    <!-- 获取属性与自定义属性 -->
+    <div class="test" data-demo1="demo1" data-demo2="demo2" fetfuck="fetfuck"></div>
+    <script>
+        //获取和设置属性值
+        //obj.Attribute
+
+        //obj.tagName 仅获取标签名称（XML中返回原始大小写，HTML中始终返回 **大写** ），node.nodeName可获取任意节点的值
+
+
+        // 自定义属性,h5规范要求自定义属性以 data- 开头
+        // 获取自定义属性值
+        // obj.getAttribute('attribute_name')
+        // h5新增: obj.dataset（所有自定义属性的集合，集合内属性名会自动去掉 data- 前缀，且其他 - 连接的单词会变成驼峰吗命名）
+
+        // 设置自定义属性值
+        // obj.setAttribute('attribute_name', value)
+    </script>
+    <hr>
+
+    <!-- node节点操作 -->
+    <script>
+        // 节点拥有 nodeType nodeName nodeValue等属性
+        // nodeType: 元素节点为1 属性节点为2 文本节点为3
+
+        // ----一、获取节点----
+        // 取父节点 
+        // obj.parentNode 获取父节点
+
+        // 取子节点 
+        // 1. obj.childNodes 获取所有子节点，包含文本节点（回车等）无用信息，取元素节点只能通过nodeType来判断是否为元素节点
+        // 2. obj.children 获取所有子元素节点
+        // 3. obj.firstChild 获取第一个子节点，包含文本节点
+        // 4. obj.lastChild 获取最后一个子节点，包含文本节点
+        // 5. obj.firstElementChild 获取第一个元素节点，ie9以上
+        // 6. obj.lastElementChild 获取最后一个元素节点，ie9以上
+
+        // 取兄弟节点
+        // 1. obj.nextSibling 获取下一个兄弟节点，包含文本节点
+        // 2. obj.previousSibling 获取上一个兄弟节点，包含文本节点
+        // 3. obj.nexElementSibling 获取下一个兄弟元素节点，ie9以上
+        // 4. obj.previousElementSibling 获取上一个兄弟元素节点，ie9以上
+
+        // ----二、创建节点----
+        // 创建元素节点
+        // 1. dom.creatElement('tagName') 
+        // 2. dom.write(element str) 文档执行完毕后调用会直接重绘文档，且文档内容仅包含参数
+        // 3. obj.innerHTML = element str 向节点内直接写入element
+        // 效率 3 > 1，注意 innerHTML 方式效率虽然高，但拼接字符串会花费非常多的时间，创建多个标签应通过数组实现
+
+
+        // 可以直接对新创建的元素的 innerHTML 赋值来添加当新元素内的元素
+        // 如：dom.creatElement('li').innerHTML = <a href="javascript:;"> text </a>
+
+        // 添加节点
+        // 1. obj.appendChild(child) 插入至node的子元素末尾
+        // 2. obj.insertBefore(child, other) 插入至node的other元素之前
+
+        // 删除节点
+        // obj.removeChild(child) 子元素将一并删除
+        // 
+
+        // 复制节点
+        // obj.cloneNode() 浅拷贝
+        // obj.cloneNode(true) 深拷贝
+        // - - -
+
+        // 阻止链接跳转
+        // 1. href属性填写 javascript:; 或 javascript:void(0); (或者填写一个无意义的字符如##， 1等)
+        // 2. href填写#或空，添加属性onclick值为 return false，即为其添加回调函数返回false阻止跳转(返回true为允许跳转)
+        // = = =
+    </script>
+    <ul id="demo1">
+        <li>100</li>
+        <li>100</li>
+        <li>100</li>
+        <li>100</li>
+        <li>100</li>
+    </ul>
+    <button id="copy">copy</button>
+    <button id="change">change</button>
+    <script>
+        bu_cp = document.getElementById('copy');
+        bu_ch = document.getElementById('change');
+        ul = document.getElementById('demo1');
+        bu_cp.onclick = function () {
+            var new_ = ul.cloneNode(true);
+            var sibling = document.getElementById('demo1').nextElementSibling
+            if (sibling === undefined) {
+                ul.parentNode.appendChild(new_);
+            } else {
+                ul.parentNode.insertBefore(new_, sibling)
+            }
+
+        }
+        bu_ch.onclick = function () {
+            for (li of document.querySelectorAll('#demo1 li')) {
+                li.innerHTML = 'changed'
+            }
+
+        }
+    </script>
+
+    <!-- 闭包例子 -->
+    <script>
+        // function Person(name, weight, height, age) {
+        //     var instance = {
+        //         name: name,
+        //         weight: weight,
+        //         height: height,
+        //         age: age,
+        //         sleep: function(instance) {
+        //             return function() {
+        //                 console.log('my name is ' + name + '.I am sleeping');
+        //             }
+        //         }(),
+
+        //         eat: function(instance) {
+        //             return function() {
+        //                 console.log('my name is ' + name + '.I am eating');
+        //             }
+        //         }(),
+
+        //         code: function(instance) {
+        //             return function() {
+        //                 console.log('my name is ' + name + '.I am coding');
+        //             }
+        //         }()
+        //     };
+
+        //     return instance;
+        // }
+
+        // zhangsan = Person('张三', '120', '175', '20');
+        // console.log(zhangsan);
+        // zhangsan.sleep();
+        // zhangsan.eat();
+        // zhangsan.code()
+    </script>
+
+
+    <!-- 事件高级 -->
+    <button>button</button>
+    <script>
+        // 事件侦听
+        // 1. obj.addEventListener('event_name', callback, bool) 标准
+        // 2. obj.attachEvent('event_name', callback) 非标准，ie9之前独有
+        var script = document.getElementsByTagName('script')
+
+        function fun_name() {
+            console.log('addEventListener');
+        }
+        script[script.length - 1].previousElementSibling.addEventListener('click', fun_name)
+
+        // 事件解绑(与上方对应)
+        // 1. obj.removeEventListener('event_name'， callback)
+        // 2. obj.detachEvent('event_name'， callback)
+
+        script[script.length - 1].previousElementSibling.removeEventListener('click', fun_name)
+    </script>
+
+    <hr>
+
+    <style>
+        .div_event div {
+            margin: 30px;
+            width: 100px;
+            height: 100px;
+            background-color: #ccc;
+            font-size: 50px;
+        }
+    </style>
+
+    <div class="div_event">
+        <div>test</div>
+    </div>
+
+    <!-- DOM事件流 -->
+    <script>
+        // 
+        // 事件触发后会向全体元素广播回调，广播存在顺序执行的两种时序：
+        // 1. 由根节点到子节点（捕获）
+        // 2. 由子节点到根节点（冒泡）
+        // obj.onclick 与 obj.attachEvent() 仅在冒泡阶段触发
+        // obj.addEventListener() 可通过第三个参数来设置函数将处于哪种时序中被回调
+        // 捕获：true，缺省或false为冒泡
+        // 大部分情况下不会使用捕获
+        // onblur、onfocus、onmouseenter、onmouseleave不会在冒泡时序中被回调
+        son = document.querySelector('.div_event div')
+        fa = document.querySelector('.div_event')
+
+        son.addEventListener('click', fun_son)
+
+        function fun_son() {
+            fa.addEventListener('click', fun_fa, true)
+            alert('son')
+        }
+
+        function fun_fa() {
+            alert('fa')
+        }
+    </script>
+    <hr>
+
+    <!-- 事件对象 -->
+    <button class="event_obj">event_obj</button>
+    <script>
+        // 
+        // 回调时作为参数传入
+        document.getElementsByClassName('event_obj')[0].addEventListener('click', function (event) {
+            console.dir(event || window.event); // 兼容性处理，ie9以前需要从 window 对象中取到事件对象
+            //常用属性及方法
+
+            console.log({
+                '触发对象:': event.target, // ie9之前不支持 兼容性处理|| event.srcElement，若考虑兼容性，还应使用 obj.onclick 注册事件
+                // 有可能是子元素触发  
+
+                '绑定对象:': this,
+                '绑定对象:': event.currentTarget, // 非标准，ie9之前不支持，一般使用this
+                '事件类型:': event.type,
+                '-------------': '-------------',
+                '阻止默认行为:': event.preventDefault, // ie9之前不支持，使用方法 e.returnValue，// 另外通过 obj.onclick 的回调中返回 false 也可阻止默认行为
+                '阻止冒泡:': event.stopPropagation // ie9之前不支持，使用属性 e.cancelBubble = true
+
+            }
+
+            );
+
+        })
+    </script>
+    <hr>
+
+    <ul>
+        <li>111111</li>
+        <li>222222</li>
+        <li>333333</li>
+        <li>444444</li>
+        <li>555555</li>
+    </ul>
+    <!-- 事件委托 / 委派（jQuery） -->
+    <script>
+        // 
+        // 给父亲注册事件，回调时判断事件对象的 target 属性
+        script = document.getElementsByTagName('script');
+
+        script[script.length - 1].previousElementSibling.addEventListener('click', function (e) {
+            console.log(e);
+            console.log(event);
+            console.log(e === event);
+            // 事件触发后会有一个全局变量 event 出现，与传入回调函数的事件对象完全相同
+
+
+            if (event.target.tagName == 'LI') {
+
+                console.log('我被触发了:' + event.target.innerHTML);
+                if (event.target.style.backgroundColor === 'rgb(0, 170, 170)') {
+                    event.target.style.backgroundColor = 'rgba(0,0,0,0)';
+                } else {
+                    event.target.style.backgroundColor = 'rgb(0, 170, 170)';
+                }
+            }
+        })
+    </script>
+
+    <hr>
+
+    <style>
+        .img_follow_fa {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            margin: auto;
+            border: 1px solid orange;
+            background-color: #f5f5f5;
+            transition: all .3s;
+        }
+
+        .img_follow_fa:hover {
+            box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .2);
+        }
+
+        .img_follow_fa img {
+            position: absolute;
+        }
+    </style>
+    <div class="img_follow_fa">
+        <img src="img/li_right.png" alt="">
+    </div>
+    <!-- 鼠标事件高级 -->
+    <script>
+        // 
+
+        // 鼠标事件对象常用属性
+        // 1. clientX clientY 相对于客户区的xy坐标
+        // 2. pageX pageY 相对于文档的xy坐标 ie9之前不支持
+        // 3. screenX screenY 相对于屏幕的xy坐标
+
+        // 鼠标事件
+        // 1.contextmenu 右键菜单被触发
+        // 2.selectstart 文本选择开始
+        // 3.mousemove 鼠标被移动
+        // 4.mousedown 鼠标按下
+        // 5.mouseup 鼠标抬起
+
+        //demo 阻止文本复制
+        script = document.getElementsByTagName('script');
+        // 右键菜单
+        script[script.length - 2].previousElementSibling.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        // 文本选择
+        script[script.length - 2].previousElementSibling.addEventListener('selectstart', function (e) {
+            e.preventDefault();
+        });
+
+        //demo 鼠标图片跟随
+        // script = document.getElementsByTagName('script');
+        // script[script.length - 1].previousElementSibling
+        document.addEventListener('mousemove', function (e) {
+            const fa = document.querySelector('.img_follow_fa'),
+                img = document.querySelector('.img_follow_fa img');
+
+            return function (e) {
+                var mou_boxtop = e.pageY - fa.offsetTop < 0 ? 0 : e.pageY - fa.offsetTop;
+                var mou_boxleft = e.pageX - fa.offsetLeft < 0 ? 0 : e.pageX - fa.offsetLeft;
+
+                img.style.left = mou_boxleft < img.offsetWidth / 2 ? 0 : mou_boxleft > fa.offsetWidth - img.offsetWidth / 2 ? fa.offsetWidth - img.offsetWidth - 2 + 'px' : mou_boxleft - img.offsetWidth / 2 + 'px';
+                img.style.top = mou_boxtop < img.offsetHeight / 2 ? 0 : mou_boxtop > fa.offsetHeight - img.offsetHeight / 2 ? fa.offsetHeight - img.offsetHeight - 2 + 'px' : mou_boxtop - img.offsetHeight / 2 + 'px';
+
+                // img.style.left = (e.pageX + img.offsetWidth > fa.offsetWidth + fa.offsetLeft ? fa.offsetLeft + fa.offsetWidth - img.offsetWidth - 1 : e.pageX < fa.offsetLeft ? fa.offsetLeft + 1 : e.pageX) + 'px';
+                // img.style.top = (e.pageY + img.offsetHeight > fa.offsetHeight + fa.offsetTop ? fa.offsetTop + fa.offsetHeight - img.offsetHeight - 1 : e.pageY < fa.offsetTop ? fa.offsetTop + 1 : e.pageY) + 'px';
+            }
+        }())
+    </script>
+    <hr>
+
+    <input type="text">
+    <!-- 键盘事件 -->
+    <script>
+        //
+        // 1.keydown 键盘按下
+        // 2.keyup 键盘弹起
+        // 3.keypress 键盘按下，不识别功能键
+        // 执行顺序 keydown > keypress
+
+        document.addEventListener('keyup', function (e) {
+            // 键盘事件对象常用属性
+            console.log({
+                '按下的键:': e.key, // 返回按下的键，有很大兼容性问题
+                '按下的ascii:': e.keyCode, // 返回按下键的 ascii，keypress 区分大小写，keyup 和 keydown 不区分大小写
+            });
+        });
+
+        // 另: 置焦点 obj.focus()
+
+        // 阻止输入，keydown 与 keypress 事件触发时，文本框内文字还未输入，可通过阻止默认行为来阻止输入
+        script = document.getElementsByTagName('script');
+        script[script.length - 1].previousElementSibling.addEventListener('keydown', function (e) {
+            e.preventDefault()
+
+        });
+
+        // 另: 阻止获取焦点
+        script[script.length - 1].previousElementSibling.addEventListener('focusin', function (e) {
+            e.target.blur()
+            e.preventDefault()
+
+        });
+    </script>
+    <hr>
+
+    <!-- BOM -->
+    <script>
+        // BOM对象 windows
+        // 1. 变量、函数分别为 window 对象的方法
+        // 注意：name 是window对象的一个属性 console.log(window.name);
+        // 注意: 定时器传入的函数由 window 对象回调
+        // 
+        // 2. BOM 事件 'load' 页面完全加载完成后回调
+        // 通过关键字 'load' 注册或直接对 window.onload 赋值函数指针
+        // 另：DOM 事件 'DOMContentLoaded'仅 DOM 加载完后回调 ie9及以上支持
+
+        // 3. BOM 事件 'resize' 窗口大小被改变时回调
+        // 通过关键字 'resize' 注册或直接对 window.onresize 赋值函数指针
+        // 回调函数中通过 e.width 和 e.height 获得窗口当前大小
+
+        // 4. BOM 事件 'pageshow' 页面被重新加载时回调
+        // 火狐中存在'往返缓存'，后退时不会触发 load 系事件
+        // 回调函数中通过 e.persisted 属性可以判断页面是否来源于缓存
+
+
+        // 5. 定时器 
+        // 定时 window.setTimeout(callback, timeout) timeout 缺省为0 返回一个句柄，指向此定时器
+        // 停止定时 window.clearTimeout(hWnd)
+        // 重复定时 window.setInterval(callback, timeout)
+
+        // 6. 异步
+        function asyn_demo() {
+
+            temp = function () {
+                console.log(1); // 第一个执行
+
+                setTimeout(() => {
+                    console.log(2); //第五个执行
+                }, 0);
+
+                console.log(3); //第二个执行
+                console.log(4); //第三个执行
+            }();
+
+            console.log(5); //第四个执行
+
+        };
+        // webapi的异步任务将在主线程空闲时执行
+    </script>
+
+    <!-- location对象 -->
+    <form action="skip_demo.html">
+        <input type="text" name="skip_demo1">
+        <input type="text" name="skip_demo2">
+        <input type="submit" value="submit">
+    </form>
+    <script>
+        //
+        // window.location 对象常用方法属性
+        console.log({
+            'href（url）': location.href, // *常用
+            'host（域名）': location.host,
+            'port（端口）': location.port,
+            'pathname（路径）': location.pathname,
+            'search（query参数）': location.search, // *常用
+            'hash（#link）': location.hash,
+            '-------------': '-------------',
+            'assign() 跳转，记录浏览历史': location.assign,
+            'replace() 跳转，不记录浏览地址': location.replace,
+            'reload() 重载': location.reload // 参数传入 true 则不读取缓存
+        });
+
+        // demo 跳转参数传递
+    </script>
+
+    <script>
+        //
+        // window.navigator 对象常用属性
+        console.log({
+            'Agent': navigator.agent
+        });
+    </script>
+
+    <script>
+        //
+        // history 对象常用方法属性
+        console.log({
+            'forward()（前进）': history.forward,
+            'back() （后退）': history.back,
+            'go() （跳转）': history.go //参数为前进后退的
+        });
+    </script>
+    <hr>
+
+    <!-- 网页特效 -->
+    <!-- offset client scroll -->
+    <style>
+        .login {
+            display: none;
+            position: fixed;
+            width: 500px;
+            height: 260px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            z-index: 1;
+            box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .3);
+        }
+
+        .bg {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, .3);
+        }
+
+        .login .title {
+            display: block;
+            padding: 25px 0 0 0;
+            font-size: 20px;
+            text-align: center;
+            cursor: move;
+        }
+
+        .login .close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            transform: translate(30%, -30%);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 20px;
+            background-color: #f5f5f5;
+            cursor: pointer;
+            border-radius: 50%;
+            border: #bbb 1px solid;
+        }
+
+        .login .input {
+            padding: 25px 0 0 0;
+            overflow: hidden;
+        }
+
+        .login .input input {
+            float: left;
+            width: 350px;
+            height: 30px;
+            padding: 0 0 0 7px;
+            border: #ccc 1px solid;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .login .input label {
+            float: left;
+            width: 95px;
+            height: 30px;
+            line-height: 30px;
+            text-align: right;
+            color: #555;
+        }
+
+        .button_login {
+            width: 50%;
+            margin: 30px auto 0 auto;
+        }
+
+        .button_login input {
+            display: block;
+            width: 100%;
+            height: 35px;
+            border: #aaa 1px solid;
+            text-align: center;
+            font-size: 16px;
+            line-height: 35px;
+            text-decoration: none;
+            color: #555;
+            background-color: #fff;
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+    <div class="login">
+        <span class="close">X</span>
+
+        <span class="title" onselectstart="return false;">用户登录</span>
+        <form action="skip_demo.html">
+            <div class="input">
+                <label for="username">用户名：</label>
+                <input type="text" id="username" name="skip_demo1">
+            </div>
+            <div class="input">
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="skip_demo2">
+            </div>
+            <!-- <div class="button_login"><a href="javascrept:;">登录</a></div> -->
+            <div class="button_login"><input type="submit" value="登录" class=""></div>
+
+        </form>
+
+    </div>
+    <div class="bg"></div>
+    <button>登录窗口</button>
+    <script>
+        // offset系列 
+        // 1. obj.offsetParent 带有定位的父元素，若无返回body
+        // 2. obj.offsetTop 距父元素（有定位）顶端的距离（**带边框** 不带margin）
+        // 3. obj.offsetLeft 距父元素（有定位）左端的距离（**带边框** 不带margin）
+        // 4. obj.offsetWidth 元素宽度（**带边框** 不带margin）
+        // 5. obj.offsetHeight 元素高度（**带边框** 不带margin）
+
+        // client系列
+        // 1. obj.clientWidth 元素宽度（**不带边框** 不带margin）
+        // 2. obj.clientHeight 元素高度（**不带边框** 不带margin）
+        // 3. obj.clientTop 上边框宽度
+        // 4. obj.clientLeft 左边框宽度
+
+        // scroll系列
+        // 1. obj.scrollHeight 元素实际内容大小（包含超出边框的部分）（**不带边框** 不带margin）
+        // 2. scrollWidth （包含超出边框的部分）（**不带边框** 不带margin）
+        // 3. obj.scrollTop 元素上方被卷曲的内容高度
+        // 4. obj.scrollLeft 元素左边被卷曲的内容高度
+        // 另: 'scroll' 事件，元素被滚动
+        // 另: 页面被卷曲的内容高度需要通过 window.pageYOffset 及 window.pageXOffset 获取 ie9及以上支持
+
+        // 兼容性解决方法
+        // 声明了 DTD，通过 document.documentElement.scrollTop/Left 获取
+        // 未声明 DTD，通过 document.body.scrollTop/Left 获取
+
+        // 封装
+        function get_scroll(params) {
+            return {
+                Left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                Top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            };
+        }
+        // 另：调用动作 obj.click()
+    </script>
+
+    <script>
+        var script = document.getElementsByTagName('script');
+
+        // 登录框关闭
+        document.querySelector('.close').addEventListener('click', function () {
+            var login = document.querySelector('.login');
+            var bg = document.querySelector('.bg');
+            return function (e) {
+                bg.style.display = 'none';
+                login.style.display = 'none';
+            };
+
+        }());
+
+        // 拖动实现 1.
+        // document.querySelector('.login .title').addEventListener('mousedown', function() {
+
+        //     var down = false;
+        //     var login = document.querySelector('.login');
+        //     var origin_left = 0;
+        //     var origin_top = 0;
+
+        //     document.addEventListener('mousemove', function(e) {
+
+
+        //         if (down == true) {
+        //             login.style.left = e.pageX - origin_left + 'px';
+        //             login.style.top = e.pageY - origin_top + 'px';
+        //         }
+        //     });
+        //     document.querySelector('.login .title').addEventListener('mouseup', function(e) {
+        //         down = false
+        //     });
+
+        //     return function(e) {
+        //         down = true;
+        //         origin_left = e.pageX - login.offsetLeft;
+        //         origin_top = e.pageY - login.offsetTop;
+        //     }
+        // }());
+
+        // 拖动实现 2.
+
+        document.querySelector('.login .title').addEventListener('mousedown', function (e) {
+
+            var login = document.querySelector('.login');
+            origin_left = e.pageX - login.offsetLeft;
+            origin_top = e.pageY - login.offsetTop;
+
+            function drag(e) { // 拖动函数
+                console.log(e.pageX - origin_left);
+                login.style.left = e.pageX - origin_left + 'px';
+                login.style.top = e.pageY - origin_top + 'px';
+
+            };
+            document.addEventListener('mousemove', drag);
+            document.querySelector('.login .title').addEventListener('mouseup', function (e) {
+                document.removeEventListener('mousemove', drag);
+            });
+        });
+
+
+        // 按钮触发登录框
+        script[script.length - 2].previousElementSibling.addEventListener('click', function name() {
+            var login = document.querySelector('.login');
+            var bg = document.querySelector('.bg');
+            return function (e) {
+                console.log(bg.style.display);
+                bg.style.display = 'block';
+                login.style.display = 'block';
+                // 初始化位置
+                login.style.left = '';
+                login.style.top = '';
+            };
+
+        }());
+    </script>
+    <hr>
+
+
+    <!-- 放大效果 -->
+
+    <style>
+        .preview_fa {
+            margin: auto;
+            width: 1000px;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        .preview_img {
+            position: relative;
+            float: left;
+            width: 384px;
+            height: 216px;
+            border: #C2C5C2 1px solid;
+            background: url(img/ms.jpg) no-repeat;
+            background-size: contain;
+            cursor: move;
+        }
+
+        .mask {
+            display: none;
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(238, 238, 52, 0.4);
+        }
+
+        .big {
+            display: none;
+            position: relative;
+            float: left;
+            margin-left: -1px;
+            width: 400px;
+            height: 400px;
+            border: #C2C5C2 1px solid;
+            overflow: hidden;
+        }
+
+        .big img {
+            position: absolute;
+            width: 1536px;
+        }
+    </style>
+    <div class="preview_fa">
+        <div class="preview_img">
+            <div class="mask">
+
+            </div>
+        </div>
+        <div class="big">
+            <img src="img/ms.jpg" alt="">
+        </div>
+    </div>
+    <script>
+        var preview_img = document.querySelector('.preview_img');
+        var mask = document.querySelector('.mask');
+        var big = document.querySelector('.big');
+        var img = document.querySelector('.big img');
+
+        preview_img.addEventListener('mouseenter', function (e) {
+            big.style.display = 'block';
+            mask.style.display = 'block';
+        });
+        preview_img.addEventListener('mousemove', function (e) { // 鼠标移动
+            var imgx = e.pageX - preview_img.offsetLeft - mask.offsetWidth / 2;
+            var imgy = e.pageY - preview_img.offsetTop - mask.offsetHeight / 2;
+
+            mask.style.left = (imgx <= 0 ? 0 : imgx >= preview_img.offsetWidth - mask.offsetWidth - 2 ? preview_img.offsetWidth - mask.offsetWidth - 2 : imgx) + 'px';
+            mask.style.top = (imgy <= 0 ? 0 : imgy >= preview_img.offsetHeight - mask.offsetHeight - 2 ? preview_img.offsetHeight - mask.offsetHeight - 2 : imgy) + 'px';
+            console.log();
+
+            img.style.left = -parseInt(mask.style.left) * 4 + 'px';
+            img.style.top = -parseInt(mask.style.top) * 4 + 'px';
+            // mask.style.left =  e.pageX Height- this.offsetLeft - mask.offsetWidth / 2;
+        });
+        preview_img.addEventListener('mouseleave', function (e) {
+            big.style.display = 'none';
+            mask.style.display = 'none';
+
+        });
+    </script>
+
+
+    <!-- 侧栏跟随 -->
+    <style>
+        .side_fa {
+            position: absolute;
+            right: 50px;
+            top: 500px;
+            background-color: #ccc;
+            border-radius: 10% 10%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+        }
+
+        .side_fa ul {
+            padding: 0 20px;
+            list-style: none;
+        }
+
+        .side_fa li {
+            list-style: none;
+            padding-top: 10px;
+        }
+
+        .side_fa .goback {
+            display: block;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #f5f5f5;
+            text-decoration: none;
+            color: black;
+            border-radius: 10%;
+        }
+    </style>
+    <div class="side_fa">
+        <ul>
+            <li>1.item</li>
+            <li>2.item</li>
+            <li>3.item</li>
+            <li>4.item</li>
+            <li>5.item</li>
+            <li><a href="javascript:;" class="goback">back</a></li>
+        </ul>
+
+
+    </div>
+    <script>
+        // 用到的 window.pageX/YOffset 获取页面头部被卷曲高度，ie9及以上支持
+
+        // 兼容性解决方法
+        // 声明了 DTD，通过 document.documentElement.scrollTop/Left 获取
+        // 未声明 DTD，通过 document.body.scrollTop/Left 获取
+
+        // 封装
+        function get_scroll(params) {
+            return {
+                Left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+                Top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+            };
+        }
+        var side = document.querySelector('.side_fa');
+        var reference_top = document.querySelector('#button').offsetTop;
+        var side_top = side.offsetTop - reference_top;
+        var posi_back = document.querySelector('.img_follow_fa').offsetTop;
+        var goback = document.querySelector('.goback');
+
+
+        function callback_side(params) {
+            // console.log(get_scroll().Top);
+
+            if (get_scroll().Top > reference_top) {
+                side.style.display = 'block';
+                side.style.top = side_top + 'px';
+                side.style.position = 'fixed';
+            } else {
+                side.style.top = '500px';
+                side.style.position = ''
+            }
+            if (pageYOffset > posi_back) {
+                goback.style.visibility = '';
+
+            } else {
+                goback.style.visibility = 'hidden';
+            }
+
+        }
+        document.addEventListener('DOMContentLoaded', callback_side);
+        document.addEventListener('scroll', callback_side);
+
+        // goback.addEventListener('click', function(e) { // ie9 后支持
+        //         document.documentElement.scrollIntoView({
+        //             block: "start",
+        //             behavior: "smooth"
+        //         });
+
+        //     })
+        // 兼容性封装：
+        goback.addEventListener('click', scroll_smooth(0, 10, 10, undefined));
+
+        function scroll_smooth(y, velocity, interval, callback) {
+
+            function animate(y, velocity, interval, callback) {
+                this.timer = setInterval(() => {
+                    if (window.pageYOffset != y) {
+                        // console.log(window.pageYOffset);
+                        var step = (y - window.pageYOffset) / velocity
+                        window.scroll(0, window.pageYOffset + (step < 0 ? Math.floor(step) : Math.ceil(step)));
+                    } else {
+                        callback && callback();
+                        clearInterval(this.timer);
+                    }
+
+                }, interval);
+            }
+
+            return function () {
+                clearInterval(this.timer);
+                animate(y, velocity, interval, callback);
+            };
+
+        }
+    </script>
+    <!-- 立即执行函数 -->
+    <script>
+        // 语法规范
+        // 1. (function(formal parameters) {})(actual parameters)
+        // 2. (function(formal parameters) {}(actual parameters))
+        // 从外部引入js文件时，将其整体用一个匿名的立即执行函数封装起来，避免污染全局变量
+    </script>
+
+
+    <hr>
+
+    <!-- js动画 -->
+    <style>
+        .animation {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 1000px;
+            background-color: #ccc;
+        }
+    </style>
+    <button class="ani_button1">前进（节流阀）</button>
+    <button class="ani_button2">后退</button>
+    <div>
+        <div class="animation"></div>
+    </div>
+    <script>
+        var ani_buttion1 = document.querySelector('.ani_button1');
+        var ani_buttion2 = document.querySelector('.ani_button2');
+        var animation_box = document.querySelector('.animation');
+
+        animate_event = function (obj, length, target, velocity, interval, callback) {
+            function animate(obj, length, target, velocity, interval, callback) {
+                if (target === undefined) {
+                    var target = length + obj.offsetLeft;
+                }
+                obj.timer = setInterval(() => {
+                    if (obj.offsetLeft != target) {
+                        step = (target - obj.offsetLeft) / velocity;
+                        obj.style.left = obj.offsetLeft + (step < 0 ? Math.floor(step) : Math.ceil(step)) + 'px';
+                    } else {
+                        callback && callback();
+                        clearInterval(obj.timer);
+                    }
+                }, interval);
+            }
+
+            return function (e) {
+                clearInterval(obj.timer);
+                animate(obj, length, target, velocity, interval, callback);
+            }
+
+        };
+
+        ani_buttion1.addEventListener('click', function () {
+            // 节流阀
+            if (ani_buttion1.valve === undefined) {
+                ani_buttion1.valve = true;
+
+            }
+            // 节流阀
+            return function () {
+                if (this.valve) {
+                    this.valve = false;
+                    animate_event(animation_box, 500, undefined, 10, 10, function () {
+                        ani_buttion1.valve = true;
+                    })();
+                }
+            }
+
+        }());
+        ani_buttion2.addEventListener('click', animate_event(animation_box, -500, undefined, 10, 10, undefined));
+    </script>
+
+
+
+    <style>
+        .side_bar {
+            position: relative;
+            height: 600px;
+            width: 300px;
+            left: -250px;
+        }
+
+        .side_state {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            font-weight: 400;
+            font-size: 25px;
+            color: #444;
+            background-color: #e5e5e5;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+        }
+    </style>
+    <div class="side_bar">
+        <div class="side_state">
+            >
+        </div>
+    </div>
+    <script>
+        var bar = document.querySelector('.side_bar');
+        var bar_state = document.querySelector('.side_state');
+        bar_state.addEventListener('mouseenter', function () {
+
+            bar_state.innerHTML = '<';
+            bar.style.boxShadow = '0 0px 30px rgba(0, 0, 0, .3)';
+            bar.style.transition = 'box-shadow .4s';
+            animate_event(bar, undefined, 0, 10, 10)();
+        });
+
+        bar.addEventListener('mouseleave', function () {
+            bar_state.innerHTML = '>';
+            bar.style.boxShadow = '';
+            animate_event(bar, undefined, -250, 10, 10, function () {
+
+                bar.style.transition = '';
+            })();
+        });
+    </script>
+
+
+    <hr>
+
+    <style>
+        .button_slide {
+            position: relative;
+            margin: 10px;
+            width: 100px;
+            height: 45px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .button_slide img {
+            position: absolute;
+            height: 100%;
+            right: 0;
+        }
+
+        .button_slide span {
+            position: absolute;
+            color: #fff;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: rgb(153, 255, 0);
+        }
+    </style>
+    <div class="button_slide">
+        <span>按钮</span>
+        <img src="img/slide.png" alt="">
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var img_slide = document.querySelector('.button_slide img');
+            var button_slide = document.querySelector('.button_slide');
+
+            button_slide.addEventListener('mouseenter', animate_event(img_slide, undefined, 0, 10, 7));
+            button_slide.addEventListener('mouseleave', animate_event(img_slide, undefined, -img_slide.offsetWidth + button_slide.offsetWidth, 10, 7));
+
+
+        })
+    </script>
+
+    <hr>
+
+
+    <!-- 本地存储 -->
+    <input type="text" class="input_session_storage">
+    <button class="button_set">存储</button>
+    <button class="button_get">获取</button>
+    <button class="button_del">删除</button>
+    <button class="button_clr">清空</button>
+
+    <script>
+        // 1. window.sessionStorage 生命周期为浏览器
+        // sessionStorage.setItem(key, value)
+        // sessionStorage.getItem(key)
+        // sessionStorage.removeItem(key)
+        // sessionStorage.clear()
+
+        var button_set = document.querySelector('.button_set'),
+            button_get = document.querySelector('.button_get'),
+            button_del = document.querySelector('.button_del'),
+            button_clr = document.querySelector('.button_clr'),
+            input_session_storage = document.querySelector('.input_session_storage');
+
+        button_set.addEventListener('click', function () {
+            sessionStorage.setItem('test', input_session_storage.value);
+            input_session_storage.value = '';
+        });
+        button_get.addEventListener('click', function () {
+            input_session_storage.value = sessionStorage.getItem('test');
+        });
+        button_del.addEventListener('click', function () {
+            sessionStorage.removeItem('test');
+        });
+        button_clr.addEventListener('click', function () {
+            sessionStorage.clear();
+        });
+    </script>
+
+    <hr>
+
+    <!-- 本地存储 -->
+    <input type="text" class="input_local_storage">
+    <button class="button_lset">存储</button>
+    <button class="button_lget">获取</button>
+    <button class="button_ldel">删除</button>
+    <button class="button_lclr">清空</button>
+
+    <script>
+        // 1. window.localStorage 生命周期为浏览器
+        // localStorage.setItem(key, value)
+        // localStorage.getItem(key)
+        // localStorage.removeItem(key)
+        // localStorage.clear()
+
+        var button_lset = document.querySelector('.button_lset'),
+            button_lget = document.querySelector('.button_lget'),
+            button_ldel = document.querySelector('.button_ldel'),
+            button_lclr = document.querySelector('.button_lclr'),
+            input_local_storage = document.querySelector('.input_local_storage');
+        console.log(input_local_storage);
+
+        button_lset.addEventListener('click', function () {
+            localStorage.setItem('test', input_local_storage.value);
+            input_local_storage.value = '';
+        });
+        button_lget.addEventListener('click', function () {
+            input_local_storage.value = localStorage.getItem('test');
+        });
+        button_ldel.addEventListener('click', function () {
+            localStorage.removeItem('test');
+        });
+        button_lclr.addEventListener('click', function () {
+            localStorage.clear();
+        });
+    </script>
+
+    <hr>
+
+    <input type="text" class="username_storage">
+    <input type="checkbox" class="checkbox" value="记住密码" id="checkbox"><label for="checkbox">记住密码</label>
+    <button class="login_storage">登录</button>
+    <script>
+        var username_storage = document.querySelector('.username_storage'),
+            checkbox = document.querySelector('.checkbox'),
+            login_storage = document.querySelector('.login_storage');
+
+        var username = localStorage.getItem('test_username');
+
+        if (username) {
+            username_storage.value = username;
+            checkbox.checked = true;
+        }
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                localStorage.setItem('test_username', username_storage.value);
+            } else {
+                localStorage.removeItem('test_username');
+            }
+        })
+        login_storage.addEventListener('click', function () {
+            if (this.checked) {
+                localStorage.setItem('test_username', username_storage.value);
+            }
+        })
+        username_storage.addEventListener('change', function () {
+            console.log(1);
+
+
+        });
+    </script>
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/js.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="../../js/statistics_baidu.js"></script>
+    <title>To Do List</title>
+</head>
+
+<body style="background-color: #f5f5f5;">
+
+    <!-- <div style="background: url(../fullpage/images/landscape9.jpg) fixed;" class="jumbotron text-center">
+
+    </div> -->
+    <div class="page-header text-center">
+        <h1>To Do List<small> <a href="../../index.html" target="_blank">@高厉害 GaoLihai</a></small></h1>
+
+    </div>
+    <div class="container">
+
+
+        <!-- input -->
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button class="clear_btn btn btn-danger" type="button">
+                    Clear
+                </button>
+            </span>
+
+            <input type="text" class="todo_input form-control" placeholder="What needs to be done?">
+
+            <span class="input-group-btn">
+                <button class="todo_btn btn btn-info" type="button">
+                    Add
+                </button>
+            </span>
+        </div>
+
+
+        <!-- doing -->
+        <button style="cursor: auto;" type="button" class="title_todo list-group-item disabled h1">
+            To Do
+            <span class="doing_count badge"></span>
+        </button>
+        <div style="display: none;" class="todo_doing list-group">
+
+            <!-- content -->
+        </div>
+
+        <!-- finish -->
+        <button style="cursor: auto;" type="button" class="title_finish list-group-item disabled h2">
+            Finished
+            <span class="finish_count badge"></span>
+        </button>
+        <div style="display: none;" class="todo_finish list-group">
+
+            <!-- content -->
+        </div>
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

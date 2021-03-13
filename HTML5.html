@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5</title>
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/statistics_baidu.js"></script>
+    <style>
+        header {
+            height: 120px;
+            background-color: #ccc;
+        }
+
+        nav {
+            height: 120px;
+            background-color: #0aa;
+        }
+
+        article {
+            float: left;
+            width: 70%;
+            height: 400px;
+            background-color: orange;
+        }
+
+        section {
+            margin: 10px;
+            height: 100px;
+            background-color: purple;
+            color: white;
+        }
+
+        aside {
+            float: left;
+            width: 30%;
+            height: 400px;
+            background-color: greenyellow;
+        }
+
+        footer {
+            height: 120px;
+            background-color: pink;
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+<body>
+
+    <h1>1.语义化标签</h1>
+    <header>
+        header
+    </header>
+    <nav>
+        nav
+    </nav>
+    <article>
+        article
+        <section>
+            section1
+        </section>
+        <section>
+            section2
+        </section>
+        <section>
+            section3
+        </section>
+    </article>
+    <aside>
+        aside
+    </aside>
+    <div style="clear: both;"></div>
+    <footer>
+        footer
+    </footer>
+
+    <hr>
+
+    <h1>2.多媒体标签</h1>
+    <h3>audio</h3>
+    <style>
+        audio {
+            outline: none;
+        }
+    </style>
+    <!-- 谷歌禁用了 autoplay -->
+    <p>
+        <hr> src="media/snow.mp3"
+        <hr> controls="controls"
+        <hr> autoplay="autoplay"
+        <hr> loop="loop"
+        <hr>
+    </p>
+    <!-- 写法一 -->
+    <!-- <audio src="media/snow.mp3" controls="controls" autoplay="autoplay" loop="loop"></audio> -->
+    <!-- 写法二 -->
+    <audio controls="controls" autoplay>
+        <source src="media/snow.mp3" type="audio/mpeg">
+        <source src="media/snow.ogg" type="audio/ogg">
+        error
+    </audio>
+
+    <hr color="orange">
+    <hr color="orange">
+
+    <h3>video</h3>
+    <!-- 谷歌禁用了 autoplay -->
+    <p>
+        <hr> src="media/video1.mp4"
+        <hr> controls="controls"
+        <hr> autoplay="autoplay"
+        <hr> loop="loop"
+        <hr> autoplay="autoplay"
+        <hr> width="100" height="100"
+        <hr> preload="auto / none" 预先加载视频
+        <hr> poster="url" 加载等待的画面图片
+        <hr> muted="muted" 静音播放
+        <hr>
+    </p>
+    <video autoplay muted="muted" width="800" loop>
+        <source src="media/video1.mp4" type="video/mp4">
+        <source src="media/video1.ogg" type="video/ogg">
+        error
+
+    </video>
+
+    <hr>
+    <h1>三、表单</h1>
+    <h2>表单类型</h2>
+    <img src="img/input_type.png" alt="">
+    <form action="">
+        <ul style="list-style: none;">
+            <li>邮箱 <input type="email"></li>
+            <li>网址 <input type="url"></li>
+            <li>日期 <input type="date"></li>
+            <li>时间 <input type="time"></li>
+            <li>月份 <input type="month"></li>
+            <li>星期 <input type="week"></li>
+            <li>数字 <input type="number"></li>
+            <li>手机号码 <input type="tel"></li>
+            <li>搜索框 <input type="search"></li>
+            <li>颜色选择器 <input type="color"></li>
+            <li><input type="submit"></li>
+        </ul>
+    </form>
+    <hr>
+    <h2>表单属性</h2>
+    <img src="img/input_attr.png" alt="">
+    <form action="">
+        <ul style="list-style: none;">
+            <li>required <input type="search" required> </li>
+            <li>placeholder <input type="search" placeholder="placeholder"></li>
+            <li>autofocus <input type="search" autofocus></li>
+            <li>autocomplete <input type="search" autocomplete="on" name="name"></li>
+            <li>multiple <input type="file" multiple></li>
+            <li><input type="submit"></li>
+        </ul>
+    </form>
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

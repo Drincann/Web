@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/statistics_baidu.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./plug/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./plug/code-prettify/run_prettify.js"></script>
+    <link rel="stylesheet" href="./plug/code-prettify/prettify.css" />
+    <link rel="stylesheet" href="./plug/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/FiraCode.css" />
+    <style>
+        html,
+        body {
+            background-color: #fff;
+        }
+
+        pre {
+            font-family: 'Fira Code';
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        nav ul {
+            position: fixed;
+            z-index: 999;
+            padding: 0;
+            margin: 0;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            list-style: none;
+        }
+
+        nav ul li {
+            display: block;
+            padding: 7px 10px;
+            margin-top: 10px;
+            color: #444;
+            background-color: #ddd;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: 0.3s, color 0.1s;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        nav ul li:hover {
+            box-shadow: 0 0 30px rgba(0, 144, 144, 0.9);
+            background-color: #0aa;
+            color: #fff;
+        }
+
+        .jumbotron {
+            background: url('./demo/fullpage/images/landscape5.jpg') fixed;
+            color: #aaa;
+            background-size: cover;
+        }
+
+        .jumbotron .container :nth-child(n):not(:last-child) {
+            mix-blend-mode: color-dodge;
+        }
+    </style>
+    <script src="./js/scrollSmooth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var list = document.getElementsByTagName('nav')[0].children[0]
+                .children;
+            for (let i in list) {
+                if (i == 'length') {
+                    break;
+                }
+                list[i].addEventListener('click', function () {
+                    var top = document.querySelector(
+                        '#' + list[i].getAttribute('data-index')
+                    ).offsetTop;
+                    scrollSmooth(top, 15, 10, undefined, false)();
+                });
+            }
+        });
+    </script>
+    <title>Ajax Note</title>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+<body>
+    <nav>
+        <ul>
+            <li data-index="h1">一、Ajax 基础</li>
+            <li data-index="h2">Ajax 封装</li>
+            <li data-index="h3">toQueryString</li>
+            <!-- <li data-index="h4">四、</li>
+            <li data-index="h5">五、</li>
+            <li data-index="h6">六、</li>
+            <li data-index="h7">七、</li> -->
+        </ul>
+    </nav>
+    <div class="jumbotron text-center">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <h2>
+                这里是 <a href="./index.html" target="_blank">@高厉害</a> 的
+                Ajax 笔记
+            </h2>
+            <h2>
+                首页 →
+
+            </h2>
+            <a class="btn btn-primary btn-lg" href="https://gaolihai.top" role="button"
+                target="_blank">/gaolihai.top</a>
+            <!-- <h2> 一些例子见此 → <a class="btn btn-primary btn-lg" href="./jq_demo.html" role="button" target="_blank">./ jq_demo.html</a></h2> -->
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">一、Ajax 基础</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 简单实例
+    // 浏览器
+    // Ajax 对象
+    var xhr = new XMLHttpRequest();
+    // 设置请求参数
+    xhr.open('get', 'http://localhost/route?key=value');
+    // 接收数据
+    xhr.onload = function() {
+        xhr.responseText;
+    };
+    // 发送数据
+    xhr.send();
+    
+    
+    // 服务端
+    app.get('/route', (req, res) => {
+        req.query;
+        res.send(data);
+    })
+    
+    
+    
+    // 一、Ajax 基础
+    // 1.1. 请求参数传递 
+    // 1.1.1. (key=value)格式 - application/x-www-form-urlencoded
+    // GET
+    xhr.open('get', 'http://example.com/route?key=value');
+    xhr.send();
+    // 服务端
+    app.get('/route', (req, res) => {
+        req.query;
+        res.send(data);
+    })
+    
+
+    // POST
+    xhr.open('post', `http://example.com/route`);
+    // 报文头 参数类型
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // 报文体
+    xhr.send('key=value');
+    // 服务端
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.post('/Ajax', (req, res) => {
+        req.body;
+        res.send(data);
+    })
+    
+    
+    // 1.2. JSON格式 - application/json
+    // GET 不能提交 json 格式
+    // POST
+    // 浏览器
+    xhr.open('post', `http://example.com/route`);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(jsonData));
+    
+
+    // 服务端
+    app.use(bodyParser.json());
+    app.post('/Ajax', (req, res) => {
+        req.body;
+        //...
+        res.send(data);
+    })
+    
+    
+    // 2、Ajax 状态码
+    // 0 请求未初始化 -- 创建了 Ajax 对象，未调用 open 方法配置
+    // 1 请求建立，未发送 -- 已调用 open，未调用 send 方法
+    // 2 请求发送 -- 已发送数据(非 send 调用后)，未返回数据
+    // 3 请求处理中，数据流逐渐返回的过程 -- 返回数据中
+    // 4 服务端响应完成 -- 返回数据结束
+    // 5 请求未初始化
+    // 通过 xhr.readyState 获取
+    // onreadystatechange 事件: 当 Ajax 状态吗发生变化时回调
+    // 观察输出结果
+    xhr.onreadystatechange = function() {
+        var count = 0;
+        return () => {
+            console.log(++count, ':', xhr.readyState);
+        };
+    }();
+    // 这也是第二种获取数据的方式，兼容 ie:
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            xhr.responseText;
+        } else if (xhr.status != 200) {
+            console.log('error');
+        }
+    };
+    
+
+    // 3. Ajax 错误处理
+    // 获取 http 状态码
+    xhr.status;
+    // 网络中断回调 onerror
+    xhr.onerror = function (err) {
+        alert("网络中断", err);
+    };
+    
+    // 4. 低版本 ie 浏览器有严重的缓存问题
+    // 请求同一路由时，虽然服务端返回了不同的数据，但 Ajax 仅会返回首次请求时返回的数据
+    // 解决方法: 为请求 url 添加唯一请求参数
+    xhr.open("get", "http://example.com/route?_=" + Math.random());
+    xhr.open("get", "http://example.com/route?_=" + Date.now());
+    
+    // 5. 关于异步 api 再次强调
+    // 异步 api 在调用时会被初始化，如 settimeout 会开始计时
+    // 但计时器结束后不一定会调用回调函数，而是等待同步函数全部结束后依次回调
+    
+    // 6. 一些方法
+    xhr.getResponseHeader("attr");
+    // 获取响应头信息
+    string.include("str");
+    // 是否包含子串，返回 bool
+    Object.assign(obj1, obj2);
+    // 对象覆盖
+    arr.filter((item) => {
+        return true;
+    });
+    // 数组筛选 (后端部分), 返回新数组
+    
+    // 7. 客户端模板引擎 art-template
+    // 引入
+    &lt;script src="/js/template-web.js"&gt;&lt;/script&gt;;
+    
+    // 模板
+    &lt;script id="tpl" type="text/html"&gt;&lt;/script&gt;;
+    
+    // 渲染
+    var html = template("tpl", { key: value });
+    
+    // 更新
+    document.querySelector("#container").innerHTML = html;
+    
+    // 8. FormData 对象
+    var form = document.querySelector("form");
+    var formData = new FormData(form);
+    xhr.open("post", "http://example.com/route");
+    xhr.send(formData);
+    
+    // 一些方法
+    formData.get("key");
+    // 获取
+    formData.set("key", "value");
+    // 设置（或添加）重名时覆盖
+    formData.delete("key");
+    // 删除
+    formData.append("key", "value");
+    // 修改（或设置）重名时保留，但服务端不经过特别处理只会读取最后一次 append 的值
+    
+    // 二进制数据上传
+    document.querySelector("#file").onchange = function () {
+        var formData = new FormData();
+        formData.append("key", this.files[0]);
+        xhr.open("post", "http://example.com/route");
+        xhr.send(formData);
+    };
+    
+    // 文件上传进度
+    xhr.upload.onprogress = function (ev) {
+        ev.loaded;
+        ev.total;
+    };
+    
+    // 9. Ajax 请求限制
+    // 浏览器不允许 Ajax 向其他服务器发送请求
+    // 同源政策
+    // 同源: 两个页面拥有相同的 协议、域名、端口
+    // 浏览器不允许 ajax 对象向非同源的 url 发送请求
+
+    // jsonp 解决方案
+    // 原理: 通过 script 标签向非同源 url 请求数据
+    // 服务端返回一个写了实参的调用函数的代码, 从而获取返回数据
+    // jsonp 浏览器端封装
+    function jsonp({ url, data, callback }) {
+        var script = document.createElement('script');
+        var funName = 'jsonp' + Date.now() + Math.random().toString().replace('.', '');
+        // 函数名字
+        console.log(funName);
+
+        window[funName] = function (data) {
+            // 删除挂载在顶级对象下的临时回调函数
+            callback(data);
+            delete this[funName];
+        };
+
+        // 参数拼接
+        url += '?callback=' + funName;
+        for (item in data) {
+            url += '&' + item + '=' + data[item];
+        }
+
+        // 标签添加请求地址
+        script.src = url;
+        script.onload = function () {
+            document.body.removeChild(this);
+        }
+        document.body.appendChild(script);
+    }
+
+    // 服务端配合代码
+    app.get("/jsonp", (req, res) => {
+        // ..
+        let { callback } = req.query;
+        res.send(callback + "(" + JSON.stringify(data) + ")");
+    });
+    // 或使用
+    app.get("/jsonp", (req, res) => {
+        // ..
+        res.jsonp({ data });
+    });
+    // 补充
+    // img dom 拥有一个事件 onload, 加载图片完成后回调
+
+
+    // CORS 解决方案
+    // CORS (Cross-origin resource sharing 跨域解决方案)
+    // 当浏览器进行 ajax 请求时会在请求头中加入 origin 字段
+    // 服务端以此作为判断依据，决定是否在响应头中添加两字段
+    // Access-Control-Allow-Origin(值为 * 或请求 url) 
+    // Access-Control-Allow-Methods(值为请求方法 get post) 
+    // 添加该字段后，返回数据时，浏览器就会接收该请求
+    // 服务端代码
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'get');
+        next();
+    });
+
+
+    // 服务端代请求 解决方案
+    // 通过请求服务端，令服务端代为向其他服务端请求数据，然后返回
+    // 第三方模块 npm i request
+    const request = require('request');
+    app.get('/req', (req, res) => {
+        request('http://example.com/route', req.query, (err, response, body) => {
+            // console.log(err);
+            // console.log(response);
+            console.log(body);
+            res.send(body);
+        });
+
+    })
+
+    // 请求携带 Cookie
+    // 使用 Ajax 发送跨域请求时设置 withCredentials 为 true
+    // 服务端设置 Access-Control-Allow-Credentials: true
+    // 注意: json 格式特殊
+    // 在使用Ajax跨域请求时，如果设置Header的ContentType为application/json,会分两次发送请求。
+    // 第一次先发送Method为OPTIONS的请求到服务器，这个请求会询问服务器支持哪些请求方法（GET,POST等），支持哪些请求头等等服务器的支持情况。
+    // (检查 chrome://flags/#out-of-blink-cors 配置，改成 disabled 后重启 Chrome 就可以抓到 OPTION 了)
+    // 等到这个请求返回后，如果原来我们准备发送的请求符合服务器的规则，那么才会继续发送第二个请求，否则会在Console中报错。
+    // 在跨域的时候，除了contentType为application/x-www-form-urlencoded,multipart/form-data或者text/plain外，都会触发浏览器先发送方法为OPTIONS的请求。
+    // 此时若想成功获得响应，服务端要在响应头加 Access-Control-Allow-Headers 字段，值为 * 或 Content-Type 原因暂时不明
+
+    // 另外 如果要携带 cookie 
+    // 那么服务端的'Access-Control-Allow-Origin' 字段不允许出现 *
+    // 可填 req.get('origin') 
+    // 若为 json 类型格式请求，则 'Access-Control-Allow-Headers' 也不允许为 *
+    // 可填 ’x-requested-with, content-type'
+
+    // 浏览器端
+    xhr.withCredentials = true;
+    // 服务端
+    res.header('Access-Control-Allow-Credentials', true);
+
+
+    // 服务端总结
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', req.get('origin'));// 携带 cookie 时不允许为 *
+        res.header('Access-Control-Allow-Methods', '*');// get,post,put,delete...
+        res.header("Access-Control-Allow-Headers", "x-requested-with,content-type");// 携带 cookie 且 json 请求时不允许为 *
+        res.header('Access-Control-Allow-Credentials', true);// 携带 cookie 时需要设置
+        next();
+    });
+
+
+
+    // 10. jQuery Ajax api
+    $.ajax(
+        {
+            type: 'get',
+
+            url: 'http://example.com/route',
+
+            data: { content: 'content' },
+
+            contentType: 'application/x-www-form-urlencoded',// 可缺省
+
+            beforeSend: function () {
+                return false;
+            },
+
+            success: function (res) {
+                res;
+            },
+
+            error: function (xhr) {
+
+            }
+        }
+    );
+
+    // json
+    $.ajax(
+        {
+            type: 'post',
+
+            url: 'http://example.com/route',
+
+            data: JSON.stringify({ content: 'content' }),
+
+            contentType: 'application/json',
+
+            beforeSend: function () {
+                return false;
+            },
+
+            success: function (res) {
+                res;
+            },
+
+            error: function (xhr) {
+
+            }
+        }
+    );
+
+    // jsonp
+    $.ajax(
+        {
+            type: 'get',
+
+            url: 'http://example.com/route',
+
+            data: { content: 'content' },
+
+            dataType: 'jsonp',
+
+            jsonp: 'callback',
+            // 发送到服务端的回调函数 key, 可缺省, 默认为 callback
+
+            jsonCallback: 'funName',
+            // 发送到服务端的回调函数 value, 可缺省, 默认为 jQuery + random + timestamp
+            // 上述两参数对应为: http://example.com/route?  [jsonp]=[jsonCallback]  &key=value...
+
+            beforeSend: function () {
+                return false;
+            },
+
+            success: function (res) {
+                res;
+            },
+
+            error: function (xhr) {
+
+            }
+        }
+    );
+
+    // cors
+    $.ajax(
+        {
+            type: 'get',
+
+            url: 'http://example.com/route',
+
+            data: { content: 'content' },
+
+            xhrFields: { withCredentials: true },
+
+            beforeSend: function () {
+                return false;
+            },
+
+            success: function (res) {
+                res;
+            },
+
+            error: function (xhr) {
+
+            }
+        }
+    );
+
+    // $.get $.post
+    $.get('http://example.com/route', { content: 'content' }, res => console.log(res));
+
+    // jsonp 
+    $.get('http://example.com/route', { callback: 'fun' }, res => console.log(res));
+    // 注意, 填了 callback 字段且其值必须为已经挂载在全局的有效函数才会被 jq 认为是一个 jsonp 请求
+    // 或
+    $.getJSON('http://example.com/route?callback=?', { content: '123' }, res => console.log(res));
+
+    // $.ajax 简写的错误处理 (jq 文档给出的实例)
+    var jqxhr = $.post("http://example.com/route", function () {
+        alert("success");
+    })
+        .done(function () {
+            alert("second success");
+        })
+        .fail(function () {
+            alert("error");
+        })
+        .always(function () {
+            alert("finished");
+        });
+    
+    
+    // 将 form 表单转换成查询字符串
+    $('#form').serialize();
+    
+    $.post("http://example.com/route", $("#form").serialize()).done(function () {
+        // ...
+    });
+    
+
+    // 11. jQuery 全局事件
+    // 当 ajax 请求开始发送时触发
+    $().on('ajaxStart', function () {
+        'start';
+    })
+
+    // 当 ajax 请求完成时触发
+    $().on('ajaxCompete', function () {
+        'commplate';
+    })
+
+    // 12. RESTful 风格 api
+    // 一套设计请求的规范
+    // GET POST PUT DELETE
+    // 请求地址不要出现动词, 动作类型由请求类型表示
+    // 对于 express 框架
+    app.get();
+    app.post();
+    app.put();
+    app.delete();
+
+    // 13. XML
+    // 客户端
+    // xml 用于传输数据
+    // xhr.responseXML 返回的是一个 XML DOM 对象
+    var xhr = new XMLHttpRequest();
+    xhr.open('get', '/xml');
+    xhr.send();
+    xhr.onload = function () {
+        console.log(xhr.responseXML.getElementsByTagName('student')[0]);
+    }
+    // 服务端
+    app.get('/xml', (req, res) => {
+        res.header('content-type', 'text/xml')
+        res.send(`
+        &lt;students&gt;
+            &lt;student&gt;
+                &lt;id&gt;1&lt;/id&gt;  
+                &lt;name&gt;高厉害&lt;/name&gt;
+            &lt;/student&gt;
+            
+            &lt;student&gt;
+                &lt;id&gt;2&lt;/id&gt;
+                &lt;name&gt;贾周元&lt;/name&gt;
+            &lt;/student&gt;
+        &lt;/students&gt;`)
+    });
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h2">Ajax 封装</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+    // 6. Ajax 封装
+    // Ajax 封装
+function Ajax() {
+    var makeCallback = function (xhr, callback) {
+        xhr.onerror = function (err) {
+            callback(err, undefined, xhr);
+        };
+        xhr.onload = function () {
+            var contentType = xhr.getResponseHeader('Content-Type');
+            callback(undefined, contentType && contentType.indexOf('application/json') != -1
+                ? JSON.parse(xhr.responseText)
+                : xhr.responseText, xhr);
+        };
+    };
+    var toQueryString = function () {
+        function recursive(value, key) {
+            var queryStr = '';
+            if (typeof value != 'object')
+                queryStr += key + '=' + value + '&';
+            else
+                for (var item in value)
+                    queryStr += key == undefined ? recursive(value[item], item) : recursive(value[item], key + '[\'' + item + '\']');
+            return queryStr;
+        }
+        return function (value) {
+            return recursive(value).slice(0, -1);
+        }
+    }();
+    this.get = function (options) {
+        options.data = options.data || '';
+        var xhr = new XMLHttpRequest();
+        options.pre(xhr) && options.pre(xhr);
+        makeCallback(xhr, options.callback);
+        xhr.open('get', options.url + '?' + (typeof options.data == 'string' ? options.data : toQueryString(options.data)));
+        xhr.send();
+    };
+    this.postUrl = function postUrl(options) {
+        options.data = options.data || '';
+        var xhr = new XMLHttpRequest();
+        options.pre(xhr) && options.pre(xhr);
+        makeCallback(xhr, options.callback);
+        xhr.open('post', options.url);
+        if (options.data instanceof FormData) { return xhr.send(options.data) };
+        xhr.setRequestHeader(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+        );
+        this.xhr.send(
+            typeof options.data == 'string' ? options.data : toQueryString(options.data)
+        );
+    }
+    this.postJson = function (options) {
+        options.data = options.data || '';
+        var xhr = new XMLHttpRequest();
+        options.pre(xhr) && options.pre(xhr);
+        makeCallback(xhr, options.callback);
+        xhr.open('post', options.url);
+        if (options.data instanceof FormData) { return xhr.send(options.data) };
+        xhr.setRequestHeader(
+            'Content-Type',
+            'application/json'
+        );
+        xhr.send(
+            typeof options.data == 'string' ? options.data : JSON.stringify(options.data)
+        );
+    }
+    this.post = this.postJson;
+}
+
+// ES6 版本
+class Ajax {
+    #toQueryString = function () {
+        function recursive(value, key) {
+            var queryStr = '';
+            if (typeof value != 'object')
+                queryStr += key + '=' + value + '&';
+            else
+                for (let item in value)
+                    queryStr += key == undefined ? recursive(value[item], item) : recursive(value[item], key + '[\'' + item + '\']');
+            return queryStr;
+        }
+        return function (value) {
+            return recursive(value).slice(0, -1);
+        }
+    }();
+    #makeCallback = function (xhr, callback) {
+        xhr.onerror = function (err) {
+            callback(err, undefined, xhr);
+        };
+        xhr.onload = function () {
+            let contentType = xhr.getResponseHeader("Content-Type");
+            callback(
+                undefined,
+                contentType && contentType.includes("application/json")
+                    ? JSON.parse(xhr.responseText)
+                    : xhr.responseText,
+                xhr
+            );
+        };
+    };
+
+    get({ url, data, callback, pre }) {
+        data = data || '';
+        const xhr = new XMLHttpRequest();
+        pre && pre(xhr);
+        this.#makeCallback(xhr, callback);
+        xhr.open(
+            "get",
+            url + "?" + (typeof data == "string" ? data : this.#toQueryString(data))
+        );
+        xhr.send();
+    }
+    postUrl({ url, data, callback, pre }) {
+        data = data || '';
+        const xhr = new XMLHttpRequest();
+        pre && pre(xhr);
+        this.#makeCallback(xhr, callback);
+        xhr.open("post", url);
+        if (data instanceof FormData) { return xhr.send(data) };
+        xhr.setRequestHeader(
+            "Content-Type",
+            "application/x-www-form-urlencoded"
+        );
+        xhr.send(typeof data == "string" ? data : this.#toQueryString(data));
+    }
+    postJson({ url, data, callback, pre }) {
+        data = data || '';
+        const xhr = new XMLHttpRequest();
+        pre && pre(xhr);
+        this.#makeCallback(xhr, callback);
+        xhr.open("post", url);
+        if (data instanceof FormData) { return xhr.send(data) };
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(typeof data == "string" ? data : JSON.stringify(data));
+    }
+    post({ url, data, callback, pre }) {
+        this.postJson({ url, data, callback, pre });
+    }
+}
+        </pre>
+    </div>
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h3">toQueryString</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+// 对象转 queryString
+// 递归遍历到任意深度
+var toQueryString = function () {
+    function recursive(value, key) {
+        var queryStr = '';
+        if (typeof value != 'object') 
+            // normal
+            queryStr += key + '=' + value + '&';
+        else
+            // obj or array
+            for (var item in value)
+                queryStr += key == undefined ? recursive(value[item], item) : recursive(value[item], key + '[\'' + item + '\']');
+        return queryStr;
+    }
+    return function (value) {
+        return recursive(value).slice(0, -1);
+    }
+}();
+// 几行代码写了一晚上，脑子都要炸了，写了删删了写
+// 有的写得老长，debug 老久，最后还是删了重写
+// 没想到最终的解决方法这么简洁优雅
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h4">二、阿里百秀项目笔记</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+    // 1. 前后端分离的登录拦截
+    // 通过页面头部的 script 标签访问接口，返回执行代码 (类似 jsonp)
+    // 接口文档
+    
+    // #### 1.4.1 获取用户登录状态
+    // | 请求地址      | 请求方式 |
+    // | ------------- | -------- |
+    // | /login/status | GET      |
+    // ```json
+    // var isLogin = true;
+    // var userId = "5c8d0bd652ae3d26686b8601";
+    // ```
+    
+    // html 代码
+    &lt;script src="/ali/login/status"&gt;&lt;;/script&gt;
+        &lt;script&gt;
+            if (!isLogin) {
+                location.href = 'login.html';
+        }
+        &lt;;/script&gt;
+    
+    // 2. api confirm('info') 确认框
+    
+    // 3. 文件表单 change 事件, 选择的文件列表: this.files
+    
+    // 4. 设定对象 key 为一个变量的值
+    var key = content;
+    var value = 'contentValue';
+    // 错误示范
+    { key: value } 
+    > { key: "contentValue" }
+    
+    // 将 key 的值在此处展开
+    { [key]: value } 
+    > { content: "contentValue" }
+    
+    // 5. 使用 FormData 对象上传文件
+    var formData = new FormData();
+    formData.append('avatar', this.files[0]);
+    $.ajax({
+        type: 'post',
+        url: '/ali/upload',
+        data: formData,
+        processData: false,// 不解析 data 字段
+        contentType: false,// 不设置类型
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (err) {
+            console.log(err);
+            alert('图片上传错误');
+        }
+    });
+    
+    // 6. simpleMDE 实例
+    // 创建
+    
+    href = "https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.css"
+    src = "https://cdn.bootcss.com/simplemde/1.11.2/simplemde.min.js"
+    
+    src = "https://cdn.bootcss.com/highlight.js/9.18.1/highlight.min.js"
+    href = "https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css"
+    
+    var simplemde = new SimpleMDE({
+        element: document.getElementById('content'),
+        renderingConfig: {
+            codeSyntaxHighlighting: true
+        }
+    });
+    
+    // 表单提交
+    $('#addForm').on('submit', function () {
+        // markdown --> html 
+        var html = simplemde.markdown(simplemde.value());
+        $('#content').val(html);
+        // formData
+        var formData = $(this).serialize();
+        // post
+        $.post('/ali/posts', formData).done(function (data) {
+            location.href = 'posts.html';
+        }).fail(errHandler);
+        return false;
+    })
+    
+    
+    // 7. 获取 query 参数
+    function getUrlParams(param) {
+        var params = location.search.slice(1).split('&');
+        if (params == '') return null;
+        var obj = {};
+        $.each(params, function (index, item) {
+            var [key, value] = item.split('=');
+            obj[key] = value;
+        });
+        if (param) {
+            var { [param]: re } = obj;
+            return re;
+        }
+        return obj;
+    }
+
+        </pre>
+    </div>
+
+    <!-- <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">一、Ajax 基础</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+        </pre>
+    </div>
+
+    <div style="text-align: center;">
+        <h1 style="padding: 50px;" id="h1">一、Ajax 基础</h1>
+    </div>
+    <div class="container">
+        <pre class="prettyprint lang-js linenums">
+
+        </pre>
+    </div> -->
+    <script src="css/live2d/autoload.js"></script>
+    <script>NProgress.done();</script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #ccc;
+}
+
+.fa {
+    margin: 20px auto;
+    width: 203px;
+    height: 270px;
+    background-color: #ccc;
+    perspective: 1500px;
+    /* Safari 和 Chrome */
+    /* transform-style: preserve-3d; */
+}
+
+.upper {
+    position: absolute;
+    z-index: 3;
+    width: 203px;
+    height: 270px;
+    border-radius: 6px;
+    background: url(../images/book.png) no-repeat right;
+    background-size: 100%;
+    transition: all .5s;
+    transform-origin: 0 0 0;
+}
+
+.middle {
+    position: absolute;
+    z-index: 2;
+    width: 203px;
+    height: 270px;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    transition: all .5s;
+    transform-origin: 0 0 0;
+}
+
+.middle .cover {
+    display: inline-block;
+    width: 203px;
+    height: 270px;
+    background-color: #ccc;
+}
+
+.lower {
+    position: absolute;
+    z-index: 1;
+    width: 203px;
+    height: 270px;
+    border-radius: 6px;
+    background-color: #656566;
+}
+
+.fa:hover .upper {
+    transform: rotateY(-35deg);
+}
+
+.fa:hover .middle {
+    transform: rotateY(-25deg);
+}

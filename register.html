@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+    <link rel="stylesheet" href="./plug/bootstrap4/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="alert mt-5 shadow-lg" role="alert">
+            <h1 class="alert-heading">注册</h1>
+
+            <div id="infoBox">
+                <!-- infoTpl -->
+            </div>
+
+            <hr>
+            <form action="/exampleUrl" method="GET" id="form">
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input name="username" type="text" class="form-control" id="username" required placeholder="请输入用户名">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input name="password" type="password" class="form-control" id="password" required
+                        placeholder="请输入密码">
+                </div>
+                <div class="form-group">
+                    <label for="confirm">确认密码</label>
+                    <input name="confirm" type="password" class="form-control" id="confirm" required
+                        placeholder="请输入密码">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">电子邮箱</label>
+                    <input name="email" type="email" class="form-control" id="email" required placeholder="请输入邮箱">
+                </div>
+
+                <button type="submit" class=" btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-primary">重置</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/html" id="infoTpl">
+        <div class="alert {{@classText}} col text-center" role="alert" id="info" style="display: none;">
+            {{infoText}}
+        </div>
+    </script>
+
+    <script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.js"></script>
+    <script src="./plug/template/template.js"></script>
+    <script>
+        $('#confirm').on('blur', function () {
+            if ($('#password').val() != $(this).val()) {
+                return info('alert-danger', '两次输入的密码不一致')
+            }
+            $('#info').fadeOut();
+        });
+        $('#username').on('blur', function () {
+            if ($(this).val().length > 20) {
+                return info('alert-danger', '用户名长度应在 1 ~ 20 个字符内'), false;
+            }
+            $('#info').fadeOut();
+        });
+        $('#password').on('blur', function () {
+
+            if ($(this).val().length > 20) {
+                return info('alert-danger', '密码长度应在 1 ~ 20 个字符内'), false;
+            }
+            $('#info').fadeOut();
+        });
+        $('#form').on('submit', function (e) {
+            // 提交数据
+            var formdata = new FormData(this);
+
+            // 校验数据
+            var username = formdata.get('username');
+            var password = formdata.get('password');
+            var confirm = formdata.get('confirm');
+            if (username.length > 20) {
+                return info('alert-danger', '用户名长度应在 1 ~ 20 个字符内'), false;
+            }
+            if (password.length > 20) {
+                return info('alert-danger', '密码长度应在 1 ~ 20 个字符内'), false;
+            }
+            if (password != confirm) {
+                return info('alert-danger', '两次输入的密码不一致'), false;
+            }
+            // 去掉 confirm
+            formdata.delete('confirm');
+
+
+            // ajax request
+            $.ajax({
+                type: 'post',
+                url: '/exampleUrl',
+                data: formdata,
+
+                // 防止 jq 解析
+                processData: false,
+                contentType: false
+            }).done(function () {
+                // do sth.
+            }).fail(function (err) {
+                // 显示错误信息
+                try {
+                    // 由于要模拟成功，错误处理需要注释
+                    // info('alert-danger', JSON.parse(err.responseText).message)
+                } catch (error) {
+                    // info('alert-danger', err.responseText)
+                }
+            });
+            // 模拟成功
+            info('alert-success', '注册成功，即将跳转到首页');
+            setTimeout(function () {
+                location.href = './index.html';
+            }, 3000)
+            // 阻止表单提交
+            return false;
+        });
+        // 封装提示信息渲染
+        function info(classText, infoText) {
+            $('#infoBox').html(template('infoTpl', { classText, infoText }));
+            $('#info').fadeIn();
+        }
+    </script>
+
+</body>
+
+</html>

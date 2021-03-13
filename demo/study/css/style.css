@@ -1,0 +1,626 @@
+/* css初始化 */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.clearfix {
+    /*IE6、7*/
+    *zoom: 1;
+}
+
+
+/* css初始化 */
+
+body {
+    background-color: #f3f5f7;
+}
+
+
+.w {
+    width: 1200px;
+    margin: auto;
+}
+
+.sidenav {
+    position: fixed;
+    left: 50%;
+    margin-left: -720px;
+    top: 50%;
+    width: 100px;
+    background-color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, .3);
+}
+
+.sidenav li {
+    position: relative;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.sidenav li a {
+    font-size: 16px;
+    color: #050505;
+}
+
+.sidenav li a:hover {
+    color: #00a4ff;
+}
+
+
+/* header start */
+
+.header {
+    margin: 30px auto;
+    width: 1200px;
+    height: 42px;
+    /* background-color: #ccc; */
+}
+
+
+/* logo */
+
+.logo {
+    float: left;
+    margin-right: 68px;
+}
+
+
+/* nav */
+
+.nav {
+    float: left;
+}
+
+.nav ul li {
+    float: left;
+}
+
+.nav ul li a {
+    display: inline-block;
+    margin-right: 27px;
+    height: 40px;
+    padding: 0 10px;
+    line-height: 40px;
+    color: #050505;
+    font-size: 18px;
+}
+
+.nav ul li a:hover {
+    border-bottom: 2px solid #00a4ff;
+}
+
+
+/* search */
+
+.search {
+    float: left;
+    margin-left: 50px;
+}
+
+.search input {
+    float: left;
+    width: 340px;
+    height: 38px;
+    padding-left: 20px;
+    /* color: #ccc; */
+    border: 1px solid #00a4ff;
+    border-right: 0px;
+}
+
+.search button {
+    float: left;
+    width: 50px;
+    height: 40px;
+    background: #00a4ff url(../images/search.png) no-repeat center;
+}
+
+
+/* user */
+
+.user {
+    float: left;
+    height: 42px;
+    margin: 3px 0 0 30px;
+}
+
+.user img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    vertical-align: middle;
+}
+
+.user a.name {
+    display: inline-block;
+    margin-left: 5px;
+    height: 42px;
+    line-height: 42px;
+    font-size: 14px;
+    color: #666;
+}
+
+
+/* header end */
+
+
+/* banner start */
+
+.banner {
+    height: 420px;
+    background: #1c036c url(../images/banner.png) no-repeat center;
+}
+
+
+/* subnav */
+
+.subnav {
+    float: left;
+    width: 150px;
+    height: 420px;
+    padding: 0 20px;
+    background: rgba(0, 0, 0, .3);
+}
+
+.subnav a {
+    display: inline-block;
+    width: 150px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 14px;
+    color: white;
+}
+
+.subnav a:hover {
+    color: #00b4ff;
+}
+
+.subnav span {
+    float: right;
+}
+
+
+/* course */
+
+.course {
+    float: right;
+    width: 228px;
+    height: 300px;
+    margin-top: 50px;
+    background-color: #fff;
+}
+
+.course .course-hd {
+    height: 48px;
+    line-height: 48px;
+    background-color: #9bceea;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: white;
+}
+
+.course .course-bd {
+    padding: 11px 0 0 0;
+}
+
+.course li {
+    width: 192px;
+    height: 50px;
+    margin: 11px 0 0 18px;
+    border-bottom: 2px solid #efefef;
+}
+
+.course .coures-bd-left {
+    color: #4e4e4e;
+    font-size: 16px;
+}
+
+.course .coures-bd-right {
+    color: #4e4e4e;
+    font-size: 14px;
+}
+
+.course div {
+    color: #a5a5a5;
+    font-size: 12px;
+}
+
+.course-bd>ul>a {
+    display: inline-block;
+    width: 198px;
+    height: 37px;
+    margin: 5px 0 0 14px;
+    border: 1px solid #22b0ff;
+    background-color: #fff;
+    font-size: 14px;
+    color: #00a4ff;
+    text-align: center;
+    line-height: 37px;
+}
+
+.course-bd>ul>a:hover {
+    background-color: #00a4ff;
+    color: #fff;
+}
+
+
+/* banner end */
+
+
+/* recommend start */
+
+.recommend {
+    height: 60px;
+    margin-top: 8px;
+    background-color: #fff;
+    box-shadow: 0 0px 30px 0 rgba(0, 0, 0, .3);
+    line-height: 60px;
+}
+
+.recommend h3.recommend-left {
+    float: left;
+    width: 132px;
+    font-size: 16px;
+    text-align: center;
+    color: #00a4ff;
+}
+
+.recommend ul {
+    float: left;
+}
+
+.recommend ul li {
+    float: left;
+    color: #ccc;
+}
+
+.recommend ul li a {
+    color: #050505;
+    margin: 0 34px;
+}
+
+.recommend h3.recommend-right {
+    float: right;
+    margin-right: 26px;
+}
+
+.recommend h3.recommend-right a {
+    font-size: 14px;
+    color: #00a4ff;
+}
+
+
+/* recommend end */
+
+
+/* box start */
+
+
+/* classify */
+
+.classify {
+    margin-top: 16px;
+    height: 61px;
+    line-height: 61px;
+}
+
+.classify span {
+    float: left;
+    font-size: 20px;
+    color: #494949;
+}
+
+.classify div {
+    float: right;
+}
+
+.classify a {
+    margin-right: 30px;
+    font-size: 12px;
+    color: #a5a5a5;
+}
+
+
+/* box */
+
+.box {
+    width: 1215px;
+}
+
+.box ul li {
+    position: relative;
+    float: left;
+    margin: 0 15px 15px 0;
+    width: 228px;
+    height: 270px;
+    background-color: #fff;
+    transition: all .3s;
+}
+
+.box ul li:hover {
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .1);
+}
+
+
+/* top */
+
+.box ul li img {
+    width: 100%;
+}
+
+
+/* bottom */
+
+.box ul li h3 {
+    position: absolute;
+    top: 180px;
+    margin: 0 20px 0 20px;
+    color: #050505;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.box ul li p {
+    position: absolute;
+    bottom: 20px;
+    margin: 0 20px;
+    font-size: 12px;
+    color: #999;
+}
+
+.box ul li p span {
+    color: #ff7c2d;
+}
+
+
+/* box end */
+
+
+/* box1 start */
+
+
+/* classify1 */
+
+.classify1 {
+    margin-top: 16px;
+    height: 61px;
+    line-height: 61px;
+}
+
+
+/* left */
+
+.classify1 span {
+    float: left;
+    font-size: 20px;
+    color: #494949;
+}
+
+
+/* center */
+
+.classify1 ul {
+    width: 416px;
+    margin: 0 auto;
+}
+
+.classify1 ul li {
+    float: left;
+    margin: 0 36px;
+}
+
+.classify1 ul li a {
+    color: #868686;
+    font-size: 16px;
+}
+
+.classify1 ul li a:hover {
+    color: #00a4ff;
+}
+
+
+/* right */
+
+.classify1 div {
+    float: right;
+}
+
+.classify1 div a {
+    margin-right: 30px;
+    font-size: 12px;
+    color: #a5a5a5;
+}
+
+
+/* box1 */
+
+.box1 {
+    width: 1215px;
+}
+
+
+/* box1-left */
+
+.box1-left {
+    float: left;
+}
+
+.box1-left a {
+    display: inline-block;
+}
+
+.box1-left a img {
+    vertical-align: bottom;
+}
+
+
+/* box1-right */
+
+.box1-right {
+    float: left;
+    margin-left: 15px;
+}
+
+
+/* box1-right-top */
+
+.box1-right-top a {
+    display: inline-block;
+}
+
+.box1-right-top a img {
+    vertical-align: bottom;
+}
+
+
+/* box1-right-bottom */
+
+.box1-right-bottom {
+    margin-top: 15px;
+}
+
+
+/* box1 */
+
+.box1-right-bottom ul li {
+    position: relative;
+    float: left;
+    margin: 0 15px 15px 0;
+    width: 228px;
+    height: 270px;
+    background-color: #fff;
+    transition: all .3s;
+}
+
+.box1-right-bottom ul li:hover {
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .1);
+}
+
+
+/* top */
+
+.box1-right-bottom ul li {
+    overflow: hidden;
+}
+
+
+/* bottom */
+
+.box1-right-bottom ul li h3 {
+    position: absolute;
+    top: 180px;
+    margin: 0 20px 0 20px;
+    color: #050505;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.box1-right-bottom ul li p {
+    position: absolute;
+    bottom: 20px;
+    margin: 0 20px;
+    font-size: 12px;
+    color: #999;
+}
+
+.box1-right-bottom ul li p span {
+    color: #ff7c2d;
+}
+
+
+/* box end */
+
+
+/* footer start */
+
+.footer {
+    height: 384px;
+    padding: 33px 30px 0 20px;
+    margin-top: 40px;
+    background-color: #fff;
+}
+
+
+/* copyright */
+
+.copyright {
+    float: left;
+}
+
+.copyright p {
+    width: 440px;
+    margin: 25px 0 15px 0;
+    font-size: 12px;
+}
+
+.copyright a {
+    display: inline-block;
+    width: 118px;
+    height: 34px;
+    border: 1px solid #00a4ff;
+    line-height: 34px;
+    font-size: 16px;
+    text-align: center;
+    color: #00a4ff;
+}
+
+.copyright a:hover {
+    background-color: #00a4ff;
+    color: white;
+}
+
+
+/* links */
+
+.links {
+    float: right;
+}
+
+.links dl {
+    float: left;
+    margin-left: 145px;
+}
+
+.links dt {
+    height: 35px;
+    font-size: 16px;
+    color: #333;
+}
+
+.links dd a {
+    display: inline-block;
+    height: 21px;
+    font-size: 12px;
+    color: black;
+}
+
+
+/* footer end */

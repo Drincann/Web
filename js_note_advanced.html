@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/jquery.min.js"></script>
+    <title>ES6 与面向对象</title>
+    <style>
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <link href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+    <script>NProgress.start();</script>
+</head>
+
+<body>
+    <button class="btn-1">skill</button>
+    <div class="tab">
+
+        <div class="child"> 选项卡 </div>
+    </div>
+    <script>
+        // 一、类的创建、继承
+
+        // 创建
+        // class
+        class People {
+            // 构造器
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+
+            // 方法
+            sayHi() {
+                console.log('Hi!My name is ' + this.name + '.');
+                return 'Hi!My name is ' + this.name + '.';
+            }
+
+        }
+        var gaolihai = new People('gaolihai', 20);
+        // gaolihai.sayHi();
+
+
+        // 继承
+        // extends super
+        class Cartoon_p extends People {
+            constructor(name, age, skill, btn) {
+                // 调用父类构造器
+                super(name, age);
+                var that = this;
+                // super 无法输出，其并不是一个对象，而是一种语法，一个关键字
+                // console.log(super); 会报错
+
+                // 要正常使用依赖父类属性的方法，必须 super() 调用父类构造函数。
+                // 扩展父类方法，其实是 super.method() 调用父类方法后再扩展功能，
+
+
+                // 扩展属性
+                this.skill_str = skill;
+
+                if (btn) {
+                    $(btn).on('click', function () {
+                        that.skill()
+                    })
+                }
+            }
+            sayHi() {
+                console.log(super.sayHi() + "i'm a cartoon character.");
+            }
+
+            // 扩展方法
+            skill() {
+                console.log('Using this skill:' + this.skill_str);
+            }
+        }
+        var onePunchMan = new Cartoon_p('一拳超人', 20, '认真一拳', $('.btn-1')[0]);
+        // console.log(onePunchMan);
+
+        // onePunchMan.sayHi();
+        // onePunchMan.skill();
+
+        // class List {
+        //     constructor(param) {
+        //         this.prop = param;
+        //     }
+        //     listToggle() {
+        //         // ... fun
+
+        //         // 这个方法通过被回调来切换 tab 栏
+        //         // 当该方法被回调时，我需要两个东西
+        //         // 1.调用者 'div.tab-child1' 2.当前 List 实例，通过该实例取到需要的属性
+
+        //         // 当前 this 指向的是调用者，此时我该如何取到当前 List 实例？
+        //         console.log(this);
+        //     }
+        // }
+        // var list = new List();
+        // // 对 tab 栏委派事件，子项触发时回调 list 的 listToggle 方法
+        // $('div.tab').on('click', '.child', list.listToggle);
+
+
+
+
+        // class List {
+        //     constructor(param) {
+        //         this.prop = param;
+        //     }
+        //     listToggle(target) {
+        //         // ... 
+        //         // 用闭包的方式传参
+        //         return function() {
+        //             console.log(target);
+        //             console.log(this);
+        //         }
+        //     }
+        // }
+        // var list = new List();
+        // $('div.tab').on('click', '.child', function() {
+        //     // 传参调用方法
+        //     // 取到闭包
+        //     // 调用闭包 bind 方法取到 [改变了 this 指向的函数拷贝]
+        //     // 调用该函数拷贝
+        //     list.listToggle(this).bind(test)();
+        // });
+
+
+
+        class List {
+            constructor(param) {
+                this.prop = param;
+            }
+            listToggle(jq_e) {
+
+                console.log(jq_e.target);
+                console.log(this);
+
+            }
+        }
+        var list = new List();
+        $('div.tab').on('click', '.child', list.listToggle.bind(list));
+    </script>
+
+    <!-- TAB 切换 -->
+    <style>
+        .demo1 input {
+            position: absolute;
+            padding-left: 5px;
+            width: 80%;
+            height: 75%;
+            left: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        .demo1 textarea {
+            position: absolute;
+            padding-left: 5px;
+            width: 98%;
+            height: 97%;
+            left: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+        .demo1 {
+            width: 600px;
+            background-color: #ccc;
+        }
+
+        .demo1 .top {
+            position: relative;
+            width: 100%;
+            height: 40px;
+            background-color: #0aa;
+            /* box-sizing: border-box; */
+        }
+
+        .demo1 .bottom {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            border-top: 1px solid red;
+        }
+
+        .demo1 .top>span {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            border: 1px solid #ccc;
+            transition: border .2s, color .3s;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .demo1 .top>span:hover {
+            color: red;
+        }
+
+        .demo1 .top>span:active {
+            border: 2px solid black;
+        }
+
+        .demo1 .top>li {
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-right: solid 2px red;
+            /* box-sizing: border-box; */
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .demo1 .top>li em {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .demo1 .top>li>span {
+            content: 'x';
+            position: absolute;
+            height: 10px;
+            line-height: 10px;
+            right: 5px;
+            top: 5px;
+            color: #ccc;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: .3s;
+            user-select: none;
+        }
+
+        .demo1 .top>li>span:hover {
+            color: red;
+        }
+
+        .demo1 .bottom>div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .demo1 li.current {
+            border-bottom: 1px solid #0aa;
+            z-index: 9;
+        }
+    </style>
+    <div class="demo1">
+        <ul class="top">
+            <li><em>12</em><span>x</span></li>
+            <li><em>12</em><span>x</span></li>
+            <span class="add"> + </span>
+        </ul>
+
+        <section class="bottom">
+            <div>test1</div>
+            <div>test2</div>
+        </section>
+    </div>
+    <script>
+        // 禁止文本选择
+        // window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty()
+        class Tab {
+            constructor(top, top_child, bottom, bottom_child) {
+                this.list = $(top);
+                this.section = $(bottom);
+                this.list_child = top_child;
+                this.section_child = bottom_child;
+                this.list.children(top_child).eq(0).addClass('current');
+                this.section.children(bottom_child).eq(0).show().siblings().hide();
+            };
+
+            addTab(top, bottom) {
+                if (this.list.children(this.list_child).length !== 0) {
+                    this.list.children(this.list_child).last().after($('<li><em>' + top + '</em><span>x</span></li>'))
+
+                    this.section.children(this.section_child).last().after($('<div>' + bottom + '</div>'))
+                } else {
+                    this.list.children().prepend($('<li><em>' + top + '</em><span>x</span></li>'))
+                    this.section.children().prepend($('<div>' + bottom + '</div>'))
+
+
+                }
+
+                this.list.children(this.list_child).eq(0).addClass('current');
+                this.section.children(this.section_child).eq(0).show().siblings().hide();
+            }
+            rmTab(index) {
+                this.list.children(this.list_child).eq(index).remove();
+                this.section.children(this.section_child).eq(index).remove();
+            }
+            toggleTab(index) {
+                this.list.children(this.list_child).eq(index).addClass('current').siblings().removeClass('current');
+                this.section.children(this.section_child).eq(index).stop().fadeIn().siblings().stop().fadeOut();
+            }
+            changeTab(index, top, bottom) {
+
+                top === undefined && this.list.children(this.list_child).eq(index).children('em').html(top);
+
+                bottom === undefined && this.section.children(this.section_child).eq(index).html(bottom);
+
+
+
+            }
+        }
+
+        var tab = new Tab('.top', 'li', '.bottom', 'div');
+        // TOGGLE
+        $('.top').on('click', 'li', function () {
+            tab.toggleTab($(this).parent().children('li').index($(this)));
+        });
+
+        // ADD
+        $('.add').on('click', function () {
+            tab.addTab('new', 'new')
+
+        });
+
+        // DELETE
+        $('.top').on('click', 'li span', function (e) {
+            console.log(2);
+            if ($(this).parent().hasClass('current')) {
+                if ($(this).parent().parent().children('li').index($(this).parent()) <= 0) {
+                    tab.toggleTab($(this).parent().next().index())
+                } else {
+                    tab.toggleTab($(this).parent().prev().index())
+                }
+            }
+
+            tab.rmTab($(this).parents('.top').children('li').index($(this).parent()))
+            e.stopPropagation()
+        });
+        $('.top,.bottom').on('dblclick', 'em,div', function () {
+            var str = $(this).html(),
+                input = this.tagName == 'EM' ? $('<input type="text" value="' + str + '">') : $('<textarea cols="30" rows="10">' + str + '</textarea>');
+            $(this).empty().prepend(input).children().on('blur keyup', function (e) {
+                if (e.type === 'keyup') {
+                    if (e.keyCode !== 13) {
+                        return;
+                    }
+                }
+                $(this).parent().html(this.value);
+            })[0].select();
+        });
+    </script>
+
+    <script>NProgress.done();</script>
+</body>
+
+</html>

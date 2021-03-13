@@ -1,0 +1,37 @@
+ * {
+     outline: none !important;
+ }
+ 
+ input:focus {
+     outline: none !important;
+ }
+ /* finish style */
+ 
+ .finish_list {
+     /* opacity: .5; */
+     background-color: #f5f5f5;
+     text-decoration: line-through;
+ }
+ /* list style */
+ 
+ .finish_list,
+ .doing_list {
+     position: relative;
+     /* display: none; */
+     padding-right: 20px;
+     overflow: hidden;
+ }
+ /* delete style */
+ 
+ .finish_list span,
+ .doing_list span {
+     /* margin: 0 !important; */
+     float: right;
+     width: 70px;
+     /* position: absolute;
+     top: 50%;
+     transform: translateY(-50%);
+     right: 10px; */
+     /* display: inline-block;*/
+     font-size: 14px;
+ }

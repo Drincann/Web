@@ -1,0 +1,225 @@
+body {
+    margin: 0 auto;
+    width: 100%;
+    /* 最大宽度根据实际设计更改 */
+    max-width: 980px;
+    /* 最小宽度一般不变 */
+    min-width: 320px;
+    font-size: 14px;
+    font-family: -apple-system, Helvetica, sans-serif;
+    line-height: 1.5;
+    color: #666;
+}
+
+img {
+    vertical-align: top;
+}
+
+a {
+    text-decoration: none;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+.app {
+    height: 45px;
+}
+
+.app {
+    list-style: none;
+}
+
+ul.app {
+    padding: 0;
+    margin: 0;
+}
+
+.app li {
+    float: left;
+    height: 100%;
+    background-color: #fff;
+    text-align: center;
+    line-height: 45px;
+    color: #fff;
+}
+
+.app li.close {
+    width: 8%;
+    background-color: #333;
+}
+
+.app li.close img {
+    width: 10px;
+    vertical-align: middle;
+}
+
+.app li.logo {
+    width: 10%;
+    background-color: #333;
+}
+
+.app li.logo img {
+    width: 30px;
+    vertical-align: middle;
+}
+
+.app li.h {
+    width: 57%;
+    background-color: #333;
+}
+
+.app li.openBtn {
+    width: 25%;
+    background-color: #F63515;
+}
+
+
+/* search */
+
+.search {
+    position: fixed;
+    width: 100%;
+    height: 44px;
+    background-color: rgba(141, 117, 117, 0);
+    overflow: hidden;
+}
+
+.search-btn {
+    position: absolute;
+    left: 0;
+    width: 40px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    vertical-align: middle;
+}
+
+.search-btn img {
+    width: 20px;
+    vertical-align: middle;
+}
+
+.search-login {
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+}
+
+.search-input {
+    position: relative;
+    box-sizing: border-box;
+    height: 30px;
+    margin: 7px 50px;
+    border-radius: 22px;
+    background-color: #fff;
+}
+
+.jd-icon {
+    width: 20px;
+    height: 15px;
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    background: url(../images/jd.png) no-repeat;
+    background-size: 20px;
+}
+
+.jd-icon::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    width: 1px;
+    height: 15px;
+    background: #ccc;
+}
+
+.scope {
+    background: url(../images/jd-sprites.png);
+    background-size: 200px;
+    background-position: -281px 0;
+    position: absolute;
+    top: 7px;
+    width: 18px;
+    height: 15px;
+    left: 45px;
+}
+
+
+/* main */
+
+.slider {
+    vertical-align: middle;
+}
+
+.slider img {
+    width: 100%;
+}
+
+.brand {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.brand div {
+    float: left;
+    width: 33.33%;
+}
+
+.brand div img {
+    width: 100%;
+}
+
+nav.nav {
+    height: 167px;
+}
+
+nav.nav a {
+    text-align: center;
+    display: block;
+    width: 20%;
+    float: left;
+}
+
+nav.nav a img {
+    margin-top: 15px;
+    vertical-align: middle;
+    width: 40px;
+}
+
+nav.nav a span {
+    margin-top: 10px;
+    display: block;
+    color: #666;
+}
+
+.news {
+    margin-top: 10px;
+}
+
+.news a {
+    box-sizing: border-box;
+    float: left;
+}
+
+.news a img {
+    width: 100%;
+}
+
+.news a:nth-child(1) {
+    width: 50%;
+}
+
+.news a:nth-child(2) {
+    border-left: 1px solid #ccc;
+    width: 25%;
+}
+
+.news a:nth-child(3) {
+    border-left: 1px solid #ccc;
+    width: 25%;
+}
